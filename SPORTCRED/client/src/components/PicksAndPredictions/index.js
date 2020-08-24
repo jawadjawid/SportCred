@@ -26,7 +26,7 @@ class PicksAndPredictions extends React.Component {
         data:
             [
                 {
-                    date: "2020-07-30",
+                    date: "2020-08-30",
                     winner: "UTA",
                     teams: {
                         teamA: {
@@ -40,12 +40,31 @@ class PicksAndPredictions extends React.Component {
                     },
                     round: "0"
                 }
-            ]
-};
+            ],
+        currDay: new Date().getDate(),
+        currMonth: new Date().getMonth() + 1,
+        fullDateWithTwoZeros: new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1).toString() + '-' + '0' + (new Date().getDate()).toString(),
+        fullDateWithDayZero:  new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString() + '-' + '0' + (new Date().getDate()).toString(),
+        fullDateWithMonthZero:  new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1).toString() + '-' + (new Date().getDate()).toString(),
+        fullDateWithNoZeros:  new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString() + '-' + (new Date().getDate()).toString(),
+    };
 
     componentDidMount() {
-        const {  currentData: currentData } = this.props;
-        getUserPicksAndPredictions(currentData,this);
+        if (this.state.currDay.toString().length == 1 && this.state.currMonth.toString().length == 1) {
+            getUserPicksAndPredictions(this, this.state.fullDateWithTwoZeros);
+        }
+
+        else if (this.state.currDay.toString().length == 1) {
+            getUserPicksAndPredictions(this, this.state.fullDateWithDayZero);
+        }
+
+        else if (this.state.currMonth.toString().length == 1){
+            getUserPicksAndPredictions(this, this.state.fullDateWithMonthZero);
+        }
+        else {
+            getUserPicksAndPredictions(this, this.state.fullDateWithNoZeros);
+        }
+        // getUserPicksAndPredictions(this, val);
     }
 
     render() {
