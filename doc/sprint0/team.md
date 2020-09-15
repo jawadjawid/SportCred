@@ -9,5 +9,7 @@ Jimmy Yu yujimmy1 1005499060 jimmmy.yu@mail.utoronto.ca (messenger)
 Piyush Ukani 1004716756 piyush.ukani@mail.utoronto.ca(messenger)
 
 Muhammad Osman Amjad amjadmu6 1005308016 m.amjad@mail.utoronto.ca Messenger
+
+Maninder Dhanauta dhanauta 1004877608 m.dhanauta@mail.utoronto.ca Messenger
 ...
 (Your discord chat invite goes here)
