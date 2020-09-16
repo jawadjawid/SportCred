@@ -6,7 +6,7 @@ Kshitij Dahal; dahalksh; 1005198046; kshitij.dahal@mail.utoronto.ca; (messenger)
 
 Jimmy Yu; yujimmy1; 1005499060; jimmmy.yu@mail.utoronto.ca; (messenger)
 
-Piyush Ukani; 1004716756; piyush.ukani@mail.utoronto.ca; (messenger)
+Piyush Ukani; ukanipiy; 1004716756; piyush.ukani@mail.utoronto.ca; (messenger)
 
 Muhammad Osman Amjad; amjadmu6; 1005308016; m.amjad@mail.utoronto.ca; Messenger
 
