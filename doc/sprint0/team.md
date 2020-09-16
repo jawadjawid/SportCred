@@ -14,7 +14,8 @@ Maninder Dhanauta; dhanauta; 1004877608; m.dhanauta@mail.utoronto.ca; Messenger
 
 Vineet Arunkumar Desai; desaivi2; 1004777100; vineet.desai@mail.utoronto.ca; (messenger)
 ...
+
 (Your discord chat invite goes here)
 
-Dicord invite link:
+Discord invite link:
 https://discord.gg/f9TVWEH
