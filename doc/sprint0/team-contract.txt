@@ -4,22 +4,34 @@ while another may think that 2 days is acceptable.
 In this tutorial, your team will work on establishing team expectations. In the space below, write down the
 list of agreed upon guidelines that your team intends to follow. Include guidelines for the following:
 • methods of communication (email, phone, messenger, text, . . . )
+    messenger, and discord.
 • communication response times (email, phone, messenger, text, . . . )
+    Around 2-3 hours.
 • meeting attendance (when to meet, whether all meetings are mandatory, . . . )
+    Standups: Every weekday, but three out of five meetings mandatory, at 6pm
+    Tutorial: TH 10:00 - 11:00 TA: Brian Lin
 • running meetings (when, where, face-to-face vs. online, who takes minutes, . . . )
+    Every weekday at 6pm on discord for meetings. Weekly rotation for leading scrum meetings.
 • meeting preparation (whether preparation is needed, what to prepare, . . . )
+    Prepare to mention what you worked on, blockers, what you want to work on.
 • version control (what to/not to commit, content of log messages, . . . )
+    Github. Pull requeust with at least one review and approval. Last reviewer will merge. 
 • division of work (how to divide work, who will decide who does what, . . . )
+    Currently will be based off our strengths and interests.
+    Scrum master will divide up the work off strengths during sprint planning (on the day of demo 6pm). 
 • submitting assignments (when to submit, who will submit, who will review the submission, . . . )
+    Scrum master will review before the day of demos. Everyone should be responsible for their own work.
 • contingency planning (what if a team member drops out, what if a team member consistently misses
-meetings, what if a team member is academically dishonest, . . . ) We suggest that in these cases, a
-team promptly seeks help from the instructor. It is important not to let such situations escalate.
+meetings, what if a team member is academically dishonest, . . . ) 
+    Reduce the number of features we want to implement. Immediately have another sprint planning meeting to reallocate work.
+
+We suggest that in these cases, a team promptly seeks help from the instructor. It is important not to let such situations escalate.
 The list above is just meant to get you started. If you had any team problems in the past, think about what
 went wrong and how expectations can be set to prevent those types of problems.
 
 Team Guidelines (continued)
 We accept these guidelines and intend to fulfill them (sign below):
-
+Jimmy Yu
 
 
 
