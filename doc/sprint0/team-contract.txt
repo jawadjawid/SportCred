@@ -1,29 +1,42 @@
-When working in a team, problems occasionally arise. One source of problems is the differing expectations
-of team members. For example, one person may think that an email response should come within 2 hours,
-while another may think that 2 days is acceptable.
-In this tutorial, your team will work on establishing team expectations. In the space below, write down the
-list of agreed upon guidelines that your team intends to follow. Include guidelines for the following:
-• methods of communication (email, phone, messenger, text, . . . )
-    messenger, and discord.
-• communication response times (email, phone, messenger, text, . . . )
-    Around 2-3 hours.
-• meeting attendance (when to meet, whether all meetings are mandatory, . . . )
-    Standups: Every weekday, but three out of five meetings mandatory, at 6pm
-    Tutorial: TH 10:00 - 11:00 TA: Brian Lin
-• running meetings (when, where, face-to-face vs. online, who takes minutes, . . . )
-    Every weekday at 6pm on discord for meetings. Weekly rotation for leading scrum meetings.
-• meeting preparation (whether preparation is needed, what to prepare, . . . )
-    Prepare to mention what you worked on, blockers, what you want to work on.
-• version control (what to/not to commit, content of log messages, . . . )
-    Github. Pull requeust with at least one review and approval. Last reviewer will merge. 
-• division of work (how to divide work, who will decide who does what, . . . )
-    Currently will be based off our strengths and interests.
-    Scrum master will divide up the work off strengths during sprint planning (on the day of demo 6pm). 
+In the space below, the list of agreed upon guidelines that our team intends to follow.
+Include guidelines for the following:
+• methods of communication 
+    Our team will be communicating using messenger, and discord.
+    Discord will be used for standups and Messenger will be used for contacting individuals.
+
+• communication response times 
+    Each individual is expected to respond to a message on discord or messenger within 3 hours.
+
+• meeting attendance 
+    Standups: Every weekday at 6pm. Everybody should attend all standups unless an emergency arises.
+    Tutorial: For our sprints our team will be attending tutorial Thursday 10:00 - 11:00 TA: Brian Lin
+
+• running meetings
+    The standups will be held every weekday at 6pm on discord. The team will be having a leader that is
+    going to lead the standups and is going to ask individuals about the progress they have made since
+    last standup. Each week the leader will be changed.
+
+• meeting preparation
+    Prepare to mention what you worked on. Also, say what will you be working on in the coming days.
+
+• version control 
+    We will be commiting to Github branches to store our work. If someone wants to merge something to master, 
+    they should create a pull request and need to have at least one review and approval from the teammates.
+    The person reviewing last will be merging onto master.  
+
+• division of work
+    Currently the work will be divided based off our strengths and interests.
+    The leader of that week will divide the work off strengths of each individual during the standup 
+    after the sprint meeting which is on the day of demo at 6pm. 
+
 • submitting assignments (when to submit, who will submit, who will review the submission, . . . )
-    Scrum master will review before the day of demos. Everyone should be responsible for their own work.
+    During the week of demo, the leader will review the work the day before demo. 
+    Everyone should be responsible for their own work.
+
 • contingency planning (what if a team member drops out, what if a team member consistently misses
 meetings, what if a team member is academically dishonest, . . . ) 
-    Reduce the number of features we want to implement. Immediately have another sprint planning meeting to reallocate work.
+    If a team member drops out then an emergency sprint planning meeting will be held to reallocate 
+    work. If necessary the team might even reduce the number of features we want to implement.
 
 We suggest that in these cases, a team promptly seeks help from the instructor. It is important not to let such situations escalate.
 The list above is just meant to get you started. If you had any team problems in the past, think about what
@@ -37,7 +50,7 @@ Maninder Dhanauta
 Mahamad Jawad Jawid
 Kshitij Dahal
 Muhammad Osman Amjad
-
+Vineet Desai
 
 
 Review the guidelines with your TA and decide which member of your team will keep this form. In the event
