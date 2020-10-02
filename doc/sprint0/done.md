@@ -1,0 +1,1 @@
+Acceptance criteria is satisfied, code review has been done by at least one person other than developer, product owner approves the work, unit and functional tests are passing, and functionality has been tested manually by people other than the developer.
