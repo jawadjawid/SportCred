@@ -14,9 +14,11 @@ How did you make decisions?
 
 How did you define priority and/or points of user stories? How many rounds of voting (on average) did you need to come to a consensus for the point estimate?
 
--We define our priority (high, medium, low) based on what absolutely needs to be implemented for a minimum viable product.
+-We define our priority (high, medium, low) based on what absolutely needs to be implemented for a minimum viable product.   
+-We defined the points based on their relativity difficulty with each other.  
+-On average we took two rounds of voting to agree on a decision. First round to speak our opinions, and second rounds to actually come to a consensus.  
 
--On average we took two rounds of voting to agree on a decision. First round to speak our opinions, and second rounds to actually come to a consensus.
+
 
 Did you meet in person or online?
 
