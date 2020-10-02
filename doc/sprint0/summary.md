@@ -6,7 +6,7 @@ Create a social sports debate web app that assigns each user a ‘Analytical Cre
  
 # Key Types of Users
 
-##Sports Enthusiasts
+## Sports Enthusiasts
 This user grew up playing, watching and enjoying sports all around. He owns a couple of his favourite athlete’s jerseys, and frequently attends viewing parties to watch his favourite basketball team play on ESPN with other sports enthusiasts. This type of user has an above average knowledge on sports and is looking to use the app to find like-minded people to discuss the latest sports news.
 
 ##Aspiring Sports Analysts
