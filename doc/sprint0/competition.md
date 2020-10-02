@@ -9,8 +9,13 @@ Sportcred provides a solution and a way to ‘put your money where your mouth is
 (For reference see ESPN's First Take youtube playlist at: https://www.youtube.com/playlist?list=PLn3nHXu50t5zaUJUABsZexD7ki0lADzCU)
 
 Sports Forums:
+
 Footballforums.net
+
 insidehoops.com/forum/
+
 Bigsoccer.com
+
 covers.com/forum
+
 Sportsbookreview.com/forum
