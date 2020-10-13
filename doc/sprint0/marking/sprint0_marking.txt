@@ -1,5 +1,5 @@
-Team Name:
-Github: 
+Team Name: ilir action team
+Github: https://github.com/UTSCCSCC01/project-ilir-action-team
 
 summary.md (Max 8 marks)
   - Project objectives have been specified clearly (max 2 marks) [0 marks: not at all, 1 mark = somewhat clearly, 2 marks = clearly]
