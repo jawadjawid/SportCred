@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
 import UserBasicInfo from "./UserBasicInfo";
+import UserACSScore from "./UserACSScore";
 
 
 const theme1 = createMuiTheme({
@@ -45,6 +46,7 @@ export default function Profile() {
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     <UserBasicInfo />
+                    <UserACSScore />
                 </Grid>
                 <Grid item xs={9}>
                 </Grid>
