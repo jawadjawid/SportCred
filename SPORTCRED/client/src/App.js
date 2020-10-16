@@ -1,15 +1,19 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
-import LoginForm from "./components/LoginForm";
+import Routes from './Routes';
 
-function App() {
-  return (
-    <div className="App">
-        <br /><br />
-     <LoginForm />
+class App extends React.Component {
 
-    </div>
-  );
+    state = {
+        currentUser: null
+    };
+
+    render() {
+        return (
+                <Routes {...this.state} app={this}/>
+        );
+    };
 }
+
 export default App;
