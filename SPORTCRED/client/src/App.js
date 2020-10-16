@@ -42,7 +42,11 @@ class App extends React.Component {
 
     render() {
         return (
+            <div>
+            <ThemeProvider theme={theme}>
                 <Routes {...this.state} app={this}/>
+                </ThemeProvider>
+                </div>
         );
     };
 }

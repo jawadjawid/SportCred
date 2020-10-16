@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch, useLocation} from 'react-router-dom';
 import signup from './components/signup'
-import Landing from './components/Landing'
+import Landing from './components/Landing/Landing'
 import Profile from './components/Profile/Profile';
 
 
