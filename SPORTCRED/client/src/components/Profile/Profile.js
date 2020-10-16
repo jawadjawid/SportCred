@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import UserBasicInfo from "./UserBasicInfo";
 import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
+import UserAboutInfo from "./UserAboutInfo";
 
 
 const theme1 = createMuiTheme({
@@ -48,6 +49,7 @@ export default function Profile() {
                 <Grid item xs={3}>
                     <UserBasicInfo />
                     <UserACSScore />
+                    <UserAboutInfo />
                     <FriendLineUp />
                 </Grid>
                 <Grid item xs={9}>
