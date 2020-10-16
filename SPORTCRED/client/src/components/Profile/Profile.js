@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +11,7 @@ import UserBasicInfo from "./UserBasicInfo";
 import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
 import UserAboutInfo from "./UserAboutInfo";
+import {getUserProfile} from "../../backendConnector/profile";
 
 
 const theme1 = createMuiTheme({
@@ -27,35 +28,52 @@ const theme1 = createMuiTheme({
             dark: '#222629',
             contrastText: '#fff',
         },
-        type:'dark'
+        type: 'dark'
     }, typography: {
-        h1:{
-            fontSize:'1.5rem',
-            marginBottom:'1.0rem'
+        h1: {
+            fontSize: '1.5rem',
+            marginBottom: '1.0rem'
         },
-        h2:{
-            fontSize:'1.5rem'
+        h2: {
+            fontSize: '1.5rem'
         }
     }
 });
 
-export default function Profile() {
-    return (
-        <ThemeProvider theme={theme1}>
-            <AppBar position="static" style={{"margin-bottom":"1rem",padding:"1.5rem"}}>
-            </AppBar>
-            <CssBaseline/>
-            <Grid container spacing={2}>
-                <Grid item xs={3}>
-                    <UserBasicInfo />
-                    <UserACSScore />
-                    <UserAboutInfo />
-                    <FriendLineUp />
+export default class Profile extends React.Component {
+
+    state = {
+        username:"",
+        fullName:"",
+        userIcon:"",
+        friends:[],
+        userBackground:{},
+        acsScore:"",
+        acsHistoryReport:""
+    }
+
+    componentDidMount() {
+        getUserProfile("ilir123",this);
+    }
+
+    render() {
+        return (
+            <ThemeProvider theme={theme1}>
+                <AppBar position="static" style={{"margin-bottom": "1rem", padding: "1.5rem"}}>
+                </AppBar>
+                <CssBaseline/>
+                <Grid container spacing={2}>
+                    <Grid item xs={3}>
+                        <UserBasicInfo fullName={this.state.fullName} username={this.state.username} userIcon={this.state.userIcon}/>
+                        <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
+                        <UserAboutInfo background={this.state.userBackground}/>
+                        <FriendLineUp friends={this.state.friends}/>
+                    </Grid>
+                    <Grid item xs={9}>
+                    </Grid>
                 </Grid>
-                <Grid item xs={9}>
-                </Grid>
-            </Grid>
-        </ThemeProvider>
-    );
+            </ThemeProvider>
+        );
+    }
 }
 

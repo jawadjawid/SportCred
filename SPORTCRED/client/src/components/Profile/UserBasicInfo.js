@@ -6,29 +6,16 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
 export default class UserBasicInfo extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            fullName : "Ilir Dima",
-            username: "ilir123"
-        }
-    }
-
-    componentDidMount() {
-        // call api to update state info
-    }
-
-
     render(){
         return (
             <React.Fragment>
                 <Card style={{ display:'flex', justifyContent:'center' ,margin:"1rem"}}>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
-                            <UserIcon size="large" fullName={this.state.fullName} />
+                            <UserIcon size="large" fullName={this.props.fullName} imgSrc={this.props.userIcon}/>
                         </ListItem>
                         <ListItem style={{ justifyContent:'center' }}>
-                            <Typography variant="h1" component="h1" style={{ justifyContent:'center' }}>{this.state.username}</Typography>
+                            <Typography variant="h1" component="h1" style={{ justifyContent:'center' }}>{this.props.username}</Typography>
                         </ListItem >
                     </List>
                 </Card>
