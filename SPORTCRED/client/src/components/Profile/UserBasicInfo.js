@@ -25,7 +25,7 @@ export default class UserBasicInfo extends React.Component{
                 <Card style={{ display:'flex', justifyContent:'center' ,margin:"1rem"}}>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
-                            <UserIcon fullName={this.state.fullName} />
+                            <UserIcon size="large" fullName={this.state.fullName} />
                         </ListItem>
                         <ListItem style={{ justifyContent:'center' }}>
                             <Typography variant="h1" component="h1" style={{ justifyContent:'center' }}>{this.state.username}</Typography>

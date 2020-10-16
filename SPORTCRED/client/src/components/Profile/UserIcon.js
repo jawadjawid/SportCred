@@ -27,30 +27,23 @@ export default class UserIcon extends React.Component {
 
 
     render(){
-        const classes = makeStyles((theme) => ({
-            root: {
-                display: 'flex',
-                '& > *': {
-                    margin: theme.spacing(1),
-                },
-            },
+        const sizes = {
             small: {
-                width: theme.spacing(3),
-                height: theme.spacing(3),
+                width: '25px',
+                height: '25px'
             },
             large: {
-                width: theme.spacing(20),
-                height: theme.spacing(20),
-            },
-        }));
+                width: '60px',
+                height: '60px'
+            }
+        };
 
         if(this.state.imgSrc == null){
-            return (<div className={classes.root} >
-                <Avatar  className={classes.small}>{this.retrieveInitials()}</Avatar>
-            </div>);
+            return (
+                <Avatar  style={sizes[this.props.size]}>{this.retrieveInitials()}</Avatar>);
         } else {
-            return (<React.Fragment className={classes.root}>
-                <Avatar className={classes.large} style={{alignSelf: 'center'}} alt={this.state.fullName} src={this.state.imgSrc} /> </React.Fragment>);
+            return (
+                <Avatar style={sizes[this.props.size]} alt={this.state.fullName} src={this.state.imgSrc} />);
         }
     }
 
