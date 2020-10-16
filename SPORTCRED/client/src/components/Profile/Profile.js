@@ -7,6 +7,8 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
+import UserBasicInfo from "./UserBasicInfo";
+
 
 const theme1 = createMuiTheme({
     palette: {
@@ -25,7 +27,6 @@ const theme1 = createMuiTheme({
         type:'dark'
     }, typography: {
         h1:{
-            fontWeight:'300rem',
             fontSize:'1.5rem',
             marginBottom:'1.0rem'
         },
@@ -41,8 +42,9 @@ export default function Profile() {
             <AppBar position="static" style={{"margin-bottom":"1rem",padding:"1.5rem"}}>
             </AppBar>
             <CssBaseline/>
-            <Grid container spacing={2} style={{"margin-left":"1rem"}}>
+            <Grid container spacing={2}>
                 <Grid item xs={3}>
+                    <UserBasicInfo />
                 </Grid>
                 <Grid item xs={9}>
                 </Grid>
