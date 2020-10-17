@@ -42,7 +42,7 @@ const UserACSHistoryReport = (props) => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={props.close} color="secondary">
+                <Button onClick={props.close} color="secondary">
                     <b> Close</b>
                 </Button>
             </DialogActions>

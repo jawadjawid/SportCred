@@ -24,6 +24,7 @@ import ListItem from "@material-ui/core/ListItem";
 import UserIcon from "./UserIcon";
 
 const theme1 = createMuiTheme({
+
     palette: {
         primary: {
             light: '#6b6e70',
@@ -39,6 +40,10 @@ const theme1 = createMuiTheme({
         },
         type: 'dark'
     }, typography: {
+        fontFamily: {
+            main:"Calibri",
+            secondary:'Verdana',
+        },
         h1: {
             fontSize: '1.5rem',
             marginBottom: '1.0rem'
