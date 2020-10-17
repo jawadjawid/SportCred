@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "react-window": "^1.8.5",
     "reactstrap": "^8.6.0"
   }
 }
