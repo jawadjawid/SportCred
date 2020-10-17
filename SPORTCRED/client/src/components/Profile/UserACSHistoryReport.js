@@ -11,6 +11,8 @@ import UserIcon from "./UserIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
 
 const UserACSHistoryReport = (props) => {
 
@@ -39,6 +41,11 @@ const UserACSHistoryReport = (props) => {
                     </FixedSizeList>
                 </DialogContentText>
             </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={props.close} color="secondary">
+                    <b> Close</b>
+                </Button>
+            </DialogActions>
         </Dialog>
     )
 }
