@@ -15,7 +15,7 @@ const theme = createMuiTheme({
         },
         tertiary:{
             //light green
-        main: '#c202d3'
+        main: '#bee500'
     },
       secondary:  {
           //orange
@@ -27,10 +27,10 @@ const theme = createMuiTheme({
       }
     },
     typography: {
-        fontFamily: [
-          '"Lato"',
-          'sans-serif'
-        ].join(',')
+        fontFamily: {
+          main:"Calibri",
+          secondary:'Verdana',
+        },
       }
 });
 

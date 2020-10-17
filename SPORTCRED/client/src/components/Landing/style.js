@@ -1,5 +1,6 @@
 export const style = theme => ({
     Container: {
+        fontFamily:theme.typography.fontFamily.secondary,
         position: 'relative',
         minHeight: '300px',
         minWidth: '800px',
@@ -18,16 +19,17 @@ export const style = theme => ({
       },
       MainLabel:{
         // color: theme.palette.primary.main,
-        width: 'auto',
-        height: '22px',
+        width: '20%',
+        height: '20%',
         marginLeft: '61px',
-        marginTop: '98px',
+        marginTop: '11px',
       },
       Login:{
-          float: 'right',
+        float: 'right',
         fontWeight: 'bold',
-        marginTop: '30px',
-        color: theme.palette.primary.main,
+        fontFamily:theme.typography.fontFamily.main,
+        marginTop: '-4px',
+        color: theme.palette.secondary.main,
         border: theme.palette.primary.main + '1px solid',
         padding: '10px 5px',
         backgroundColor: 'hsla(0, 0%, 0%, 0)',
@@ -44,10 +46,12 @@ export const style = theme => ({
     zIndex: '9',
     display: 'flex',
     justifyContent: 'flex-end',
-    }
+    },
     // SubContentbutton:hover {
     //     background-color: #f1f1f1,
     //     color: #000000c0,
     // }
-  
+    Motto:{
+        color: theme.palette.tertiary.main,
+    }
   })
