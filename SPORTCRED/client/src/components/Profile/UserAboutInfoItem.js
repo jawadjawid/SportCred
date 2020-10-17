@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 
 export default function UserAboutInfoItem(props) {
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={0}>
             <Grid item xs={6}><b>
                 {props.prompt}
             </b>

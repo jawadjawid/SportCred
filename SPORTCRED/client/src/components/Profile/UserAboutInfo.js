@@ -22,7 +22,7 @@ const UserAboutInfo = (props) => {
         return (
             <React.Fragment>
                 <UserAboutInfoItem prompt={key} answer={background[rowInfo.index][key]}/>
-                <Divider style={{"margin-top":"2px", "margin-bottom":"10px"}} />
+                <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
             </React.Fragment>
         );
     }

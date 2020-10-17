@@ -5,8 +5,8 @@ export const getUserProfile = async (username, currPage) => {
     // axios.get('http://localhost:5000/api/getUserProfile' + username, currPage.state)
     //     .then(res => {
     //         if(res.status == 200) return res.data;
-    //     }).then(res => {
-    //
+    //     }).then(data => {
+    //         currPage.setState(data)
     // });
 
     currPage.setState({

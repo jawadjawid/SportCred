@@ -1,10 +1,8 @@
-export const style = theme => ({
+export const style = {
     Background: {
-        'padding-left': '10%',
-        'padding-right': '10%'
+       'overflow':'hidden'
     },
     Card: {
-        //backgroundColor: theme.palette.primary.light,
         'margin': '1rem 0'
     },
     GridContainer: {
@@ -23,6 +21,6 @@ export const style = theme => ({
     },
     AppBar:{
         'margin-bottom': '1rem',
-        padding: '1.5rem'
+        'padding': '1.5rem 0'
     }
-})
+}

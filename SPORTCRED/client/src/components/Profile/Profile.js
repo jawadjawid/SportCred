@@ -77,7 +77,7 @@ class Profile extends React.Component {
     render() {
         const {classes} = this.props;
 
-        return (<React.Fragment>
+        return (<div className={classes.Background}>
                 <ThemeProvider theme={theme1}>
                 <AppBar position="static" className={classes.AppBar}>
                 </AppBar>
@@ -104,7 +104,7 @@ class Profile extends React.Component {
                 </Grid>
                 </div>
                 </ThemeProvider>
-        </React.Fragment>
+        </div>
         );
     }
 }
