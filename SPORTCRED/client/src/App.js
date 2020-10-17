@@ -42,7 +42,14 @@ const theme = createMuiTheme({
         },
         h2: {
             fontSize: '1.5rem'
-        }
+        },
+        h3:{
+            fontSize:'1.2rem'
+        },
+        h4:{
+            fontSize:'1.5rem'
+        },
+
       }
 });
 

@@ -30,7 +30,7 @@ const UserACSScore = (props) => {
 
     return (
         <React.Fragment>
-            <Card style={{padding: "1rem", margin: "1rem"}}>
+            <Card style={{padding: "1rem", margin: "1rem 0"}}>
                 <Typography variant="h1" component="h1" color="secondary">ACS <Button style={{float: "right"}}
                                                                                       onClick={handleOpen}>
                     History Report

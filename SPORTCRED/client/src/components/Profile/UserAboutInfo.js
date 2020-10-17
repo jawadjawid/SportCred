@@ -29,11 +29,6 @@ const UserAboutInfo = (props) => {
 
     const {classes} = props;
 
-    const theme = createMuiTheme( {'&.Mui-selected': {
-            outline: 'none',
-        }}
-    );
-
     return (
         <React.Fragment>
             <Card style={{padding: "1rem"}} className={classes.Card}>
@@ -41,7 +36,7 @@ const UserAboutInfo = (props) => {
                     <Button style={{float: "right",borderWidth:"0px"}} >
                     Edit Details
                 </Button></Typography>
-                <FixedSizeList height={220} width={280} itemSize={40} itemCount={background.length}>
+                <FixedSizeList height={220} width={280} itemSize={40} itemCount={background.length} style={{overflow:'hidden'}}>
                     {renderRow}
                 </FixedSizeList>
             </Card>

@@ -27,15 +27,18 @@ export const getUserProfile = async (username, currPage) => {
         acsHistoryReport:[{
             "acsStart":"35",
             "acsEnd":"41",
-            "activity":"trivia with user: bla bla bla"
+            "activity":"Trivia with user5223 with final score of 142:42",
+            "date":"Oct 12"
         },{
             "acsStart":"31",
             "acsEnd":"35",
-            "activity":"debate won w post # 324234"
+            "activity":"Debate won w post #4324",
+            "date":"Oct 7"
         },{
-            "acsStart":"28",
+            "acsStart":"33",
             "acsEnd":"31",
-            "activity":"trivia w user : jkljslfd324"
+            "activity":"Trivia w user3252 with final score of 100:24",
+            "date":"Oct 3"
         }],
         userBackground: [
             {"Age":"15"},

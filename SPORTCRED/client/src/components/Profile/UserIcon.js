@@ -1,6 +1,8 @@
 import React from 'react';
 import {Avatar} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
+import PersonIcon from "@material-ui/icons/Person";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 export default class UserIcon extends React.Component {
 
@@ -20,8 +22,8 @@ export default class UserIcon extends React.Component {
     render(){
         const sizes = {
             small: {
-                width: '25px',
-                height: '25px'
+                width: '35px',
+                height: '35px'
             },
             large: {
                 width: '60px',
@@ -29,13 +31,9 @@ export default class UserIcon extends React.Component {
             }
         };
 
-        if(this.props.imgSrc == null){
-            return (
-                <Avatar  style={sizes[this.props.size]}>{this.retrieveInitials()}</Avatar>);
-        } else {
             return (
                 <Avatar style={sizes[this.props.size]} alt={this.props.fullName} src={this.props.imgSrc} />);
-        }
+
     }
 
 

@@ -9,7 +9,7 @@ export default class UserBasicInfo extends React.Component{
     render(){
         return (
             <React.Fragment>
-                <Card style={{ display:'flex', justifyContent:'center' ,margin:"1rem"}}>
+                <Card>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
                             <UserIcon size="large" fullName={this.props.fullName} imgSrc={this.props.userIcon}/>

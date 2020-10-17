@@ -1,38 +1,28 @@
 export const style = theme => ({
-    Container: {
-        position: 'relative',
-        minHeight: '300px',
-        minWidth: '800px',
-        overflow: 'hidden',
-        marginBottom: '500px',
+    Background: {
+        'padding-left': '10%',
+        'padding-right': '10%'
     },
-    Video: {
-        width: '100%',
-        height: '100%',
+    Card: {
+        //backgroundColor: theme.palette.primary.light,
+        'margin': '1rem 0'
     },
-    Content: {
-        position: 'absolute',
-        top: '0',
-        width:''
-
+    GridContainer: {
+        'display': 'flex',
+        'flex-flow': 'row wrap',
+        'margin': '0 auto',
+        'padding': '0 10%'
     },
-    Background:{
-        backgroundColor: "#bebdbd"
+    GridItemLeft:{
+        minWidth:'300px',
+        flex:'1 0 auto'
     },
-    Card:{
-       //backgroundColor: theme.palette.primary.light,
-        margin:'1rem'
+    GridItemRight:{
+        minWidth:'350px',
+        flex:'1 1 auto'
     },
-    NavBar:{
-        position: 'absolute',
-        top: '7vw',
-        right: '15vw',
-        color: '#fff',
-        lineHeight: '0px',
-        padding: '14px 6px 14px 6px',
-        zIndex: '9',
-        display: 'flex',
-        justifyContent: 'flex-end',
+    AppBar:{
+        'margin-bottom': '1rem',
+        padding: '1.5rem'
     }
-
 })

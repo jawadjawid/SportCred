@@ -3,32 +3,38 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import {Typography} from "@material-ui/core";
+import {SvgIcon, Typography} from "@material-ui/core";
 import {FixedSizeList} from "react-window";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import UserIcon from "./UserIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Divider from "@material-ui/core/Divider";
 
 const UserACSHistoryReport = (props) => {
 
     const renderRow = (rowInfo) => {
         const {report} = props;
-        const text = report[rowInfo.index]["acsStart"] + '->' + report[rowInfo.index]["acsEnd"] + ' : ' + report[rowInfo.index]["activity"];
+        const style = {'margin-left':'0.5rem',color: parseInt(report[rowInfo.index]["acsStart"]) < parseInt(report[rowInfo.index]["acsEnd"]) ? '#14A76C':'#eb3434'};
         return (
-            <ListItem button>
-                <ListItemText primary={text} />
-            </ListItem>
+            <React.Fragment>
+                <Typography variant="h4" style={{'display':'inline-block'}} >{report[rowInfo.index]["activity"]} {'\u2022'} </Typography>
+                <Typography variant="h5" style={{'display':'inline-block','margin-left':'0.5rem',color:'grey'}}> {report[rowInfo.index]["date"]}</Typography>
+                <Typography variant="h3" style={{"margin-top":'0.3rem', 'display':'inline-block', 'float':'right'}}> {report[rowInfo.index]["acsStart"]}
+                     <ArrowForwardIosIcon style={style}/> {report[rowInfo.index]["acsEnd"]}</Typography>
+                <Divider style={{'margin-bottom':'1rem','margin-top':'0.2rem'}}/>
+            </React.Fragment>
         );
     }
 
     return (
-        <Dialog open={props.open} onClose={props.close}>
+        <Dialog open={props.open} onClose={props.close} fullWidth="true" maxWidth="md">
             <DialogTitle><Typography variant="h1" component="h1" color="secondary">ACS History
                 Report</Typography></DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    <FixedSizeList height={300} width={280} itemSize={40} itemCount={props.report.length}>
+                <DialogContentText >
+                    <FixedSizeList height={300} itemSize={40} itemCount={props.report.length}>
                         {renderRow}
                     </FixedSizeList>
                 </DialogContentText>
