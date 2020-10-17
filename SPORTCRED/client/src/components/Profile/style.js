@@ -17,22 +17,11 @@ export const style = theme => ({
 
     },
     Background:{
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: "#bebdbd"
     },
     Card:{
-        backgroundColor: theme.palette.primary.light,
+       //backgroundColor: theme.palette.primary.light,
         margin:'1rem'
-    },
-    Login:{
-        float: 'right',
-        fontWeight: 'bold',
-        marginTop: '30px',
-        color: theme.palette.primary.main,
-        border: theme.palette.primary.main + '1px solid',
-        padding: '10px 5px',
-        backgroundColor: 'hsla(0, 0%, 0%, 0)',
-        fontSize: '1.25rem',
-        borderRadius: '5px',
     },
     NavBar:{
         position: 'absolute',
@@ -45,9 +34,5 @@ export const style = theme => ({
         display: 'flex',
         justifyContent: 'flex-end',
     }
-    // SubContentbutton:hover {
-    //     background-color: #f1f1f1,
-    //     color: #000000c0,
-    // }
 
 })

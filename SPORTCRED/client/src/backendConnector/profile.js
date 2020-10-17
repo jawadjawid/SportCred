@@ -38,12 +38,12 @@ export const getUserProfile = async (username, currPage) => {
             "activity":"trivia w user : jkljslfd324"
         }],
         userBackground: [
-            {"age":"15"},
-            {"favourite sport": "basketball"},
-            {"favourite player": "bob"},
-            {"favourite team": "lakers"},
-            {"odd sport":"cricket"},
-            {"highest level of sports played": "college"}
+            {"Age":"15"},
+            {"Favorite Sport": "Basketball"},
+            {"Favorite Player": "Jamal Jamal"},
+            {"Favorite Team": "Miami Heat"},
+            {"Odd Sport":"cricket"},
+            {"Highest Level of Sports Played": "college"}
         ]
     });
 

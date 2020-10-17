@@ -9,6 +9,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import UserIcon from "./UserIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {style} from "./style";
+import Divider from "@material-ui/core/Divider";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const UserAboutInfo = (props) => {
     const {background} = props;
@@ -16,21 +20,32 @@ const UserAboutInfo = (props) => {
     const renderRow = (rowInfo) => {
         const key = Object.keys(background[rowInfo.index]);
         return (
-            <UserAboutInfoItem prompt={key} answer={background[rowInfo.index][key]}/>
+            <React.Fragment>
+                <UserAboutInfoItem prompt={key} answer={background[rowInfo.index][key]}/>
+                <Divider style={{"margin-top":"2px", "margin-bottom":"10px"}} />
+            </React.Fragment>
         );
     }
 
+    const {classes} = props;
+
+    const theme = createMuiTheme( {'&.Mui-selected': {
+            outline: 'none',
+        }}
+    );
+
     return (
         <React.Fragment>
-            <Card style={{padding: "1rem", margin: "1rem"}}>
-                <Typography variant="h1" component="h1" color="secondary">About <Button style={{float: "right"}}>
+            <Card style={{padding: "1rem"}} className={classes.Card}>
+                <Typography variant="h1" component="h1" color="secondary">About
+                    <Button style={{float: "right",borderWidth:"0px"}} >
                     Edit Details
                 </Button></Typography>
-                <FixedSizeList height={200} width={280} itemSize={40} itemCount={background.length}>
+                <FixedSizeList height={220} width={280} itemSize={40} itemCount={background.length}>
                     {renderRow}
                 </FixedSizeList>
             </Card>
         </React.Fragment>)
 }
 
-export default UserAboutInfo;
+export default withStyles(style)(UserAboutInfo);
