@@ -42,7 +42,7 @@ const UserACSHistoryReport = (props) => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.close} color="secondary">
+                <Button onClick={props.close} color="secondary" style={{outline:'none'}}>
                     <b> Close</b>
                 </Button>
             </DialogActions>

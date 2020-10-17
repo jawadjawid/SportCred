@@ -33,7 +33,7 @@ const UserAboutInfo = (props) => {
         <React.Fragment>
             <Card style={{padding: "1rem"}} className={classes.Card}>
                 <Typography variant="h1" component="h1" color="secondary">About
-                    <Button style={{float: "right",borderWidth:"0px"}} >
+                    <Button style={{float: "right",borderWidth:"0px",outline:'none'}} >
                     Edit Details
                 </Button></Typography>
                 <FixedSizeList height={220} width={280} itemSize={40} itemCount={background.length} style={{overflow:'hidden'}}>
