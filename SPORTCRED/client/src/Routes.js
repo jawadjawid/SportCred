@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch, useLocation} from 'react-router-dom';
-import LoginForm from './components/LoginForm'
+import signup from './components/signup'
+import Landing from './components/Landing/Landing'
 import Profile from './components/Profile/Profile';
 
 
@@ -9,8 +10,8 @@ export default props => {
     return (
         <BrowserRouter>
             <Switch>
-                <LoginRoute exact path='/' props={props} component={LoginForm}/>
-                <LoginRoute exact path='/login' props={props} component={LoginForm}/>
+                <LoginRoute exact path='/' props={props} component={Landing}/>
+                <LoginRoute exact path='/login' props={props} component={signup}/>
                 <ProfileRoute exact path='/profile' props={props} component={Profile}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
