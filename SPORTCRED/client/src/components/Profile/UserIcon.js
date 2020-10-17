@@ -5,24 +5,28 @@ import PersonIcon from "@material-ui/icons/Person";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from "@material-ui/core/IconButton";
+import UserACSHistoryReport from "./UserACSHistoryReport";
+import Typography from "@material-ui/core/Typography";
+import UserIconUpload from "./UserIconUpload";
 
 export default class UserIcon extends React.Component {
 
     retrieveInitials = () => {
-        if(this.props.hasOwnProperty("fullName")){
-            const name=this.props.fullName.split(" ");
+        if (this.props.hasOwnProperty("fullName")) {
+            const name = this.props.fullName.split(" ");
             console.log(name)
             return name[0][0] + name[1][0];
-        } else{
+        } else {
             return "KD"
         }
     }
 
-    state={
-        hover:false
+    state = {
+        hover: false,
+        open: false
     }
 
-    render(){
+    render() {
         const sizes = {
             small: {
                 width: '35px',
@@ -35,21 +39,33 @@ export default class UserIcon extends React.Component {
         };
 
         const toggleHover = () => {
-            this.setState({hover:(!(this.state.hover))});
+            this.setState({hover: (!(this.state.hover))});
         }
 
-            if(this.state.hover){
-                return (<IconButton onMouseEnter={toggleHover} onMouseLeave={toggleHover} style={{outline:'none'}}>
-                    <Avatar  style={sizes[this.props.size]} alt={this.props.fullName} >
-                        <EditIcon/></Avatar></IconButton>)
-            }
+        const handleOpen = () => {
+            this.setState({open: true});
+        };
 
-            return (<div >
-                <Avatar onMouseEnter={toggleHover} onMouseLeave={toggleHover} style={sizes[this.props.size]} alt={this.props.fullName} src={this.props.imgSrc} />
-            </div>);
+        const handleClose = () => {
+            this.setState({open: false});
+        };
+
+        if (this.state.hover) {
+            return (<React.Fragment><IconButton onMouseEnter={toggleHover} onMouseLeave={toggleHover}
+                                                style={{outline: 'none'}} onClick={handleOpen}>
+                <Avatar style={sizes[this.props.size]} alt={this.props.fullName}>
+                    <EditIcon/></Avatar></IconButton>
+                <UserIconUpload open={this.state.open} close={handleClose} /></React.Fragment>)
+
+        }
+
+        return (<React.Fragment>
+            <Avatar onMouseEnter={toggleHover} onMouseLeave={toggleHover} style={sizes[this.props.size]}
+                    alt={this.props.fullName} src={this.props.imgSrc}/>
+            <UserIconUpload open={this.state.open} close={handleClose} />
+        </React.Fragment>);
 
     }
-
 
 
 }
