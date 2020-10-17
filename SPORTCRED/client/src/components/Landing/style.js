@@ -53,5 +53,6 @@ export const style = theme => ({
     // }
     Motto:{
         color: theme.palette.tertiary.main,
+        marginLeft: '37%',
     }
   })
