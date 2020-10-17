@@ -40,10 +40,9 @@ const theme1 = createMuiTheme({
         },
         type: 'dark'
     }, typography: {
-        fontFamily: {
-            main:"Calibri",
-            secondary:'Verdana',
-        },
+        fontFamily:
+            ['Calibri','Verdana'].join(',')
+        ,
         h1: {
             fontSize: '1.5rem',
             marginBottom: '1.0rem'
