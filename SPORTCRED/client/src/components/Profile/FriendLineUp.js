@@ -31,7 +31,7 @@ export default class FriendLineUp extends React.Component {
         return (
             <React.Fragment>
                 <ThemeProvider theme={theme}>
-                <ListItem button style={{height:"50px"}}>
+                <ListItem button style={{height:"50px", width:'240px'}}>
                     <ListItemIcon>
                         <UserIcon size="small" fullName={friends[rowInfo.index]['fullName']} imgSrc={friends[rowInfo.index]['userIcon']}/>
                     </ListItemIcon>
