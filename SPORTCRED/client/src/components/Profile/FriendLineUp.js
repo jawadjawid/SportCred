@@ -33,9 +33,9 @@ export default class FriendLineUp extends React.Component {
                 <ThemeProvider theme={theme}>
                 <ListItem button style={{height:"50px"}}>
                     <ListItemIcon>
-                        <UserIcon size="small" fullName={friends[rowInfo.index]['fullName']}/>
+                        <UserIcon size="small" fullName={friends[rowInfo.index]['fullName']} imgSrc={friends[rowInfo.index]['userIcon']}/>
                     </ListItemIcon>
-                    <ListItemText disableTypography primary={friends[rowInfo.index]['fullName']}  />
+                    <ListItemText disableTypography primary={friends[rowInfo.index]['username']}  />
                 </ListItem>
                 </ThemeProvider>
             </React.Fragment>
