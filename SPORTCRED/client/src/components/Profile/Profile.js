@@ -65,14 +65,49 @@ const theme1 = createMuiTheme({
 class Profile extends React.Component {
 
     state = {
-        username:"",
-        fullName:"",
-        userIcon:"",
-        friends:[],
-        userBackground:{},
-        acsScore:"",
-        acsHistoryReport:""
-    }
+        username:"bobby123",
+        fullName:"bob marley",
+        userIcon:"https://material-ui.com/static/images/avatar/1.jpg",
+        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
+            {"fullName": "John Doe", "username": "hi142"},
+            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
+            {"fullName": "Albert Liu", "username": "alberto"},
+            {"fullName": "Mohammad Sajjad", "username": "mohao"},
+            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
+            {"fullName": "John Doe", "username": "hi142"},
+            {"fullName": "Pussy Cat", "username": "meow"},
+            {"fullName": "Albert Liu", "username": "alberto"},
+            {"fullName": "Mohammad Sajjad", "username": "mohao"}
+        ],
+        acsScore:"35",
+        acsHistoryReport:[{
+            "acsStart":"35",
+            "acsEnd":"41",
+            "activity":"Trivia with user5223 with final score of 142:42",
+            "date":"Oct 12"
+        },{
+            "acsStart":"31",
+            "acsEnd":"35",
+            "activity":"Debate won w post #4324",
+            "date":"Oct 7"
+        },{
+            "acsStart":"33",
+            "acsEnd":"31",
+            "activity":"Trivia w user3252 with final score of 100:24",
+            "date":"Oct 3"
+        }],
+        userBackground: [
+            {"Username":"bobby123"},
+            {"Full Name": "Bob Thisismylastnamehaha"},
+            {"Date of Birth":"02/03/2000"},
+            {"Email": "bobbybobbob@ilikeball.com"},
+            {"Favorite Sport": "Basketball"},
+            {"Favorite Player": "Jamal Jamal"},
+            {"Favorite Team": "Miami Heat"},
+            {"Odd Sport":"cricket"},
+            {"Highest Level of Sports Played": "college"}
+        ]
+    };
 
     componentDidMount() {
         getUserProfile("ilir123",this);
@@ -80,6 +115,8 @@ class Profile extends React.Component {
 
     render() {
         const {classes} = this.props;
+
+        const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
 
         return (<div className={classes.Background}>
                 <ThemeProvider theme={theme1}>
@@ -91,7 +128,7 @@ class Profile extends React.Component {
                     <Grid item xs={3} className={classes.GridItemLeft}>
                         <UserBasicInfo fullName={this.state.fullName} username={this.state.username} userIcon={this.state.userIcon}/>
                         <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
-                        <UserAboutInfo background={this.state.userBackground}/>
+                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground}/>
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>

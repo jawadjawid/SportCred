@@ -42,13 +42,46 @@ export const getUserProfile = async (username, currPage) => {
             "date":"Oct 3"
         }],
         userBackground: [
-            {"Age":"15"},
+            {"Username":"bobby123"},
+            {"Full Name": "Bob Thisismylastnamehaha"},
+            {"Date of Birth":"02/03/2000"},
+            {"Email": "bobbybobbob@ilikeball.com"},
             {"Favorite Sport": "Basketball"},
             {"Favorite Player": "Jamal Jamal"},
             {"Favorite Team": "Miami Heat"},
             {"Odd Sport":"cricket"},
             {"Highest Level of Sports Played": "college"}
         ]
+    });
+
+
+
+};
+
+export const getUserBackground = async (username, currPage) => {
+
+    // axios.get('http://localhost:5000/api/getUserProfile' + username, currPage.state)
+    //     .then(res => {
+    //         if(res.status == 200) return res.data;
+    //     }).then(data => {
+    //         currPage.setState(data)
+    // });
+
+    currPage.setState({
+        info: [
+            {"Username":"bobby123"},
+            {"Full Name": "Bob Thisismylastnamehaha"},
+            {"Date of Birth":"02/03/2000"},
+            {"Email": "bobbybobbob@ilikeball.com"},
+            {"Favorite Sport": "Basketball"},
+            {"Favorite Player": "Jamal Jamal"},
+            {"Favorite Team": "Miami Heat"},
+            {"Odd Sport":"cricket"},
+            {"Highest Level of Sports Played": "college"}
+        ]
+    }, () => {
+        console.log('the new state');
+        console.log(currPage.state);
     });
 
 
