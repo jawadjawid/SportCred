@@ -15,6 +15,7 @@ import Divider from "@material-ui/core/Divider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import UserACSHistoryReport from "./UserACSHistoryReport";
 import EditUserInfoDetails from "./EditUserInfoDetails";
+import {Cake, Email, EmojiEmotions, Face, Mail, Person} from "@material-ui/icons";
 
 const UserAboutInfo = (props) => {
     const [background, setBackground] = React.useState(props.background);
@@ -28,29 +29,6 @@ const UserAboutInfo = (props) => {
         setOpen(false);
     };
 
-    const renderRow = (rowInfo) => {
-        const key = Object.keys(background[rowInfo.index]);
-        return (
-            <React.Fragment>
-                <UserAboutInfoItem setProfileState={props.setProfileState} edit="false" prompt={key} answer={background[rowInfo.index][key]} backUp={props.backUp} setAnswer={setBackgroundExpanded}/>
-                <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
-            </React.Fragment>
-        );
-    }
-    const setBackgroundExpanded = (prompt,newAnswer) => {
-        const test = JSON.parse(JSON.stringify(background));
-        if(prompt === undefined){
-            console.log('here')
-        }
-        test.forEach(item => {
-            let getit = Object.keys(item).toString();
-            if(getit.localeCompare(prompt) === 0){
-                item[prompt] = newAnswer;
-                setBackground(test);
-                return;
-            }
-        })};
-
     const {classes} = props;
 
     return (
@@ -60,9 +38,13 @@ const UserAboutInfo = (props) => {
                     <Button style={{float: "right",borderWidth:"0px",outline:'none'}} onClick={handleOpen}>
                     Edit Details
                 </Button></Typography>
-                <FixedSizeList height={220} width={280} itemSize={40} itemCount={background.length} style={{"overflow":'hidden'}}>
-                    {renderRow}
-                </FixedSizeList>
+                <Typography><EmojiEmotions style={{'margin-right':'5px'}}/> {background[1]["Full Name"]}</Typography>
+                <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
+                <Typography><Cake style={{'margin-right':'10px'}}/>{background[2]["Date of Birth"]}</Typography>
+                <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
+                <Typography><Email style={{'margin-right':'10px'}}/>{background[3]["Email"]}</Typography>
+                <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
+
             </Card>
             <EditUserInfoDetails setProfileState={props.setProfileState} open={open} close={handleClose} info={background} backUp={props.backUp} setInfo={setBackground}/>
         </React.Fragment>)
