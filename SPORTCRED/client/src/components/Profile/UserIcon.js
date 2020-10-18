@@ -21,11 +21,6 @@ export default class UserIcon extends React.Component {
         }
     }
 
-    state = {
-        hover: false,
-        open: false
-    }
-
     render() {
         const sizes = {
             small: {
@@ -35,36 +30,15 @@ export default class UserIcon extends React.Component {
             large: {
                 width: '60px',
                 height: '60px'
+            },
+            xlarge: {
+                width: '200px',
+                height: '200px'
             }
         };
 
-        const toggleHover = () => {
-            this.setState({hover: (!(this.state.hover))});
-        }
-
-        const handleOpen = () => {
-            this.setState({open: true});
-        };
-
-        const handleClose = () => {
-            this.setState({open: false});
-        };
-
-        if (this.state.hover) {
-            return (<React.Fragment><IconButton onMouseEnter={toggleHover} onMouseLeave={toggleHover}
-                                                style={{outline: 'none'}} onClick={handleOpen}>
-                <Avatar style={sizes[this.props.size]} alt={this.props.fullName}>
-                    <EditIcon/></Avatar></IconButton>
-                <UserIconUpload open={this.state.open} close={handleClose} /></React.Fragment>)
-
-        }
-
-        return (<React.Fragment>
-            <Avatar onMouseEnter={toggleHover} onMouseLeave={toggleHover} style={sizes[this.props.size]}
-                    alt={this.props.fullName} src={this.props.imgSrc}/>
-            <UserIconUpload open={this.state.open} close={handleClose} />
-        </React.Fragment>);
-
+            return (<React.Fragment>
+                <Avatar style={sizes[this.props.size]} alt={this.props.fullName} src={this.props.imgSrc}/></React.Fragment>);
     }
 
 

@@ -126,7 +126,7 @@ class Profile extends React.Component {
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
                     <Grid item xs={3} className={classes.GridItemLeft}>
-                        <UserBasicInfo fullName={this.state.fullName} username={this.state.username} userIcon={this.state.userIcon}/>
+                        <UserBasicInfo fullName={this.state.fullName} username={this.state.username} userIcon={this.state.userIcon} />
                         <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
                         <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground}/>
                         <FriendLineUp friends={this.state.friends}/>
