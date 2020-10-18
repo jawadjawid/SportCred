@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import UserIcon from "./UserIcon";
 import ListItem from "@material-ui/core/ListItem";
 import UserIconEditable from "./UserIconEditable";
+import {setUserProfile} from "../../backendConnector/profile";
 
 
 const UserIconUpload = (props) => {
@@ -84,6 +85,7 @@ const UserIconUpload = (props) => {
 
     const save = () => {
         props.close();
+        setUserProfile(props.username, {userIcon:image.url});
         props.setImgSrc(image.url);
         setImage({url:''});
     }

@@ -10,7 +10,8 @@ export default class UserBasicInfo extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            imgSrc: props.userIcon
+            imgSrc: props.userIcon,
+            username: props.username
         }
     }
 
@@ -24,7 +25,7 @@ export default class UserBasicInfo extends React.Component{
                 <Card>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
-                            <UserIconEditable size="large" fullName={this.props.fullName} imgSrc={this.state.imgSrc} setImgSrc={setImgSrc}/>
+                            <UserIconEditable size="large" fullName={this.props.fullName} username={this.props.username} imgSrc={this.state.imgSrc} setImgSrc={setImgSrc}/>
                         </ListItem>
                         <ListItem style={{ justifyContent:'center' }}>
                             <Typography variant="h1" component="h1" style={{ justifyContent:'center' }}>{this.props.username}</Typography>

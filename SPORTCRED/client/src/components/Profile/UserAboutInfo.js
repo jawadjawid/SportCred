@@ -32,7 +32,7 @@ const UserAboutInfo = (props) => {
         const key = Object.keys(background[rowInfo.index]);
         return (
             <React.Fragment>
-                <UserAboutInfoItem edit="false" prompt={key} answer={background[rowInfo.index][key]} backUp={props.backUp} setAnswer={setBackgroundExpanded}/>
+                <UserAboutInfoItem setProfileState={props.setProfileState} edit="false" prompt={key} answer={background[rowInfo.index][key]} backUp={props.backUp} setAnswer={setBackgroundExpanded}/>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
             </React.Fragment>
         );
@@ -64,7 +64,7 @@ const UserAboutInfo = (props) => {
                     {renderRow}
                 </FixedSizeList>
             </Card>
-            <EditUserInfoDetails open={open} close={handleClose} info={background} backUp={props.backUp} setInfo={setBackground}/>
+            <EditUserInfoDetails setProfileState={props.setProfileState} open={open} close={handleClose} info={background} backUp={props.backUp} setInfo={setBackground}/>
         </React.Fragment>)
 }
 

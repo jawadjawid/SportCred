@@ -55,14 +55,14 @@ export default class UserIconEditable extends React.Component {
                                                 style={{outline: 'none'}} onClick={handleOpen}>
                 <Avatar style={sizes[this.props.size]} alt={this.props.fullName}>
                     <EditIcon/></Avatar></IconButton>
-                <UserIconUpload open={this.state.open} close={handleClose} imgSrc={this.props.imgSrc} setImgSrc={this.props.setImgSrc}/></React.Fragment>)
+                <UserIconUpload username={this.props.username} open={this.state.open} close={handleClose} imgSrc={this.props.imgSrc} setImgSrc={this.props.setImgSrc}/></React.Fragment>)
 
         }
 
         return (<React.Fragment>
             <Avatar onMouseEnter={toggleHover} onMouseLeave={toggleHover} style={sizes[this.props.size]}
                     alt={this.props.fullName} src={this.props.imgSrc}/>
-            <UserIconUpload open={this.state.open} close={handleClose} imgSrc={this.props.imgSrc} setImgSrc={this.props.setImgSrc} />
+            <UserIconUpload username={this.props.username} open={this.state.open} close={handleClose} imgSrc={this.props.imgSrc} setImgSrc={this.props.setImgSrc} />
         </React.Fragment>);
 
     }

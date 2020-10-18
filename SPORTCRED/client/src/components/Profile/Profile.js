@@ -65,8 +65,6 @@ const theme1 = createMuiTheme({
 class Profile extends React.Component {
 
     state = {
-        username:"bobby123",
-        fullName:"bob marley",
         userIcon:"https://material-ui.com/static/images/avatar/1.jpg",
         friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
             {"fullName": "John Doe", "username": "hi142"},
@@ -113,10 +111,19 @@ class Profile extends React.Component {
         getUserProfile("ilir123",this);
     }
 
+
     render() {
         const {classes} = this.props;
 
         const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
+
+        const setProfileState = (info) => {
+            const copy = [...info['userBackground']];
+            this.setState({userBackground:copy}, () => {
+                console.log(info);
+                console.log(this.state);
+            });
+        }
 
         return (<div className={classes.Background}>
                 <ThemeProvider theme={theme1}>
@@ -126,9 +133,9 @@ class Profile extends React.Component {
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
                     <Grid item xs={3} className={classes.GridItemLeft}>
-                        <UserBasicInfo fullName={this.state.fullName} username={this.state.username} userIcon={this.state.userIcon} />
+                        <UserBasicInfo fullName={this.state.userBackground[1]["Full Name"]} username={this.state.userBackground[0]["Username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
                         <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
-                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground}/>
+                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>

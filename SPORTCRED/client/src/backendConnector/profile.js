@@ -2,7 +2,7 @@ import axios from 'axios';
 // A function to send a POST request with the new user info
 export const getUserProfile = async (username, currPage) => {
 
-    // axios.get('http://localhost:5000/api/getUserProfile' + username, currPage.state)
+    // axios.get('http://localhost:5000/api/getUserProfile/' + username, currPage.state)
     //     .then(res => {
     //         if(res.status == 200) return res.data;
     //     }).then(data => {
@@ -10,8 +10,6 @@ export const getUserProfile = async (username, currPage) => {
     // });
 
     currPage.setState({
-        username:"bobby123",
-        fullName:"bob marley",
         userIcon:"https://material-ui.com/static/images/avatar/1.jpg",
         friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
             {"fullName": "John Doe", "username": "hi142"},
@@ -58,31 +56,34 @@ export const getUserProfile = async (username, currPage) => {
 
 };
 
-export const getUserBackground = async (username, currPage) => {
+export const setUserProfile = async (username, profile) => {
 
-    // axios.get('http://localhost:5000/api/getUserProfile' + username, currPage.state)
+    // axios.post('http://localhost:5000/api/setUserProfile/' + username, profile)
     //     .then(res => {
-    //         if(res.status == 200) return res.data;
+    //         if(res.status === 200) return res.data;
     //     }).then(data => {
     //         currPage.setState(data)
     // });
+    console.log('setting user profile');
+    console.log(username);
+    console.log(profile);
 
-    currPage.setState({
-        info: [
-            {"Username":"bobby123"},
-            {"Full Name": "Bob Thisismylastnamehaha"},
-            {"Date of Birth":"02/03/2000"},
-            {"Email": "bobbybobbob@ilikeball.com"},
-            {"Favorite Sport": "Basketball"},
-            {"Favorite Player": "Jamal Jamal"},
-            {"Favorite Team": "Miami Heat"},
-            {"Odd Sport":"cricket"},
-            {"Highest Level of Sports Played": "college"}
-        ]
-    }, () => {
-        console.log('the new state');
-        console.log(currPage.state);
-    });
+    // currPage.setState({
+    //     info: [
+    //         {"Username":"bobby123"},
+    //         {"Full Name": "Bob Thisismylastnamehaha"},
+    //         {"Date of Birth":"02/03/2000"},
+    //         {"Email": "bobbybobbob@ilikeball.com"},
+    //         {"Favorite Sport": "Basketball"},
+    //         {"Favorite Player": "Jamal Jamal"},
+    //         {"Favorite Team": "Miami Heat"},
+    //         {"Odd Sport":"cricket"},
+    //         {"Highest Level of Sports Played": "college"}
+    //     ]
+    // }, () => {
+    //     console.log('the new state');
+    //     console.log(currPage.state);
+    // });
 
 
 
