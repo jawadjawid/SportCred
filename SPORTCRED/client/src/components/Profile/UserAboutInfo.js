@@ -1,7 +1,6 @@
 import React from 'react'
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import UserAboutInfoItem from "./UserAboutInfoItem";
 import {Button} from "@material-ui/core";
 import {getUserProfile} from "../../backendConnector/profile";
 import {FixedSizeList} from "react-window";

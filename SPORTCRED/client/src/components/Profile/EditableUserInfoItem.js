@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import EditableText from "./EditText";
 
 
-export default function UserAboutInfoItemEditable(props) {
+export default function EditableUserInfoItem(props) {
 
     const [answer, setAnswer] = React.useState(props.answer)
 

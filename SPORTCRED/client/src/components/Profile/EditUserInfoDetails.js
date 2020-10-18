@@ -7,9 +7,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import {FixedSizeList} from "react-window";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
-import UserAboutInfoItem from "./UserAboutInfoItem";
 import Divider from "@material-ui/core/Divider";
-import UserAboutInfoItemEditable from "./UserAboutInfoItemEditable";
+import EditableUserInfoItem from "./EditableUserInfoItem";
 import UserBasicInfo from "./UserBasicInfo";
 
 
@@ -56,7 +55,7 @@ class EditUserInfoDetails extends React.Component {
         const key = Object.keys(this.basicInfo[index]);
             return (
                 <React.Fragment>
-                    <UserAboutInfoItemEditable prompt={key} answer={this.basicInfo[index][key]} setAnswer={this.setInfoExpanded}/>
+                    <EditableUserInfoItem prompt={key} answer={this.basicInfo[index][key]} setAnswer={this.setInfoExpanded}/>
                     {/*<Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />*/}
                 </React.Fragment>
             );
@@ -67,7 +66,7 @@ class EditUserInfoDetails extends React.Component {
         const key = Object.keys(this.additionalInfo[index]);
         return (
             <React.Fragment>
-                <UserAboutInfoItemEditable prompt={key[0]} answer={this.additionalInfo[index][key[0]]} setAnswer={this.setInfoExpanded}/>
+                <EditableUserInfoItem prompt={key[0]} answer={this.additionalInfo[index][key[0]]} setAnswer={this.setInfoExpanded}/>
                 {/*<Divider style={{"margin-top":"2px", "margin-bottom":"10px"}} />*/}
             </React.Fragment>
         );
