@@ -105,9 +105,11 @@ class EditUserInfoDetails extends React.Component {
         this.mainSetup(this.basicInfo, this.additionalInfo);
 
         return (
-            <Dialog open={this.props.open} onClose={this.props.close} fullWidth="true" maxWidth="md">
+            <Dialog disableBackdropClick disableEscapeKeyDown open={this.props.open} onClose={this.props.close} fullWidth="true" maxWidth="md">
                 <DialogTitle><Typography variant="h1" component="h1" color="secondary">Edit
-                    Profile</Typography></DialogTitle>
+                    Profile</Typography>
+                    <Divider/>
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <Typography variant="h2" style={{'margin-bottom':'10px'}}>
@@ -119,7 +121,7 @@ class EditUserInfoDetails extends React.Component {
                         <Typography variant="h2" style={{'margin-bottom':'10px'}}>
                             Additional Information
                         </Typography>
-                        <FixedSizeList height={300} itemSize={40} itemCount={this.additionalInfo.length}>
+                        <FixedSizeList height={300} itemSize={40} itemCount={this.additionalInfo.length} style={{'display':'inline'}}>
                             {this.renderRowAdditional}
                         </FixedSizeList>
                     </DialogContentText>
