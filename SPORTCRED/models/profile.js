@@ -9,12 +9,10 @@ const ProfileSchema = new Schema({
         type: String
     },
     email: {
-        type: String
+        type: String,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
-    firstName: {
-        type: String
-    },
-    lastName: {
+    fullName: {
         type: String
     },
     DOB: {
@@ -28,7 +26,7 @@ const ProfileSchema = new Schema({
     },
     questionnaire: {
         type: Schema.Types.ObjectId,
-        ref: 'Questionnarie'
+        ref: 'Questionnaire'
     },
     ACSmetrics: {
         type: Schema.Types.ObjectId,

@@ -23,7 +23,13 @@ router.post('/', (req, res) => {
         about: req.body.about
     })
     profile.save()
-        .then(data => res.json(data));
+        .then(data => res.json(data))
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({
+                error: error
+            });
+        });
 });
 
 router.delete('/:username', (req, res, next) => {
@@ -41,18 +47,64 @@ router.delete('/:username', (req, res, next) => {
 });
 
 router.put('/setUserProfile/:username', (req, res, next) => {
-    
-    Profile.findOneAndUpdate({ username: req.params.username }, { $set: req.body }, { new: true })
+
+    // Handles req.body validation
+    for(var key in req.body) {
+        if(req.body.hasOwnProperty(key)){
+            console.log("key: " + key + ", value: " + req.body[key])
+
+            // Check that a key has a non-empty value
+            if(req.body[key] == ""){
+                return res.status(400).json({
+                    message: "The key, \'" + key + "\' has an empty field"
+                });
+            }
+            
+            // Check for @ symbol in email request
+            if(key == "email"){
+                console.log("email validation")
+                if(!req.body[key].match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)){
+                    return res.status(400).json({
+                        message: "Email requires @ symbol"
+                    });
+                }
+            }
+
+            // Check for properly formatted DD/MM/YYYY format in DOB request
+            if(key == "DOB") {
+                console.log("DOB validation")
+                if(!req.body[key].match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
+                    return res.status(400).json({
+                        message: "DOB requires DD/MM/YYYY format"
+                    });
+                }
+            }
+        }
+    }
+
+    // Check if user with username exists in db
+    Profile.find({username: req.params.username })
         .exec()
-        .then(() => {
-            res.status(200).json({
-                message: 'updated'
-            })
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
+        .then(data => {
+            if (data.length == 0) {
+                res.status(400).json({
+                    message: "user with username, \'"+ req.params.username + "\' does not exist"
+                });
+            } else {
+                // If user exists then run the query to update its profile info
+                Profile.findOneAndUpdate({ username: req.params.username }, { $set: req.body }, { new: true })
+                .exec()
+                .then(() => {
+                    res.status(200).json({
+                        message: 'updated'
+                    })
+                })
+                .catch(error => {
+                    res.status(400).json({
+                        message: "Bad request"
+                    });
+                });
+            }
         });
 });
 
