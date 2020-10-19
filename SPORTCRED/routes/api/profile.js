@@ -40,6 +40,22 @@ router.delete('/:username', (req, res, next) => {
       });
 });
 
+router.put('/setUserProfile/:username', (req, res, next) => {
+    
+    Profile.findOneAndUpdate({ username: req.params.username }, { $set: req.body }, { new: true })
+        .exec()
+        .then(() => {
+            res.status(200).json({
+                message: 'updated'
+            })
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
 router.put('/updatePhone/:username', (req, res, next) => {
     console.log("Hitting update phone endpt with id " + req.params.username)
 
