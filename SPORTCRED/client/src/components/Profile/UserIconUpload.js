@@ -20,11 +20,7 @@ import {setUserProfile} from "../../backendConnector/profile";
 const UserIconUpload = (props) => {
 
     const [uploading, setUploading] = React.useState(false);
-    const [image, setImage] = React.useState({url:''});
-
-    const removeImage = () => {
-        setImage({url: ''})
-    };
+    const [image, setImage] = React.useState({url:'',formData:new FormData()});
 
     const readURL = file => {
         return new Promise((res, rej) => {
@@ -35,7 +31,10 @@ const UserIconUpload = (props) => {
         });
     };
     const preview = async (file) => {
-        setImage({url: await readURL(file)});
+        const formData = new FormData()
+
+        formData.append('userIcon',file);
+        setImage({url: (await readURL(file)),formData: formData});
         setUploading(false);
     };
 
@@ -44,15 +43,6 @@ const UserIconUpload = (props) => {
         setUploading(true);
 
         preview(files[0]);
-
-        const formData = new FormData()
-
-        files.forEach((file, i) => {
-            formData.append(i, file)
-        })
-        // send it to api after
-        console.log(formData);
-
     }
 
     const display = () => {
@@ -80,14 +70,14 @@ const UserIconUpload = (props) => {
 
     const cancel = () => {
         props.close();
-        setImage({url:''});
+        setImage({url:'',formData: new FormData()});
     }
 
     const save = () => {
         props.close();
-        setUserProfile(props.username, {userIcon:image.url});
+        setUserProfile(props.username, {userIcon:image.formData});
         props.setImgSrc(image.url);
-        setImage({url:''});
+        setImage({url:'',formData: new FormData()});
     }
 
     return (<Dialog open={props.open} onClose={props.close} fullWidth="true" maxWidth="sm">
