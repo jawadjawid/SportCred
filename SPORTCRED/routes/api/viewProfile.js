@@ -7,7 +7,8 @@ router.get('/getUserProfile/:username', (req, res, next) => {
     const givenUser = req.params.username;
 
     Profile.find({username: givenUser})
-        .select('username fullName dateOfBirth email phone userIcon about')
+        .select('username fullName dateOfBirth email phone userIcon' +
+                'userBackground acsHistoryReport acsScore friends about')
         .exec()
         .then(userData => {
             console.log(userData);
