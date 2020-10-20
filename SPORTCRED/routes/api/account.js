@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Profile = require('../../models/profile');
 const Account = require('../../models/account');
+const Questionnaire = require('../../models/Questionnaire');
 
 
 router.get('/login', (req, res) => {
@@ -28,6 +29,20 @@ router.get('/login', (req, res) => {
         }
     });
 });
+
+router.get('/questionnaire', (req,res)=>{
+    // returns a username's questionnaire 
+    Questionnaire.find({username: req.body.username})
+    .then(data => res.status(200).json(data))
+    .catch(error => {
+        console.log("error getting questionnaire")
+        res.status(500).json({
+            error: error
+        });
+    });
+});
+
+
 
 router.put('/', (req, res) => {
     // checks if account exists with username and password
