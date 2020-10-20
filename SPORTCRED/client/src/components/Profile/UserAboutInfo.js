@@ -2,17 +2,9 @@ import React from 'react'
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import {Button} from "@material-ui/core";
-import {getUserProfile} from "../../backendConnector/profile";
-import {FixedSizeList} from "react-window";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import UserIcon from "./UserIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {style} from "./style";
 import Divider from "@material-ui/core/Divider";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import UserACSHistoryReport from "./UserACSHistoryReport";
 import EditUserInfoDetails from "./EditUserInfoDetails";
 import {Cake, Email, EmojiEmotions, Face, Mail, Person} from "@material-ui/icons";
 

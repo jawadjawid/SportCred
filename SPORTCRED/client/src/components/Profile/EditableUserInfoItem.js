@@ -18,7 +18,7 @@ export default function EditableUserInfoItem(props) {
             </b>
             </Grid>
             <Grid item xs={6}>
-                <EditableText value={answer} setValue={answerChange}/>
+                <EditableText prompt={props.prompt} value={answer} setValue={answerChange} validationForSave={props.validationForSave}/>
             </Grid>
         </Grid>
 }

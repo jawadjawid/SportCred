@@ -11,7 +11,7 @@ import UserBasicInfo from "./UserBasicInfo";
 import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
 import UserAboutInfo from "./UserAboutInfo";
-import {getUserProfile} from "../../backendConnector/profile";
+import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
@@ -122,6 +122,7 @@ class Profile extends React.Component {
             this.setState({userBackground:copy}, () => {
                 console.log(info);
                 console.log(this.state);
+                setUserProfile(this.state.userBackground["Username"],this.state);
             });
         }
 

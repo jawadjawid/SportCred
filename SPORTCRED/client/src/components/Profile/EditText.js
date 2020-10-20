@@ -7,13 +7,30 @@ export default class EditableText extends React.Component{
         this.state = {
             value: props.value||'',
             edit: false,
-            setAnswer:props.setValue
+            setAnswer:props.setValue,
+            error:false,
+            errorMsg:''
         }
+    }
+
+    validate(e){
+        const value = e.target.value;
+        const currErrorValue = this.state.error;
+
+        if(value.localeCompare('')===0){
+            this.setState({error:true, errorMsg:'Do not leave fields empty'},() => {
+                if(currErrorValue !== this.state.error)
+                    this.props.validationForSave(this.props.prompt,this.state.error);
+            });
+            return false;
+        }
+        return true;
     }
 
     render() {
         return (
-            this.state.edit===true&&
+            (this.state.edit===true) &&
+            <React.Fragment>
             <input
                 style={{"border": "0",
                     "outline": "0",
@@ -37,12 +54,19 @@ export default class EditableText extends React.Component{
                     }
                 }}
                 onBlur={event=>{
-                    this.setState({edit:false})
-                    this.state.setAnswer(this.state.value);
+                    if(this.validate(event)){
+                        const currErrorValue = this.state.error;
+                        this.setState({edit:false,error:false,errorMsg:''},()=>{
+                            if(currErrorValue !== this.state.error)
+                                this.props.validationForSave(this.props.prompt,this.state.error);
+                        })
+                        this.state.setAnswer(this.state.value);
+                    }
                 }}
 
             />
-            ||
+        <span style={{color: "red"}}>{this.state.errorMsg}</span></React.Fragment>
+        ||
             <span style={{display:'block','width':'100%'}} onClick={event=>{
                 this.setState({edit:this.state.edit!==true})
             }}>
