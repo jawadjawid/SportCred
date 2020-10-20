@@ -25,16 +25,22 @@ export const style = theme => ({
         marginTop: '11px',
       },
       Login:{
-        float: 'right',
         fontWeight: 'bold',
         fontFamily:theme.typography.fontFamily.main,
-        marginTop: '-4px',
-        color: theme.palette.secondary.main,
         border: theme.palette.primary.main + '1px solid',
-        padding: '10px 5px',
-        backgroundColor: 'hsla(0, 0%, 0%, 0)',
         fontSize: '1.25rem',
-        borderRadius: '5px',
+        height: '20%',
+        marginLeft: '800px',
+        marginTop: '11px',
+    },
+    Signup:{
+        fontWeight: 'bold',
+        fontFamily:theme.typography.fontFamily.main,
+        border: theme.palette.primary.main + '1px solid',
+        fontSize: '1.25rem',
+        height: '20%',
+        marginLeft: '800px',
+        marginTop: '11px',
     },
     NavBar:{
         position: 'absolute',
@@ -47,10 +53,6 @@ export const style = theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
     },
-    // SubContentbutton:hover {
-    //     background-color: #f1f1f1,
-    //     color: #000000c0,
-    // }
     Motto:{
         color: theme.palette.tertiary.main,
         marginLeft: '37%',
@@ -60,7 +62,10 @@ export const style = theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-      },
+        type: 'dark'
+
+        //backgroundColor: theme.palette.primary.main,
+    },
       avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,

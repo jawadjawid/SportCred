@@ -16,58 +16,48 @@ state = {
     login: false,
     signup: false
 };
-openlogin() {
+openLogin() {
     this.setState({ login: true });
 }
-opensignup() {
+openSignup() {
     this.setState({ signup: true });
 }
 login(state){
     this.setState({ signup: state });
 }
 render(){
-    const { classes,SimpleDialogDemo } = this.props;
-    
-    
-    return ( //
+    const { classes } = this.props;
+    return (
         <div className = {classes.Container}>
             <video className = {classes.Video} loop autoPlay muted >
             <source src = {Sourcevid} type = 'video/mp4'/>
             </video>
             
             <div className={classes.Content}>
-            
-                <div className={classes.SubContent} >
+                <div>
                     <img className={classes.MainLabel} src = {logo} />
                     <div className={classes.NavBar}>
-                    {/* <a className={classes.Login} onClick={AlertDialog(true)}>Log in</a>
-                    <a className={classes.Login} onClick={AlertDialog(false)}>Sign up</a> */}
                     </div>
-                    <Button onClick={this.openlogin.bind(this)}>Login</Button>
-                    <Button onClick={this.opensignup.bind(this)}>Signup</Button>
-            <Dialog open={this.state.login} >
-                <DialogTitle>Login</DialogTitle>
-                <DialogContent >Start editing to see some magic happen!
-                <a onClick = {
-              () => {
-                this.setState({ login: false })
-              }}>Close</a>
-                </DialogContent>
-            </Dialog>
-            <Dialog open={this.state.signup} >
-                <DialogTitle>Signup</DialogTitle>
-                <DialogContent >Start editing to see some magic happen!
-                    <Signup   component={Signup}></Signup>
-                </DialogContent>
-            </Dialog>
+                   {/*<Button className={classes.Login} onClick={this.openLogin.bind(this)}>Login</Button>*/}
+            <Button className={classes.Signup} onClick={this.openSignup.bind(this)}>Sign Up</Button>
+                    <Dialog open={this.state.login} >
+                        <DialogTitle>Login</DialogTitle>
+                     <DialogContent >
+                         Start editing to see some magic happen!
+                             <Button onClick = {() => {this.setState({ login: false })}}>Close</Button>
+                      </DialogContent>
+                    </Dialog>
+                    <Dialog open={this.state.signup} >
+                        <Button  onClick = {() => {this.setState({ signup: false })}}>Close</Button>
+                        <DialogContent >
+                            <Signup ></Signup>
+                        </DialogContent>
+                    </Dialog>
                 </div>
                 <h1 className={classes.Motto}>Hoops to troops</h1>
             </div>
-            
         </div>
-        
     )
 }
 }
-
 export default withRouter(withStyles(style)(Landing))

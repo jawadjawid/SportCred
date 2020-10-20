@@ -17,12 +17,10 @@ import {withStyles} from '@material-ui/core';
 
 import { withRouter } from 'react-router-dom';
 
-// export default function SignUp() {
-//   const classes = useStyles();
 class Signup extends React.Component{
-    
-    render(){
-        const { classes} = style;
+
+  render(){
+    const { classes } = this.props;
   return (
       <React.Fragment>
     <Container component="main" maxWidth="xs">
