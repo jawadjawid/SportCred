@@ -180,7 +180,7 @@ router.put('/updateDOB/:username', (req, res, next) => {
     console.log("Hitting update DOB endpt with id " + req.params.username)
 
     // If DOB key is not in JSON body then return 400 status
-    if ((typeof req.body.DOB) === 'undefined') {
+    if ((typeof req.body.dateOfBirth) === 'undefined') {
         res.status(400).json({
             error: error
         })
@@ -203,7 +203,7 @@ router.put('/updatePicture/:username', (req, res, next) => {
     console.log("Hitting update picture endpt with id " + req.params.username)
 
     // If picture key is not in JSON body then return 400 status
-    if ((typeof req.body.picture) === 'undefined') {
+    if ((typeof req.body.userIcon) === 'undefined') {
         res.status(400).json({
             error: error
         })
