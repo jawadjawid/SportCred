@@ -8,7 +8,7 @@ const Account = require('../../models/account');
 router.get('/login', (req, res) => {
     // checks if account exists with username and password
     var user = req.body.username;
-    var pass = req.body.pass;
+    var pass = req.body.password;
     console.log(user+ "  " + pass);
     Account.find({username:user,password:pass})
     .exec()
@@ -29,4 +29,25 @@ router.get('/login', (req, res) => {
     });
 });
 
+router.put('/', (req, res) => {
+    // checks if account exists with username and password
+
+
+    const account = new Account({
+        username: req.body.username,
+        password: req.body.password,
+        phone: req.body.phone,
+        email: req.body.email
+    });
+
+    account.save()
+        .then(data => res.status(200).json(data))
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({
+                error: error
+            });
+        });
+
+});
 module.exports = router;
