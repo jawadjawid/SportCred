@@ -11,8 +11,9 @@ const AccountSchema = new Schema({
     phone:{
         type: String
     },
-    email:{
-        type: String
+    email: {
+        type: String,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     profile:{
         type: Schema.Types.ObjectId,
