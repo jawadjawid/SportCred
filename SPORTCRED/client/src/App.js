@@ -16,6 +16,8 @@ const theme = createMuiTheme({
         quinary:{
             main: '#FFE400'
         },
+        type: 'dark',
+
         quaternary:{
             main: '#14A76C'
         },

@@ -21,7 +21,9 @@ class Signup extends React.Component{
 
   render(){
     const { classes } = this.props;
-  return (
+    const { username, email, password, confirmPassword, registerAs, displayError, errorMessage } = this.props;
+
+    return (
       <React.Fragment>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -63,9 +65,13 @@ class Signup extends React.Component{
                 required
                 fullWidth
                 id="email"
+                displayError={displayError}
+                type="email"
+
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                helperText="dsa"
               />
             </Grid>
             <Grid item xs={12}>

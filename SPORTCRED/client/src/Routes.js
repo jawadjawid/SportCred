@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch, useLocation} from 'react-router-dom';
-import signup from './components/signup'
 import Landing from './components/Landing/Landing'
 import Profile from './components/Profile/Profile';
 
@@ -11,7 +10,6 @@ export default props => {
         <BrowserRouter>
             <Switch>
                 <LoginRoute exact path='/' props={props} component={Landing}/>
-                <LoginRoute exact path='/login' props={props} component={signup}/>
                 <ProfileRoute exact path='/profile' props={props} component={Profile}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
