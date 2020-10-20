@@ -7,6 +7,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
     const givenUser = req.params.username;
 
     Profile.find({username: givenUser})
+        .select('username fullName DOB email phone picture about')
         .exec()
         .then(userData => {
             console.log(userData);
