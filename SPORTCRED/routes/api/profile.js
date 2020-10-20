@@ -14,12 +14,11 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const profile = new Profile({
         username: req.body.username,
+        fullName: req.body.fullName,
+        dateOfBirth: req.body.dateOfBirth,
         phone: req.body.phone,
         email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        DOB: req.body.DOB,
-        picture: req.body.picture,
+        userIcon: req.body.userIcon,
         about: req.body.about
     })
     profile.save()
@@ -71,7 +70,7 @@ router.put('/setUserProfile/:username', (req, res, next) => {
             }
 
             // Check for properly formatted DD/MM/YYYY format in DOB request
-            if(key == "DOB") {
+            if(key == "dateOfBirth") {
                 console.log("DOB validation")
                 if(!req.body[key].match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
                     return res.status(400).json({
@@ -154,40 +153,17 @@ router.put('/updateEmail/:username', (req, res, next) => {
         });
 });
 
-router.put('/updateFirstName/:username', (req, res, next) => {
-    console.log("Hitting update first name endpt with id " + req.params.username)
+router.put('/updateFullName/:username', (req, res, next) => {
+    console.log("Hitting update full name endpt with id " + req.params.username)
 
     // If firstName key is not in JSON body then return 400 status
-    if ((typeof req.body.firstName) === 'undefined') {
+    if ((typeof req.body.fullName) === 'undefined') {
         res.status(400).json({
             error: error
         })
     }
 
-    Profile.updateOne({ username: req.params.username }, { firstName: req.body.firstName })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
-
-router.put('/updateLastName/:username', (req, res, next) => {
-    console.log("Hitting update last name endpt with id " + req.params.username)
-
-    // If lastName key is not in JSON body then return 400 status
-    if ((typeof req.body.lastName) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
-
-    Profile.updateOne({ username: req.params.username }, { lastName: req.body.lastName })
+    Profile.updateOne({ username: req.params.username }, { fullName: req.body.fullName })
         .then(() => {
             res.status(200).json({
                 message: 'updated successfully'
@@ -210,7 +186,7 @@ router.put('/updateDOB/:username', (req, res, next) => {
         })
     }
 
-    Profile.updateOne({ username: req.params.username }, { DOB: req.body.DOB })
+    Profile.updateOne({ username: req.params.username }, { dateOfBirth: req.body.dateOfBirth })
         .then(() => {
             res.status(200).json({
                 message: 'updated successfully'
@@ -233,7 +209,7 @@ router.put('/updatePicture/:username', (req, res, next) => {
         })
     }
 
-    Profile.updateOne({ username: req.params.username }, { picture: req.body.picture })
+    Profile.updateOne({ username: req.params.username }, { userIcon: req.body.userIcon })
         .then(() => {
             res.status(200).json({
                 message: 'updated successfully'
