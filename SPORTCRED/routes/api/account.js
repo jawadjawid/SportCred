@@ -44,6 +44,28 @@ router.get('/questionnaire', (req,res)=>{
 
 
 
+router.put('/questionnaire', (req,res)=>{
+    // updates how ever many answers provided
+    if(req.body.a1 != undefined) Questionnaire.updateOne({username:req.body.username},{a1: req.body.a1}).then();
+    if(req.body.a2 != undefined) Questionnaire.updateOne({username:req.body.username},{a2: req.body.a2}).then();
+    if(req.body.a3 != undefined) Questionnaire.updateOne({username:req.body.username},{a3: req.body.a3}).then();
+    if(req.body.a4 != undefined) Questionnaire.updateOne({username:req.body.username},{a4: req.body.a4}).then();
+    if(req.body.a5 != undefined) Questionnaire.updateOne({username:req.body.username},{a5: req.body.a5}).then();
+
+    Questionnaire.find({username:req.body.username})
+    .then(data => {
+        if (data.length == 0){
+             res.status(400).json({message:"This username does not exist"})
+        }else res.status(200).json(data)})
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({
+            error: error
+        });
+    });
+});
+
+
 router.put('/', (req, res) => {
     // checks if account exists with username and password
 
