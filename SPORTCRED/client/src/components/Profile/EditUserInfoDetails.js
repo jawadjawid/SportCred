@@ -9,6 +9,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import EditableUserInfoItem from "./EditableUserInfoItem";
+import {setUserProfile} from "../../backendConnector/profile";
 
 
 
@@ -89,6 +90,7 @@ class EditUserInfoDetails extends React.Component {
         const info = JSON.parse(JSON.stringify(this.state.info));
         this.setState({'backUp':info});
         this.props.setProfileState({userBackground: info});
+        setUserProfile(info.username,info,'editUserInfo')
         this.props.close();
     }
 

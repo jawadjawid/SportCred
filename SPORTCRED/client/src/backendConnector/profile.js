@@ -70,18 +70,37 @@ export const getUserProfile = async (username, currPage) => {
 
 };
 
-export const setUserProfile = async (username, profile) => {
-
-    const dataToSet = {
-        username:profile.state.userBackground.username,
-        fullName:profile.state.userBackground.fullName,
-        dateOfBirth:profile.state.userBackground.dateOfBirth,
-        email:profile.state.userBackground.email,
-        userIcon:profile.state.userIcon,
-        acsScore:profile.state.acsScore,
-        acsHistoryReport: profile.state.acsHistoryReport,
-        friends:profile.state.friends
+const setData = (profile,source) => {
+    switch(String(source)){
+        case 'editUserInfo':
+            // update only main user info and questionnaire
+            return {
+                fullName:profile.fullName,
+                dateOfBirth:profile.dateOfBirth,
+                email:profile.email
+            }
+        case 'iconUpload':
+            // profile pic udpated
+            return {
+                userIcon:profile.formDate
+            }
+        default:
+            // update everything
+            return {
+                username: profile.userBackground.username,
+                fullName: profile.userBackground.fullName,
+                dateOfBirth: profile.userBackground.dateOfBirth,
+                email: profile.userBackground.email,
+                userIcon: profile.userIcon,
+                acsScore: profile.acsScore,
+                acsHistoryReport: profile.acsHistoryReport,
+                friends: profile.friends
+            }
     }
+}
+
+export const setUserProfile = async (username, profile,source) => {
+    const dataToSet = setData(profile,source)
 
     axios.post('http://localhost:5000/api/setUserProfile/' + username, dataToSet)
         .then(res => {

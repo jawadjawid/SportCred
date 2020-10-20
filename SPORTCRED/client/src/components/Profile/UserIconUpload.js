@@ -71,7 +71,7 @@ const UserIconUpload = (props) => {
 
     const save = () => {
         props.close();
-        setUserProfile(props.username, {userIcon:image.formData});
+        setUserProfile(props.username, {userIcon:image.formData},'iconUpload');
         props.setImgSrc(image.url);
         setImage({url:'',formData: new FormData()});
     }

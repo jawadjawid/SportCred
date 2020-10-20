@@ -117,8 +117,7 @@ class Profile extends React.Component {
             this.setState({userBackground:copy}, () => {
                 console.log(info);
                 console.log(this.state);
-                setUserProfile(this.state.userBackground["Username"],this.state);
-            });
+                });
         }
 
         return (<div className={classes.Background}>

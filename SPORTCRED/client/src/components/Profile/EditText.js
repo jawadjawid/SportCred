@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import {validate} from "./util";
 
 export default class EditableText extends React.Component{
     constructor(props){
@@ -11,20 +12,6 @@ export default class EditableText extends React.Component{
             error:false,
             errorMsg:''
         }
-    }
-
-    validate(e){
-        const value = e.target.value;
-        const currErrorValue = this.state.error;
-
-        if(value.localeCompare('')===0){
-            this.setState({error:true, errorMsg:'Do not leave fields empty'},() => {
-                if(currErrorValue !== this.state.error)
-                    this.props.validationForSave(this.props.prompt,this.state.error);
-            });
-            return false;
-        }
-        return true;
     }
 
     render() {
@@ -54,14 +41,7 @@ export default class EditableText extends React.Component{
                     }
                 }}
                 onBlur={event=>{
-                    if(this.validate(event)){
-                        const currErrorValue = this.state.error;
-                        this.setState({edit:false,error:false,errorMsg:''},()=>{
-                            if(currErrorValue !== this.state.error)
-                                this.props.validationForSave(this.props.prompt,this.state.error);
-                        })
-                        this.state.setAnswer(this.state.value);
-                    }
+                    validate(event.target.value,this);
                 }}
 
             />
