@@ -6,6 +6,12 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
+    MuiButton: {
+        focused: {
+            color: '0px solid #4A90E2',
+            outline: 'none'
+        }
+    },
     palette: {
         quinary:{
             main: '#FFE400'
@@ -30,7 +36,20 @@ const theme = createMuiTheme({
         fontFamily: {
           main:"Calibri",
           secondary:'Verdana',
+        }, h1: {
+            fontSize: '1.5rem',
+            marginBottom: '1.0rem'
         },
+        h2: {
+            fontSize: '1.5rem'
+        },
+        h3:{
+            fontSize:'1.2rem'
+        },
+        h4:{
+            fontSize:'1.5rem'
+        },
+
       }
 });
 
