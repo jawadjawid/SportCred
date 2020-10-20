@@ -1,19 +1,15 @@
 import React from 'react';
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {Avatar, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import {FixedSizeList} from "react-window";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import {CloudUpload, Image} from "@material-ui/icons";
+import {CloudUpload} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
-import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
 import UserIcon from "./UserIcon";
-import ListItem from "@material-ui/core/ListItem";
-import UserIconEditable from "./UserIconEditable";
 import {setUserProfile} from "../../backendConnector/profile";
 
 

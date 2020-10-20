@@ -6,10 +6,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList } from 'react-window';
 import UserIcon from "./UserIcon";
-import Divider from "@material-ui/core/Divider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import PersonIcon from '@material-ui/icons/Person';
 
 const theme = createMuiTheme({
     props: {
