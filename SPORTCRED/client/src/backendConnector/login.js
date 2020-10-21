@@ -1,6 +1,6 @@
 
 export const readCookie = (app) => {
-    const url = '/api/check-session';
+    const url = 'http://localhost:5000/api/profile/check-session';
   
     fetch(url)
       .then(res => {
@@ -12,7 +12,7 @@ export const readCookie = (app) => {
         if (json && json.currentUser) {
           app.setState({
             currentUser: json.currentUser,
-            userType: json.userType,
+            
             isLoggedIn: true,
             isReadingCookie: false
           });
@@ -42,25 +42,28 @@ export const login = (loginComp, app) => {
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
       }
     });
-  
     // Send the request with fetch()
-    fetch(request)
+    fetch(request,loginComp.state)
       .then(res => {
         return res.json();
       })
       .then(json => {
-        if (json.message !== undefined) {
+        if (json.message !== 'login successfull') {
           loginComp.setState({
             displayError: true,
             errorMessage: json.message
           });
+          console.log('here')
         } else {
+            console.log('loginsucess')
+            console.log(json.message)
           app.setState({
-            currentUser: json.currentUser,
-            userType: json.userType,
+            currentUser:loginComp.state.username,
             isLoggedIn: true,
             isReadingCookie: false
           });
+          console.log(app);
+          console.log(app.state.currentUser);
         }
       })
       .catch(error => {

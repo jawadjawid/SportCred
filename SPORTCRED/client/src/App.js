@@ -4,6 +4,7 @@ import './App.css';
 import Routes from './Routes';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
+import { readCookie } from './backendConnector/login';
 
 const theme = createMuiTheme({
     MuiButton: {
@@ -58,10 +59,11 @@ const theme = createMuiTheme({
 class App extends React.Component {
 
     componentDidMount() {
-        if (!['/'].includes(window.location.pathname)) {
+          if (!['/login'].includes(window.location.pathname)) {
           readCookie(this);
-        }
-      }
+         }
+      
+    }
     
       state = {
         currentUser: null,

@@ -25,10 +25,6 @@ router.post('/login', (req, res) => {
             res.status(200).json({
                 message: "login successfull"
             });
-        }else {
-            res.status(400).json({
-                message: "this means duplicate usernames exists!!!"
-            });
         }
     });
 });
@@ -327,4 +323,16 @@ router.put('/updateAbout/:username', (req, res, next) => {
         });
 });
 
+
+// A route to check if a use is logged in on the session cookie
+router.get('/check-session', (req, res) => {
+    const { username, isLoggedIn } = req.session;
+  
+    if (isLoggedIn) {
+      res.send({ currentUser: username, userType: userType });
+    } else {
+      res.status(401).send();
+    }
+  });
+  
 module.exports = router;
