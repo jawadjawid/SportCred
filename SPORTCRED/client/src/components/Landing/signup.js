@@ -34,7 +34,6 @@ class Signup extends React.Component{
       "about": "",
       "questionnaire":{
         "favSport": "",
-        "age": "",
         "levelPlayed": "",
         "sportToLearn": "",
         "favTeam": ""
@@ -42,11 +41,32 @@ class Signup extends React.Component{
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.verifyEmail = this.verifyEmail.bind(this);
+
+    this.handleQuestionnaireChange = this.handleQuestionnaireChange.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleQuestionnaireChange(event) {
+    this.setState({
+      questionnaire: Object.assign({}, this.state.questionnaire, {[event.target.name]: event.target.value})
+    });  }
+
+  verifyEmail(email) {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if ( re.test(email) ) {
+      // this is a valid email address
+      // call setState({email: email}) to update the email
+      // or update the data in redux store.
+    }
+    else {
+      console.log('I was triggered during componentDidMount')
+    }
   }
 
   handleSubmit(event) {
@@ -110,6 +130,7 @@ class Signup extends React.Component{
                 name="email"
                 autoComplete="email"
                 value={this.state.email}
+                onChange={this.verifyEmail}
                 onChange={this.handleChange}
               />
             </Grid>
@@ -136,7 +157,6 @@ class Signup extends React.Component{
                   id="dateOfBirth"
                   name="DOB"
                   type='date'
-                  defaultValue='sad'
                   value={this.state.DOB}
                   onChange={this.handleChange}
               />
@@ -151,6 +171,50 @@ class Signup extends React.Component{
                   id="phone"
                   value={this.state.phone}
                   onChange={this.handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="favSport"
+                  label="Favourite Sport"
+                  fullWidth
+                  id="favSport"
+                  value={this.state.questionnaire.favSport}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="levelPlayed"
+                  label="Level Played"
+                  fullWidth
+                  id="levelPlayed"
+                  value={this.state.questionnaire.levelPlayed}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="sportToLearn"
+                  label="Sport To Learn"
+                  fullWidth
+                  id="sportToLearn"
+                  value={this.state.questionnaire.sportToLearn}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="favTeam"
+                  label="Favourite Team"
+                  fullWidth
+                  id="favTeam"
+                  value={this.state.questionnaire.favTeam}
+                  onChange={this.handleQuestionnaireChange}
               />
             </Grid>
           </Grid>
