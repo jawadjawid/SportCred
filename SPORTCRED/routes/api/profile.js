@@ -63,11 +63,7 @@ router.post('/signup', (req, res) => {
         email: req.body.email,
         userIcon: req.body.userIcon,
         about: req.body.about,
-        "questionnaire.favSport": req.body.questionnaire.favSport,
-        "questionnaire.age": req.body.questionnaire.age,
-        "questionnaire.levelPlayed": req.body.questionnaire.levelPlayed,
-        "questionnaire.sportToLearn": req.body.questionnaire.sportToLearn,
-        "questionnaire.favTeam": req.body.questionnaire.favTeam
+        questionnaire: req.body.questionnaire
     })
     profile.save()
         .then(data => res.json(data))
