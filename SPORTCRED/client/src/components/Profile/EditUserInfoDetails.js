@@ -16,37 +16,15 @@ import {createMuiTheme} from "@material-ui/core/styles";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
 const theme1 = createMuiTheme({
-    overrides:{
-        ".MuiDialog":{
-            root:{
-                backgroundColor:'black'
-            }
-        }
-    },
     palette: {
         background:{
             default:'#61892f',
             paper:'#1f1f1d'
         },
-        quinary:{
-            main: '#FFE400'
-        },
-        quaternary:{
-            main: '#14A76C'
-        },
-        tertiary:{
-            //light green
-            main: '#bee500'
-        },
         secondary:  {
             //orange
             main: '#61892f',
             dark:'#61892f'},
-        primary: {
-            //black primary
-            dark:'#ff0000',
-            main:'#ff0000'
-        },
         type:'dark'
     },
     typography: {
