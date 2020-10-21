@@ -62,7 +62,7 @@ router.post('/signup', (req, res) => {
         phone: req.body.phone,
         email: req.body.email,
         userIcon: req.body.userIcon,
-        about: req.body.about
+        about: req.body.about,
         "questionnaire.favSport": req.body.questionnaire.favSport,
         "questionnaire.age": req.body.questionnaire.age,
         "questionnaire.levelPlayed": req.body.questionnaire.levelPlayed,
