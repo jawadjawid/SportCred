@@ -14,14 +14,40 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {style} from './style';
 import {withStyles} from '@material-ui/core';
+import { register } from '../../backendConnector/signup';
 
 import { withRouter } from 'react-router-dom';
 
 class Signup extends React.Component{
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      fullName: '',
+      dateOfBirth: '',
+      phone: '',
+      email: '',
+      userIcon: '',
+      about: '',
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+    register(this.state).then(r => "");
+  }
+
   render(){
-    const { classes } = this.props;
-    const { username, email, password, confirmPassword, registerAs, displayError, errorMessage } = this.props;
+    const { classes} = this.props;
 
     return (
       <React.Fragment>
@@ -34,9 +60,20 @@ class Signup extends React.Component{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
+              <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="username"
+                  label="User Name"
+                  name="username"
+                  autoComplete="uname"
+              />
+            </Grid>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -46,17 +83,8 @@ class Signup extends React.Component{
                 id="firstName"
                 label="First Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                value={this.state.fullName}
+                onChange={this.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -65,13 +93,11 @@ class Signup extends React.Component{
                 required
                 fullWidth
                 id="email"
-                displayError={displayError}
+               // displayError={displayError}
                 type="email"
-
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                helperText="dsa"
               />
             </Grid>
             <Grid item xs={12}>
@@ -86,10 +112,15 @@ class Signup extends React.Component{
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+            <Grid item xs={12} sm={6}>
+              <a>Birth</a>
+              <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  type='date'
               />
             </Grid>
           </Grid>
@@ -101,14 +132,7 @@ class Signup extends React.Component{
             className={classes.submit}
           >
             Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
+          </Button >
         </form>
       </div>
       <Box mt={5}>
