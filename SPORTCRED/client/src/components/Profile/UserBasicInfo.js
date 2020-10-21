@@ -14,6 +14,12 @@ export default class UserBasicInfo extends React.Component{
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userIcon !== this.state.imgSrc) {
+            this.setState({imgSrc:nextProps.userIcon});
+        }
+    }
+
     render(){
         const setImgSrc = (src) => {
             this.setState({imgSrc:src});

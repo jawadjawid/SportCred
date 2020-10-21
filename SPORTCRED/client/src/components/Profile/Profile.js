@@ -21,9 +21,9 @@ import ListItem from "@material-ui/core/ListItem";
 class Profile extends React.Component {
 
     state = {
-        userIcon:"https://material-ui.com/static/images/avatar/1.jpg",
-        about:"i like to dance",
-        phone:"649-352-4623",
+        userIcon:"",
+        about:"",
+        phone:"",
         friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
             {"fullName": "John Doe", "username": "hi142"},
             {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
@@ -35,7 +35,7 @@ class Profile extends React.Component {
             {"fullName": "Albert Liu", "username": "alberto"},
             {"fullName": "Mohammad Sajjad", "username": "mohao"}
         ],
-        acsScore:"35",
+        acsScore:"",
         acsHistoryReport:[{
             "acsStart":"35",
             "acsEnd":"41",
@@ -55,7 +55,7 @@ class Profile extends React.Component {
         userBackground: [
             {"username":"bobby123"},
             {"about": "Im dumb"},
-            {"fullname": "Bob Thisismylastnamehaha"},
+            {"fullName": "Bob Thisismylastnamehaha"},
             {"dateOfBirth":"02/03/2000"},
             {"email": "bobbybobbob@ilikeball.com"},
             {"phone":"sdjjsljdf"},
@@ -68,7 +68,7 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-        getUserProfile(this.props.currentUser,this);
+        getUserProfile('holeesin',this);
     }
 
     render() {

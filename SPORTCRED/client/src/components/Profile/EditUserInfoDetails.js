@@ -164,7 +164,7 @@ class EditUserInfoDetails extends React.Component {
 
     save = async () => {
         const info = JSON.parse(JSON.stringify(this.state.info));
-        const ha = await setUserProfile(info,info[1]["username"] ,'editUserInfo');
+        const ha = await setUserProfile(info,info[0]["username"] ,'editUserInfo');
         if (ha === true) {
             this.setState({'backUp': info});
             this.props.setProfileState({userBackground: info});

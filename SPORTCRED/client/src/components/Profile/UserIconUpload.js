@@ -29,7 +29,8 @@ const UserIconUpload = (props) => {
     const preview = async (file) => {
         const formData = new FormData()
 
-        formData.append('userIcon',file);
+        formData.append('file',file);
+        formData.append("upload_preset","t42pg7vu");
         setImage({url: (await readURL(file)),formData: formData});
         setUploading(false);
     };

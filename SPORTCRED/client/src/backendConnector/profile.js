@@ -4,7 +4,6 @@ import {mapQuestionnairePromptToDBKey} from "../components/Profile/util";
 export const getUserProfile = async (username, currPage) => {
 
     axios.get('http://localhost:5000/api/profile/getUserProfile/'+ username).then((res) => {
-        return res.data[0];
             if(res.status === 200) {
                 return res.data[0];
             }
@@ -41,15 +40,11 @@ export const getUserProfile = async (username, currPage) => {
                         "date":"Oct 3"
                     }],
                     userBackground: createUserBackground(data)
-                },()=>{
-                    console.log(data);
-                    console.log(currPage.state);
-                }
-
-            );
-            currPage.setState(data)
+                });
+        return true;
     }).catch(error => {
         alert('Something went wrong. Please Try again Later.')
+        return false;
     });
 
     const createUserBackground = (data) => {
@@ -72,39 +67,43 @@ const createQuestionnaireToSendToDB = (profile) => {
     return questionnaire;
 }
 
-const setData = (data,source) => {
-    switch(String(source)){
+const setData = async (data, source) => {
+    switch (String(source)) {
         case 'editUserInfo':
             // update only main user info and questionnaire
             return {
-                about:data[1]["about"],
-                fullName:data[2]["fullName"],
-                dateOfBirth:data[3]["dateOfBirth"],
-                email:data[4]["email"],
-                phone:data[5]["phone"],
-                questionnaire:createQuestionnaireToSendToDB(data)
+                about: data[1]["about"],
+                fullName: data[2]["fullName"],
+                dateOfBirth: data[3]["dateOfBirth"],
+                email: data[4]["email"],
+                phone: data[5]["phone"],
+                questionnaire: createQuestionnaireToSendToDB(data)
             }
         case 'iconUpload':
             // profile pic updated
+            const pic = await axios.post('https://api.cloudinary.com/v1_1/dhdevhapy/image/upload', data.userIcon
+            ).then(res => {
+                return res.data;
+            })
             return {
-                userIcon:data.userIcon
+                userIcon: pic.url
             }
         default:
             // update everything
             return {
-                about:data[1]["about"],
-                fullName:data[2]["fullName"],
-                dateOfBirth:data[3]["dateOfBirth"],
-                email:data[4]["email"],
-                phone:data[5]["phone"],
-                questionnaire:createQuestionnaireToSendToDB(data)
+                about: data[1]["about"],
+                fullName: data[2]["fullName"],
+                dateOfBirth: data[3]["dateOfBirth"],
+                email: data[4]["email"],
+                phone: data[5]["phone"],
+                questionnaire: createQuestionnaireToSendToDB(data)
             }
     }
 }
 
 export const setUserProfile = async (data,username,source) => {
-    const dataToSet = setData(data,source);
-
+    const dataToSet = await setData(data,source);
+    console.log(dataToSet.userIcon);
     const promise = axios.put('http://localhost:5000/api/profile/setUserProfile/' + username, dataToSet)
         .then(res => {
             if(res.status === 200) return res.data;
