@@ -15,6 +15,7 @@ import {withRouter} from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import NavBar from "./NavBar";
 
 class Profile extends React.Component {
 
@@ -83,8 +84,7 @@ class Profile extends React.Component {
         }
 
         return (<div className={classes.Background}>
-                <AppBar position="static" className={classes.AppBar}>
-                </AppBar>
+                    <NavBar/>
                 <CssBaseline/>
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
