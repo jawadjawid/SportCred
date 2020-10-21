@@ -1,27 +1,40 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const uniqueValidator = require('mongoose-unique-validator');
+
 
 const ProfileSchema = new Schema({
     username: {
-        type: String
+        type: String,
+        unique: true,
+        trim: true,
+        required: true
     },
     password:{
-        type: String
+        type: String,
+        minLength: 8,
+        required: true
     },
     phone: {
         type: String,
-        match: /^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/
+        unique: true,
+        match: /^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/,
+        required: true
     },
     email: {
         type: String,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        unique: true,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        required: true
     },
     fullName: {
-        type: String
+        type: String,
+        required: true
     },
     dateOfBirth: {
         type: String,
-        match: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+        match: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+        required: true
     },
     userIcon: {
         type: String
@@ -31,9 +44,6 @@ const ProfileSchema = new Schema({
     },
     questionnaire: {
         favSport:{
-            type: String
-        },
-        age:{
             type: String
         },
         levelPlayed:{
@@ -55,5 +65,7 @@ const ProfileSchema = new Schema({
         ref: "Posts"
     }]  
 });
+
+ProfileSchema.plugin(uniqueValidator);
 
 module.exports = Profile = mongoose.model('profiles', ProfileSchema);
