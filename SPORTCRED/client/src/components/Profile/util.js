@@ -6,12 +6,16 @@ export const validate = (value,editText)=>{
         return invalid(editText,currErrorValue, 'Do not leave field empty',editText.props.validationForSave);
     }
 
-    if("Email".localeCompare(prompt) === 0 && !value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)){
+    if("email".localeCompare(prompt) === 0 && !value.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)){
         return invalid(editText,currErrorValue, 'Please enter valid email',editText.props.validationForSave);
     }
 
-    if("Date of Birth".localeCompare(prompt) === 0 && !value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
+    if("dateOfBirth".localeCompare(prompt) === 0 && !value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
         return invalid(editText,currErrorValue, 'Please enter valid date of birth',editText.props.validationForSave);
+    }
+
+    if("phone".localeCompare(prompt) === 0 && !value.match(/^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/)){
+        return invalid(editText,currErrorValue, 'Please enter valid phone number',editText.props.validationForSave);
     }
 
     editText.setState({edit:false,error:false,errorMsg:''},()=>{
