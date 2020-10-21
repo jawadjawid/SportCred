@@ -76,9 +76,6 @@ const theme1 = createMuiTheme({
 });
 
 class EditUserInfoDetails extends React.Component {
-
-
-
     constructor(props) {
         super(props);
         let errorsSetup = []
@@ -92,6 +89,15 @@ class EditUserInfoDetails extends React.Component {
             errors: errorsSetup
 
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.info !== this.state.info) {
+            this.setState({info:nextProps.info});
+        }
+    }
+
+    componentDidMount() {
     }
 
     basicInfo = [];
@@ -157,7 +163,7 @@ class EditUserInfoDetails extends React.Component {
         const info = JSON.parse(JSON.stringify(this.state.info));
         this.setState({'backUp': info});
         this.props.setProfileState({userBackground: info});
-        setUserProfile(info.Username, info, 'editUserInfo')
+        setUserProfile(info, 'editUserInfo');
         this.props.close();
     }
 

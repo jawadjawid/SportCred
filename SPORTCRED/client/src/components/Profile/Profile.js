@@ -22,6 +22,8 @@ class Profile extends React.Component {
 
     state = {
         userIcon:"https://material-ui.com/static/images/avatar/1.jpg",
+        about:"i like to dance",
+        phone:"649-352-4623",
         friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
             {"fullName": "John Doe", "username": "hi142"},
             {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
@@ -54,7 +56,7 @@ class Profile extends React.Component {
             {"username":"bobby123"},
             {"about": "Im dumb"},
             {"fullname": "Bob Thisismylastnamehaha"},
-            {"DOB":"02/03/2000"},
+            {"dateOfBirth":"02/03/2000"},
             {"email": "bobbybobbob@ilikeball.com"},
             {"phone":"sdjjsljdf"},
             {"favSport": "Basketball"},
@@ -66,9 +68,8 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-        getUserProfile("ilir123",this);
+        getUserProfile('holeesin',this);
     }
-
 
     render() {
         const {classes} = this.props;
@@ -90,7 +91,7 @@ class Profile extends React.Component {
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
                     <Grid item xs={3} className={classes.GridItemLeft}>
-                        <UserBasicInfo fullName={this.state.userBackground[1]["Full Name"]} username={this.state.userBackground[0]["Username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                        <UserBasicInfo fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
                         <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
                         <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
                         <FriendLineUp friends={this.state.friends}/>

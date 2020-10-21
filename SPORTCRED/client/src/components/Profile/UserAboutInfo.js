@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import {Button} from "@material-ui/core";
@@ -22,6 +22,10 @@ const UserAboutInfo = (props) => {
         setOpen(false);
     };
 
+    useEffect(() => {
+       setBackground(props.background);
+    });
+
     const {classes} = props;
 
     return (
@@ -35,7 +39,7 @@ const UserAboutInfo = (props) => {
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
                 <Typography><EmojiEmotions style={{'margin-right':'5px'}}/> {background[2]["fullname"]}</Typography>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
-                <Typography><Cake style={{'margin-right':'10px'}}/>{background[3]["DOB"]}</Typography>
+                <Typography><Cake style={{'margin-right':'10px'}}/>{background[3]["dateOfBirth"]}</Typography>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
                 <Typography><Email style={{'margin-right':'10px'}}/>{background[4]["email"]}</Typography>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
