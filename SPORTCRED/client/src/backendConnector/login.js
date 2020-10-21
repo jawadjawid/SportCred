@@ -1,19 +1,36 @@
-import axios from 'axios';
-// A function to send a POST request to login
 
-// let config = {
-//     headers: {
-//       header1: value,
-//     }
-//   }
+export const readCookie = (app) => {
+    const url = '/api/check-session';
+  
+    fetch(url)
+      .then(res => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then(json => {
+        if (json && json.currentUser) {
+          app.setState({
+            currentUser: json.currentUser,
+            userType: json.userType,
+            isLoggedIn: true,
+            isReadingCookie: false
+          });
+        } else {
+          app.setState({
+            isReadingCookie: false
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
 
-// export const login = async (userModel) => {
-//     axios.get('http://localhost:5000/api/profile/login', userModel)
-//         .then(res => console.log(res.data));
-// };
 
 
-// A function to send a POST request with the user to be logged in
+
 export const login = (loginComp, app) => {
     const request = new Request('http://localhost:5000/api/profile/login', {
       method: 'post',

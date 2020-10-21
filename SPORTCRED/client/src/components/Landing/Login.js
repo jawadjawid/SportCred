@@ -74,13 +74,17 @@ class Login extends React.Component{
         </Typography>
         <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-            <TextField
+          <Grid item xs={20}>
+          <TextField className={classes.Errorlabel}
             value={this.state.errorMessage}
             onChange={event => this.setState({ text: event.target.value })}
             error={displayError}
-            helperText={displayError ? 'Empty!' : ' '}
+            helperText={displayError ? 'Error!' : ' '}
+            InputProps={{ disableUnderline: true }}
             />
+            </Grid>
+            <Grid item xs={12}>
+            
               <TextField
                   autoComplete="uname"
                   name="username"

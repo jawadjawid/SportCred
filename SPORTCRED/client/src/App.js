@@ -57,9 +57,18 @@ const theme = createMuiTheme({
 
 class App extends React.Component {
 
-    state = {
-        currentUser: null
-    };
+    componentDidMount() {
+        if (!['/'].includes(window.location.pathname)) {
+          readCookie(this);
+        }
+      }
+    
+      state = {
+        currentUser: null,
+        userType: null,
+        isLoggedIn: false,
+        isReadingCookie: true
+      };
 
     render() {
         return (
