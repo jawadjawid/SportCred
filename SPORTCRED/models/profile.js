@@ -5,6 +5,9 @@ const ProfileSchema = new Schema({
     username: {
         type: String
     },
+    password:{
+        type: String
+    },
     phone: {
         type: String
     },
@@ -26,8 +29,21 @@ const ProfileSchema = new Schema({
         type: String
     },
     questionnaire: {
-        type: Schema.Types.ObjectId,
-        ref: 'Questionnaire'
+        favSport:{
+            type: String
+        },
+        age:{
+            type: String
+        },
+        levelPlayed:{
+            type: String
+        },
+        sportToLearn: {
+            type: String
+        },
+        favTeam:{
+            type: String
+        }
     },
     ACSmetrics: {
         type: Schema.Types.ObjectId,
