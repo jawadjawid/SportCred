@@ -99,8 +99,8 @@ class EditUserInfoDetails extends React.Component {
 
     mainSetup = () => {
         if (this.state.info.length > 0) {
-            this.basicInfo = this.state.info.slice(1, 4);
-            this.additionalInfo = this.state.info.slice(4, this.state.info.length);
+            this.basicInfo = this.state.info.slice(1, 6);
+            this.additionalInfo = this.state.info.slice(6, this.state.info.length);
         }
 
     };

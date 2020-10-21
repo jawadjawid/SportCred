@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {mapQuestionnairePromptToDBKey} from "../components/Profile/util";
 // A function to send a POST request with the new user info
 export const getUserProfile = async (username, currPage) => {
 
@@ -20,7 +21,7 @@ export const getUserProfile = async (username, currPage) => {
 
     const createUserBackground = (data) => {
         // assuming questionnaire is an array
-        return [{"Username":data.username},{"Full Name":data.fullName},{"Date of Birth":data.DOB},{"Email":data.email}].concat(data.questionnaire);
+        return [{"Username":data.username},{"About":data.about},{"Full Name":data.fullname},{"Date of Birth":data.dateOfBirth},{"Email":data.email},{"Phone Number":data.phone}].concat(data.questionnaire);
     }
 
     // currPage.setState({
@@ -70,14 +71,26 @@ export const getUserProfile = async (username, currPage) => {
 
 };
 
+const createQuestionnaire = (profile) => {
+     let questionnaire ={};
+    for(let i = 6; i < 11; i++){
+        const key = Object.keys(profile[i])
+        questionnaire[key] = profile[i][key];
+    }
+    return questionnaire;
+}
+
 const setData = (profile,source) => {
     switch(String(source)){
         case 'editUserInfo':
             // update only main user info and questionnaire
             return {
-                fullName:profile[1]["Full Name"],
-                dateOfBirth:profile[2]["Date of Birth"],
-                email:profile[3]["Email"]
+                about:profile[1]["about"],
+                fullName:profile[2]["fullname"],
+                dateOfBirth:profile[3]["DOB"],
+                email:profile[4]["email"],
+                phone:profile[5]["phone"],
+                questionnaire:createQuestionnaire(profile)
             }
         case 'iconUpload':
             // profile pic updated
@@ -87,14 +100,12 @@ const setData = (profile,source) => {
         default:
             // update everything
             return {
-                username: profile.userBackground.username,
-                fullName: profile.userBackground.fullName,
-                dateOfBirth: profile.userBackground.dateOfBirth,
-                email: profile.userBackground.email,
-                userIcon: profile.userIcon,
-                acsScore: profile.acsScore,
-                acsHistoryReport: profile.acsHistoryReport,
-                friends: profile.friends
+                about:profile[1]["About"],
+                fullName:profile[2]["Full Name"],
+                dateOfBirth:profile[3]["Date of Birth"],
+                email:profile[4]["Email"],
+                phone:profile[5]["Phone Number"],
+                questionnaire:createQuestionnaire(profile)
             }
     }
 }
@@ -107,9 +118,6 @@ export const setUserProfile = async (username, profile,source) => {
             if(res.status === 200) return res.data;
         }).then(data => {
     });
-    console.log('setting user profile');
-    console.log(username);
-    console.log(profile);
 
     // currPage.setState({
     //     info: [

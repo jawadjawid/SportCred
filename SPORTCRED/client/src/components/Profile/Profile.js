@@ -51,15 +51,17 @@ class Profile extends React.Component {
             "date":"Oct 3"
         }],
         userBackground: [
-            {"Username":"bobby123"},
-            {"Full Name": "Bob Thisismylastnamehaha"},
-            {"Date of Birth":"02/03/2000"},
-            {"Email": "bobbybobbob@ilikeball.com"},
-            {"Favorite Sport": "Basketball"},
-            {"Favorite Player": "Jamal Jamal"},
-            {"Favorite Team": "Miami Heat"},
-            {"Odd Sport":"cricket"},
-            {"Highest Level of Sports Played": "college"}
+            {"username":"bobby123"},
+            {"about": "Im dumb"},
+            {"fullname": "Bob Thisismylastnamehaha"},
+            {"DOB":"02/03/2000"},
+            {"email": "bobbybobbob@ilikeball.com"},
+            {"phone":"sdjjsljdf"},
+            {"favSport": "Basketball"},
+            {"age": "2"},
+            {"favTeam": "Miami Heat"},
+            {"sportToLearn":"cricket"},
+            {"levelPlayed": "college"}
         ]
     };
 

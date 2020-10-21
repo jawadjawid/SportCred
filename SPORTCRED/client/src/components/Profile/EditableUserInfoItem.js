@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid'
 import EditableText from "./EditText";
 import Typography from "@material-ui/core/Typography";
+import {mapDBKeyToQuestionnairePrompt} from "./util";
 
 
 export default function EditableUserInfoItem(props) {
@@ -15,7 +16,7 @@ export default function EditableUserInfoItem(props) {
 
         return <Grid container spacing={0}>
             <Grid item xs={6}><b>
-                <Typography variant="h4" style={{color:'#ece7e7'}}> {props.prompt}</Typography>
+                <Typography variant="h4" style={{color:'#ece7e7'}}> {mapDBKeyToQuestionnairePrompt[props.prompt]}</Typography>
             </b>
             </Grid>
             <Grid item xs={6}>

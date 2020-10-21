@@ -29,3 +29,31 @@ const invalid = (editText,currErrorValue, errorMsg,validationForSave) => {
     });
     return false
 }
+
+export const mapDBKeyToQuestionnairePrompt = {
+    "favSport":"Favourite Sport",
+    "age":"Age",
+    "levelPlayed":"Highest Level of Sports Played",
+    "sportToLearn":"Odd Sport",
+    "favTeam": "Favourite Team",
+    "username":"Username",
+    "phone":"Phone Number",
+    "email":"Email",
+    "fullname":"Full Name",
+    "DOB":"Date of Birth",
+    "about":"About"
+}
+
+export const mapQuestionnairePromptToDBKey = {
+    "Favourite Sport":"favSport",
+    "Age":"age",
+    "Highest Level of Sports Played":"levelPlayed",
+    "Odd Sport":"sportToLearn",
+"Favourite Team":"favTeam",
+    "Username":"username",
+    "Phone Number":"phone",
+    "Email":"email",
+    "Full Name":"fullname",
+    "Date of Birth":"DOB",
+    "About":"about"
+}
