@@ -102,7 +102,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
 
     Profile.find({username: givenUser})
         .select('username fullName dateOfBirth email phone userIcon ' +
-            'questionnaire.favSport questionnaire.age questionnaire.levelPlayed questionnaire.sportToLearn questionnaire.favTeam ACSmetrics about posts')
+            'questionnaire ACSmetrics about posts')
         .exec()
         .then(userData => {
             console.log(userData);
