@@ -2,19 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const QuestionnaireSchema = new Schema({
-    "Favourite Sport":{
+    username:{
         type: String
     },
-    "Age":{
+    favSport:{
         type: String
     },
-    "Highest level of sport play":{
+    age:{
         type: String
     },
-    "What sport would you like to know/learn about": {
+    levelPlayed:{
         type: String
     },
-    "Favourite sports team":{
+    sportToLearn: {
+        type: String
+    },
+    favTeam:{
         type: String
     }
 });
