@@ -18,9 +18,9 @@ export const getUserProfile = async (username, currPage) => {
             currPage.setState(data)
     });
 
-    const createUserBackground = () => {
+    const createUserBackground = (data) => {
         // assuming questionnaire is an array
-        return [{"Username":data.username},{"Full Name":data.fullName},{"Date of Birth":data.DOB},{"Email":email}].concat(questionnaire);
+        return [{"Username":data.username},{"Full Name":data.fullName},{"Date of Birth":data.DOB},{"Email":data.email}].concat(data.questionnaire);
     }
 
     // currPage.setState({
