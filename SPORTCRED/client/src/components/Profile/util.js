@@ -10,7 +10,7 @@ export const validate = (value,editText)=>{
         return invalid(editText,currErrorValue, 'Please enter valid email',editText.props.validationForSave);
     }
 
-    if("dateOfBirth".localeCompare(prompt) === 0 && !value.match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
+    if("dateOfBirth".localeCompare(prompt) === 0 && !value.match(/(\d{4})-(\d{2})-(\d{2})/)){
         return invalid(editText,currErrorValue, 'Please enter valid date of birth',editText.props.validationForSave);
     }
 
