@@ -5,8 +5,12 @@ const ProfileSchema = new Schema({
     username: {
         type: String
     },
-    phone: {
+    password:{
         type: String
+    },
+    phone: {
+        type: String,
+        match: /^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/
     },
     email: {
         type: String,
@@ -26,8 +30,21 @@ const ProfileSchema = new Schema({
         type: String
     },
     questionnaire: {
-        type: Schema.Types.ObjectId,
-        ref: 'Questionnaire'
+        favSport:{
+            type: String
+        },
+        age:{
+            type: String
+        },
+        levelPlayed:{
+            type: String
+        },
+        sportToLearn: {
+            type: String
+        },
+        favTeam:{
+            type: String
+        }
     },
     ACSmetrics: {
         type: Schema.Types.ObjectId,

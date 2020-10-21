@@ -5,21 +5,69 @@ const router = express.Router();
 const Profile = require('../../models/profile');
 
 
-router.get('/', (req, res) => {
+
+router.get('/login', (req, res) => {
+    // checks if account exists with username and password
+    var user = req.body.username;
+    var pass = req.body.password;
+    console.log(user+ "  " + pass);
+    Profile.find({username:user,password:pass})
+    .exec()
+    .then( accounts =>{
+        if (accounts.length == 0 ) {
+            res.status(404).json({
+                message: "username or password is incorrect"
+            });
+        }else if (accounts.length == 1 ) {
+            res.status(200).json({
+                message: "login successfull"
+            });
+        }else {
+            res.status(400).json({
+                message: "this means duplicate usernames exists!!!"
+            });
+        }
+    });
+});
+
+router.get('/:username', (req, res) => {
+    // gets a user's profile from username
+    // Note: Posts and ACS fields only show objectIds 
+    // (can't be accessed by front end using this request)
+
+    Profile.find({username:req.params.username})
+        .then(data => {
+            if (data.length == 0){
+                res.status(404).json({message:"This username does not exist"})
+           }else res.status(200).json(data)})
+           .catch(error => {
+            console.log(error)
+            res.status(500).json({error: error});
+         });
+});
+
+
+router.get('/all', (req, res) => {
     Profile.find()
         .sort({date: -1})
         .then(data => res.json(data));
 });
 
-router.post('/', (req, res) => {
+router.post('/signup', (req, res) => { 
     const profile = new Profile({
         username: req.body.username,
-        fullName: req.body.fullName,
+        password: req.body.password,
+		fullName: req.body.fullName,
         dateOfBirth: req.body.dateOfBirth,
         phone: req.body.phone,
         email: req.body.email,
         userIcon: req.body.userIcon,
-        about: req.body.about
+        about: req.body.about,
+        "questionnaire.favSport": req.body.questionnaire.favSport,
+        "questionnaire.age": req.body.questionnaire.age,
+        "questionnaire.levelPlayed": req.body.questionnaire.levelPlayed,
+        "questionnaire.sportToLearn": req.body.questionnaire.sportToLearn,
+        "questionnaire.favTeam": req.body.questionnaire.favTeam
     })
     profile.save()
         .then(data => res.json(data))
@@ -33,16 +81,43 @@ router.post('/', (req, res) => {
 
 router.delete('/:username', (req, res, next) => {
     Profile.deleteOne({ username: req.params.username})
-    .then(() => {
-        res.status(200).json({
-          message: 'Deleted!'
-        });
+    .then(data => {
+        if(data.n == 0 ){
+            console.log("no user deleted");
+            res.status(404).json(data);
+        }else{
+            console.log(" user was successfully deleted");
+            res.status(200).json(data);
+        }
       })
     .catch((error) => {
         res.status(400).json({
           error: error
         });
       });
+});
+
+router.get('/getUserProfile/:username', (req, res, next) => {
+    const givenUser = req.params.username;
+
+    Profile.find({username: givenUser})
+        .select('username fullName dateOfBirth email phone userIcon ' +
+            'questionnaire ACSmetrics about posts')
+        .exec()
+        .then(userData => {
+            console.log(userData);
+
+            if(userData) {
+                res.status(200).json(userData);
+            } else {
+                res.status(404).json({
+                    message: 'username not in database'});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
 });
 
 router.put('/setUserProfile/:username', (req, res, next) => {
@@ -75,6 +150,14 @@ router.put('/setUserProfile/:username', (req, res, next) => {
                 if(!req.body[key].match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
                     return res.status(400).json({
                         message: "DOB requires DD/MM/YYYY format"
+                    });
+                }
+            }
+            if(key == "phone") {
+                console.log("phone validation")
+                if(!req.body[key].match(/^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/)){
+                    return res.status(400).json({
+                        message: "phone required to be 10 digits long"
                     });
                 }
             }
