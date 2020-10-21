@@ -68,7 +68,7 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-        getUserProfile('holeesin',this);
+        getUserProfile(this.props.currentUser,this);
     }
 
     render() {
