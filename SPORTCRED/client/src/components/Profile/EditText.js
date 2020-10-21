@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import {validate} from "./util";
+import Typography from "@material-ui/core/Typography";
 
 export default class EditableText extends React.Component{
     constructor(props){

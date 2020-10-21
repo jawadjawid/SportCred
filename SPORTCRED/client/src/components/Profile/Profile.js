@@ -18,45 +18,6 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
-const theme1 = createMuiTheme({
-
-    palette: {
-        primary: {
-            light: '#6b6e70',
-            main: '#474b4f',
-            dark: '#222629',
-            contrastText: '#fff',
-        },
-        secondary: {
-            light: '#86c232',
-            main: '#61892f',
-            dark: '#222629',
-            contrastText: '#fff',
-        },
-        type: 'dark'
-    }, typography: {
-        fontFamily:
-            ['Calibri','Verdana'].join(',')
-        ,
-        h1: {
-            fontSize: '1.5rem',
-            marginBottom: '1.0rem'
-        },
-        h2: {
-            fontSize: '1.5rem'
-        },
-        h3:{
-            fontSize:'1.2rem'
-        },
-        h4:{
-            fontSize:'1.0rem'
-        },
-        h5:{
-            fontSize:'1.0rem'
-        }
-    }
-});
-
 class Profile extends React.Component {
 
     state = {
@@ -121,7 +82,6 @@ class Profile extends React.Component {
         }
 
         return (<div className={classes.Background}>
-                <ThemeProvider theme={theme1}>
                 <AppBar position="static" className={classes.AppBar}>
                 </AppBar>
                 <CssBaseline/>
@@ -146,7 +106,6 @@ class Profile extends React.Component {
                     </Grid>
                 </Grid>
                 </div>
-                </ThemeProvider>
         </div>
         );
     }

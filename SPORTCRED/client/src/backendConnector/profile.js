@@ -12,15 +12,15 @@ export const getUserProfile = async (username, currPage) => {
                     friends:data.friends,
                     acsScore:data.acsScore,
                     acsHistoryReport:data.acsHistoryReport,
-                    userBackground: createUserBackground(data.username,data.fullName,data.dateOfBirth,data.email,data.userBackground)
+                    userBackground: createUserBackground(data)
                 }
             );
             currPage.setState(data)
     });
 
-    const createUserBackground = (username, fullName, dob, email, questionnaire) => {
+    const createUserBackground = () => {
         // assuming questionnaire is an array
-        return [{"Username":username},{"Full Name":fullName},{"Date of Birth":dob},{"Email":email}].concat(questionnaire);
+        return [{"Username":data.username},{"Full Name":data.fullName},{"Date of Birth":data.DOB},{"Email":email}].concat(questionnaire);
     }
 
     // currPage.setState({
@@ -75,14 +75,14 @@ const setData = (profile,source) => {
         case 'editUserInfo':
             // update only main user info and questionnaire
             return {
-                fullName:profile.fullName,
-                dateOfBirth:profile.dateOfBirth,
-                email:profile.email
+                fullName:profile[1]["Full Name"],
+                dateOfBirth:profile[2]["Date of Birth"],
+                email:profile[3]["Email"]
             }
         case 'iconUpload':
-            // profile pic udpated
+            // profile pic updated
             return {
-                userIcon:profile.formDate
+                userIcon:profile.userIcon
             }
         default:
             // update everything

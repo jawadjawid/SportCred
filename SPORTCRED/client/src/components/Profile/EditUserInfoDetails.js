@@ -10,42 +10,107 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import EditableUserInfoItem from "./EditableUserInfoItem";
 import {setUserProfile} from "../../backendConnector/profile";
+import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Paper";
+import {createMuiTheme} from "@material-ui/core/styles";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
-
+const theme1 = createMuiTheme({
+    overrides:{
+        ".MuiDialog":{
+            root:{
+                backgroundColor:'black'
+            }
+        }
+    },
+    palette: {
+        background:{
+            default:'#61892f',
+            paper:'#1f1f1d'
+        },
+        quinary:{
+            main: '#FFE400'
+        },
+        quaternary:{
+            main: '#14A76C'
+        },
+        tertiary:{
+            //light green
+            main: '#bee500'
+        },
+        secondary:  {
+            //orange
+            main: '#61892f',
+            dark:'#61892f'},
+        primary: {
+            //black primary
+            dark:'#ff0000',
+            main:'#ff0000'
+        },
+        type:'dark'
+    },
+    typography: {
+        fontFamily:
+            ['Helvetica Neue',', Helvetica'].join(',')
+        ,
+        h1: {
+            fontSize: '1.5rem',
+            marginBottom: '1.0rem'
+        },
+        h2: {
+            fontSize: '1.5rem'
+        },
+        h3:{
+            fontSize:'1.2rem'
+        },
+        h4:{
+            fontSize:'1.0rem'
+        },
+        h5:{
+            fontSize:'1.0rem'
+        },
+        h6:{
+            fontSize:'0.5rem'
+        }
+    }
+});
 
 class EditUserInfoDetails extends React.Component {
 
-    constructor(props){
+
+
+    constructor(props) {
         super(props);
         let errorsSetup = []
         this.props.info.forEach((item) => {
-            errorsSetup[Object.keys(item)]=false;
+            errorsSetup[Object.keys(item)] = false;
         });
         this.state = {
-            info:this.props.info,
-            backUp:this.props.backUp,
-            saveDisabled:false,
+            info: this.props.info,
+            backUp: this.props.backUp,
+            saveDisabled: false,
             errors: errorsSetup
 
         }
     }
 
     basicInfo = [];
-    additionalInfo =[];
+    additionalInfo = [];
 
-    mainSetup = () => {if(this.state.info.length > 0) {
+    mainSetup = () => {
+        if (this.state.info.length > 0) {
             this.basicInfo = this.state.info.slice(1, 4);
-            this.additionalInfo = this.state.info.slice(4,this.state.info.length);
+            this.additionalInfo = this.state.info.slice(4, this.state.info.length);
         }
 
     };
 
-    setInfoExpanded = (prompt,newAnswer) => {
+    setInfoExpanded = (prompt, newAnswer) => {
         const test = [...this.state.info];
         test.forEach(item => {
-            if(Object.keys(item).toString().localeCompare(prompt) === 0){
+            if (Object.keys(item).toString().localeCompare(prompt) === 0) {
                 item[prompt] = newAnswer;
-                this.setState({'info':test});
+                this.setState({'info': test});
             }
         });
 
@@ -54,11 +119,12 @@ class EditUserInfoDetails extends React.Component {
     renderRowBasic = (rowInfo) => {
         const index = rowInfo.index;
         const key = Object.keys(this.basicInfo[index]);
-            return (
-                <React.Fragment>
-                    <EditableUserInfoItem validationForSave={this.validationForSave} prompt={key} answer={this.basicInfo[index][key]} setAnswer={this.setInfoExpanded}/>
-                   </React.Fragment>
-            );
+        return (
+            <React.Fragment>
+                <EditableUserInfoItem validationForSave={this.validationForSave} prompt={key}
+                                      answer={this.basicInfo[index][key]} setAnswer={this.setInfoExpanded}/>
+            </React.Fragment>
+        );
     }
 
     renderRowAdditional = (rowInfo) => {
@@ -66,31 +132,32 @@ class EditUserInfoDetails extends React.Component {
         const key = Object.keys(this.additionalInfo[index]);
         return (
             <React.Fragment>
-                <EditableUserInfoItem validationForSave={this.validationForSave} prompt={key} answer={this.additionalInfo[index][key]} setAnswer={this.setInfoExpanded}/>
-                </React.Fragment>
+                <EditableUserInfoItem validationForSave={this.validationForSave} prompt={key}
+                                      answer={this.additionalInfo[index][key]} setAnswer={this.setInfoExpanded}/>
+            </React.Fragment>
         );
     }
 
-    validationForSave = (prompt,errorValue) => {
+    validationForSave = (prompt, errorValue) => {
         this.state.errors[prompt] = errorValue;
-        let numOfErrors=0;
-        for(let error in this.state.errors) {
+        let numOfErrors = 0;
+        for (let error in this.state.errors) {
             if (this.state.errors[error]) {
                 numOfErrors++;
             }
         }
-        if(numOfErrors > 0){
-            this.setState({saveDisabled:true})
-        }else {
-            this.setState({saveDisabled:false});
+        if (numOfErrors > 0) {
+            this.setState({saveDisabled: true})
+        } else {
+            this.setState({saveDisabled: false});
         }
     }
 
     save = () => {
         const info = JSON.parse(JSON.stringify(this.state.info));
-        this.setState({'backUp':info});
+        this.setState({'backUp': info});
         this.props.setProfileState({userBackground: info});
-        setUserProfile(info.username,info,'editUserInfo')
+        setUserProfile(info.Username, info, 'editUserInfo')
         this.props.close();
     }
 
@@ -105,36 +172,42 @@ class EditUserInfoDetails extends React.Component {
         this.mainSetup(this.basicInfo, this.additionalInfo);
 
         return (
-            <Dialog disableBackdropClick disableEscapeKeyDown open={this.props.open} onClose={this.props.close} fullWidth="true" maxWidth="md">
-                <DialogTitle><Typography variant="h1" component="h1" color="secondary">Edit
-                    Profile</Typography>
-                    <Divider/>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        <Typography variant="h2" style={{'margin-bottom':'10px'}}>
-                            Basic Information
-                        </Typography>
-                        <FixedSizeList height={300} itemSize={40} itemCount={this.basicInfo.length} style={{'display':'inline'}}>
-                            {this.renderRowBasic}
-                        </FixedSizeList>
-                        <Typography variant="h2" style={{'margin-bottom':'10px'}}>
-                            Additional Information
-                        </Typography>
-                        <FixedSizeList height={300} itemSize={40} itemCount={this.additionalInfo.length} style={{'display':'inline'}}>
-                            {this.renderRowAdditional}
-                        </FixedSizeList>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.cancel} color="secondary" style={{outline: 'none'}}>
-                        <b> Cancel</b>
-                    </Button>
-                    <Button disabled={this.state.saveDisabled} onClick={this.save} color="secondary" style={{outline: 'none'}}>
-                        <b> Save</b>
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <ThemeProvider theme={theme1}>
+                <Dialog disableBackdropClick disableEscapeKeyDown open={this.props.open} onClose={this.props.close}
+                        fullWidth="true" maxWidth="md" style={{'color':'#FF0000'}}>
+                    <DialogTitle><Typography variant="h1" component="h1" color="secondary"><b>Edit
+                        Profile</b></Typography>
+                        <Divider/>
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            <Typography variant="h2" style={{'margin-bottom': '10px',color:'white'}}>
+                                Basic Information
+                            </Typography>
+                            <FixedSizeList height={300} itemSize={40} itemCount={this.basicInfo.length}
+                                           style={{'display': 'inline'}}>
+                                {this.renderRowBasic}
+                            </FixedSizeList>
+                            <Typography variant="h2" style={{'margin-bottom': '10px',color:'white'}}>
+                                Additional Information
+                            </Typography>
+                            <FixedSizeList height={300} itemSize={40} itemCount={this.additionalInfo.length}
+                                           style={{'display': 'inline'}}>
+                                {this.renderRowAdditional}
+                            </FixedSizeList>
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.cancel} color="secondary" style={{outline: 'none'}}>
+                            <b> Cancel</b>
+                        </Button>
+                        <Button disabled={this.state.saveDisabled} onClick={this.save} color="secondary"
+                                style={{outline: 'none'}}>
+                            <b> Save</b>
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </ThemeProvider>
         )
     }
 }
