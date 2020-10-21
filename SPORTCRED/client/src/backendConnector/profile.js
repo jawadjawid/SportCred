@@ -87,7 +87,7 @@ const setData = (profile,source) => {
             return {
                 about:profile[1]["about"],
                 fullName:profile[2]["fullname"],
-                dateOfBirth:profile[3]["DOB"],
+                dateOfBirth:profile[3]["dateOfBirth"],
                 email:profile[4]["email"],
                 phone:profile[5]["phone"],
                 questionnaire:createQuestionnaire(profile)
@@ -100,20 +100,20 @@ const setData = (profile,source) => {
         default:
             // update everything
             return {
-                about:profile[1]["About"],
-                fullName:profile[2]["Full Name"],
-                dateOfBirth:profile[3]["Date of Birth"],
-                email:profile[4]["Email"],
-                phone:profile[5]["Phone Number"],
+                about:profile[1]["about"],
+                fullName:profile[2]["fullname"],
+                dateOfBirth:profile[3]["dateOfBirth"],
+                email:profile[4]["email"],
+                phone:profile[5]["phone"],
                 questionnaire:createQuestionnaire(profile)
             }
     }
 }
 
-export const setUserProfile = async (username, profile,source) => {
+export const setUserProfile = async (profile,source) => {
     const dataToSet = setData(profile,source)
 
-    axios.post('http://localhost:5000/api/setUserProfile/' + username, dataToSet)
+    axios.post('http://localhost:5000/api/setUserProfile/' + profile[0]["username"], dataToSet)
         .then(res => {
             if(res.status === 200) return res.data;
         }).then(data => {
