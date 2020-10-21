@@ -48,7 +48,7 @@ render(){
                       </DialogContent>
                     </Dialog>
                     <Dialog open={this.state.signup} >
-                        <Button  onClick = {() => {this.setState({ signup: false })}}>Close</Button>
+                        <Button  className={classes.PopupExit}  onClick = {() => {this.setState({ signup: false })}}>X</Button>
                         <DialogContent >
                             <Signup ></Signup>
                         </DialogContent>

@@ -42,6 +42,10 @@ export const style = theme => ({
         marginLeft: '800px',
         marginTop: '11px',
     },
+    PopupExit:{
+        marginLeft: '400px',
+        marginTop: '11px',
+    },
     NavBar:{
         position: 'absolute',
     top: '7vw',

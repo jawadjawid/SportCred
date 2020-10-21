@@ -17,19 +17,28 @@ import {withStyles} from '@material-ui/core';
 import { register } from '../../backendConnector/signup';
 
 import { withRouter } from 'react-router-dom';
+import Divider from "@material-ui/core/Divider";
 
 class Signup extends React.Component{
 
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      fullName: '',
-      dateOfBirth: '',
-      phone: '',
-      email: '',
-      userIcon: '',
-      about: '',
+      "username": '',
+      "password": "",
+      "phone": "",
+      "email": "",
+      "fullname":"",
+      "DOB": "",
+      "picture": "",
+      "about": "",
+      "questionnaire":{
+        "favSport": "",
+        "age": "",
+        "levelPlayed": "",
+        "sportToLearn": "",
+        "favTeam": ""
+      }
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,11 +46,10 @@ class Signup extends React.Component{
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
     register(this.state).then(r => "");
   }
@@ -51,7 +59,7 @@ class Signup extends React.Component{
 
     return (
       <React.Fragment>
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -64,24 +72,27 @@ class Signup extends React.Component{
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                  autoComplete="uname"
+                  name="username"
                   variant="outlined"
                   required
                   fullWidth
-                  id="username"
+                  id="userName"
                   label="User Name"
-                  name="username"
-                  autoComplete="uname"
+                  autoFocus
+                  value={this.state.username}
+                  onChange={this.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                //autoComplete="fname"
+                name="fullname"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="fullName"
+                label="Full Name"
                 autoFocus
                 value={this.state.fullName}
                 onChange={this.handleChange}
@@ -98,6 +109,8 @@ class Signup extends React.Component{
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={this.state.email}
+                onChange={this.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -110,17 +123,34 @@ class Signup extends React.Component{
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={this.state.password}
+                onChange={this.handleChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <a>Birth</a>
+              {/*//<a>Birth</a>*/}
               <TextField
                   variant="outlined"
                   required
                   fullWidth
                   id="dateOfBirth"
-                  name="dateOfBirth"
+                  name="DOB"
                   type='date'
+                  defaultValue='sad'
+                  value={this.state.DOB}
+                  onChange={this.handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="phone"
+                  label="Phone"
+                  required
+                  fullWidth
+                  id="phone"
+                  value={this.state.phone}
+                  onChange={this.handleChange}
               />
             </Grid>
           </Grid>
