@@ -30,12 +30,12 @@ router.get('/login', (req, res) => {
     });
 });
 
-router.get('/', (req, res) => {
+router.get('/:username', (req, res) => {
     // gets a user's profile from username
     // Note: Posts and ACS fields only show objectIds 
     // (can't be accessed by front end using this request)
 
-    Profile.find({username:req.body.username})
+    Profile.find({username:req.params.username})
         .then(data => {
             if (data.length == 0){
                 res.status(404).json({message:"This username does not exist"})
@@ -79,8 +79,8 @@ router.post('/signup', (req, res) => {
         });
 });
 
-router.delete('/', (req, res, next) => {
-    Profile.deleteOne({ username: req.body.username})
+router.delete('/:username', (req, res, next) => {
+    Profile.deleteOne({ username: req.params.username})
     .then(data => {
         if(data.n == 0 ){
             console.log("no user deleted");
