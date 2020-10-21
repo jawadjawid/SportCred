@@ -2,96 +2,96 @@ import React from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
-import {createMuiTheme} from '@material-ui/core/styles';
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
 import UserBasicInfo from "./UserBasicInfo";
 import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
 import UserAboutInfo from "./UserAboutInfo";
-import {getUserProfile} from "../../backendConnector/profile";
+import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
-import {Button} from "@material-ui/core";
-import {FixedSizeList} from "react-window";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import UserIcon from "./UserIcon";
-
-const theme1 = createMuiTheme({
-
-    palette: {
-        primary: {
-            light: '#6b6e70',
-            main: '#474b4f',
-            dark: '#222629',
-            contrastText: '#fff',
-        },
-        secondary: {
-            light: '#86c232',
-            main: '#61892f',
-            dark: '#222629',
-            contrastText: '#fff',
-        },
-        type: 'dark'
-    }, typography: {
-        fontFamily:
-            ['Calibri','Verdana'].join(',')
-        ,
-        h1: {
-            fontSize: '1.5rem',
-            marginBottom: '1.0rem'
-        },
-        h2: {
-            fontSize: '1.5rem'
-        },
-        h3:{
-            fontSize:'1.2rem'
-        },
-        h4:{
-            fontSize:'1.0rem'
-        },
-        h5:{
-            fontSize:'1.0rem'
-        }
-    }
-});
+import NavBar from "./NavBar";
 
 class Profile extends React.Component {
 
     state = {
-        username:"",
-        fullName:"",
         userIcon:"",
-        friends:[],
-        userBackground:{},
+        about:"",
+        phone:"",
+        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
+            {"fullName": "John Doe", "username": "hi142"},
+            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
+            {"fullName": "Albert Liu", "username": "alberto"},
+            {"fullName": "Mohammad Sajjad", "username": "mohao"},
+            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
+            {"fullName": "John Doe", "username": "hi142"},
+            {"fullName": "Pussy Cat", "username": "meow"},
+            {"fullName": "Albert Liu", "username": "alberto"},
+            {"fullName": "Mohammad Sajjad", "username": "mohao"}
+        ],
         acsScore:"",
-        acsHistoryReport:""
-    }
+        acsHistoryReport:[{
+            "acsStart":"35",
+            "acsEnd":"41",
+            "activity":"Trivia with user5223 with final score of 142:42",
+            "date":"Oct 12"
+        },{
+            "acsStart":"31",
+            "acsEnd":"35",
+            "activity":"Debate won w post #4324",
+            "date":"Oct 7"
+        },{
+            "acsStart":"33",
+            "acsEnd":"31",
+            "activity":"Trivia w user3252 with final score of 100:24",
+            "date":"Oct 3"
+        }],
+        userBackground: [
+            {"username":"bobby123"},
+            {"about": "Im dumb"},
+            {"fullName": "Bob Thisismylastnamehaha"},
+            {"dateOfBirth":"02/03/2000"},
+            {"email": "bobbybobbob@ilikeball.com"},
+            {"phone":"sdjjsljdf"},
+            {"favSport": "Basketball"},
+            {"age": "2"},
+            {"favTeam": "Miami Heat"},
+            {"sportToLearn":"cricket"},
+            {"levelPlayed": "college"}
+        ]
+    };
 
     componentDidMount() {
-        getUserProfile("ilir123",this);
+        getUserProfile('holeesin',this);
     }
 
     render() {
         const {classes} = this.props;
 
+        const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
+
+        const setProfileState = (info) => {
+            const copy = [...info['userBackground']];
+            this.setState({userBackground:copy}, () => {
+                console.log(info);
+                console.log(this.state);
+                });
+        }
+
         return (<div className={classes.Background}>
-                <ThemeProvider theme={theme1}>
-                <AppBar position="static" className={classes.AppBar}>
-                </AppBar>
+                    <NavBar/>
                 <CssBaseline/>
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
                     <Grid item xs={3} className={classes.GridItemLeft}>
-                        <UserBasicInfo fullName={this.state.fullName} username={this.state.username} userIcon={this.state.userIcon}/>
+                        <UserBasicInfo fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
                         <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
-                        <UserAboutInfo background={this.state.userBackground}/>
+                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>
@@ -107,7 +107,6 @@ class Profile extends React.Component {
                     </Grid>
                 </Grid>
                 </div>
-                </ThemeProvider>
         </div>
         );
     }

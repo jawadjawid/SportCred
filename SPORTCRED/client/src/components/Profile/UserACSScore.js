@@ -42,4 +42,4 @@ const UserACSScore = (props) => {
         </React.Fragment>);
 }
 
-export default UserACSScore;
+export default React.memo(UserACSScore);

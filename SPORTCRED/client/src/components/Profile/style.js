@@ -12,7 +12,7 @@ export const style = {
         'padding': '0 10%'
     },
     GridItemLeft:{
-        minWidth:'300px',
+        minWidth:'350px',
         flex:'1 0 auto'
     },
     GridItemRight:{
