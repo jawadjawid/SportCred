@@ -130,6 +130,14 @@ router.put('/setUserProfile/:username', (req, res, next) => {
                     });
                 }
             }
+            if(key == "phone") {
+                console.log("phone validation")
+                if(!req.body[key].match(/^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/)){
+                    return res.status(400).json({
+                        message: "phone required to be 10 digits long"
+                    });
+                }
+            }
         }
     }
 

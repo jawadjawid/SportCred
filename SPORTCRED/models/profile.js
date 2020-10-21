@@ -9,7 +9,8 @@ const ProfileSchema = new Schema({
         type: String
     },
     phone: {
-        type: String
+        type: String,
+        match: /^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/
     },
     email: {
         type: String,
