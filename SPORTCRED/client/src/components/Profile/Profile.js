@@ -22,6 +22,12 @@ import {FixedSizeList} from "react-window";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import UserIcon from "./UserIcon";
+import Toolbar from "@material-ui/core/Toolbar";
+import Tabs from "@material-ui/core/Tabs";
+import Menu from "@material-ui/core/Menu";
+import Tab from "@material-ui/core/Tab";
+import NavBar from "./NavBar";
+import Avatar from "@material-ui/core/Avatar";
 
 const theme1 = createMuiTheme({
 
@@ -83,8 +89,7 @@ class Profile extends React.Component {
 
         return (<div className={classes.Background}>
                 <ThemeProvider theme={theme1}>
-                <AppBar position="static" className={classes.AppBar}>
-                </AppBar>
+                    <NavBar value="/profile"/>
                 <CssBaseline/>
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
