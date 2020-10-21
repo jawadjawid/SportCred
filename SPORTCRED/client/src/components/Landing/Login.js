@@ -9,8 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {style} from './style';
-import {withStyles} from '@material-ui/core';
-import { register } from '../../backendConnector/signup';
+import {withStyles,Checkbox, FormControlLabel} from '@material-ui/core';
+import { login } from '../../backendConnector/login';
 
 import { withRouter } from 'react-router-dom';
 
@@ -18,10 +18,16 @@ class Login extends React.Component{
 
   constructor(props) {
     super(props);
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+    const checked = localStorage.getItem('checked');
     this.state = {
-      "username": '',
-      "password": ""
-    }
+      username: (username) ? username : '',
+      password: (password) ? password : '',
+      displayError: false,
+      errorMessage: '',
+      checked: !!(checked)
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,11 +39,27 @@ class Login extends React.Component{
 
   handleSubmit(event) {
     event.preventDefault();
-    register(this.state).then(r => "");
+    if (this.state.checked) {
+        localStorage.setItem('checked', this.state.checked);
+        localStorage.setItem('username', this.state.username);
+        localStorage.setItem('password', this.state.password);
+        } 
+        else {
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
+        localStorage.removeItem('checked');
+      }
+  
+    console.log(typeof(this))
+    console.log(this)
+    // login(userinfo).then(r => "");
+    login(this, this.props.app);
+    console.log(this.state.errorMessage)
   }
 
   render(){
     const { classes} = this.props;
+    const { displayError, errorMessage, checked, username, password } = this.state;
 
     return (
       <React.Fragment>
@@ -53,6 +75,12 @@ class Login extends React.Component{
         <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
+            <TextField
+            value={this.state.errorMessage}
+            onChange={event => this.setState({ text: event.target.value })}
+            error={displayError}
+            helperText={displayError ? 'Empty!' : ' '}
+            />
               <TextField
                   autoComplete="uname"
                   name="username"
@@ -64,6 +92,7 @@ class Login extends React.Component{
                   autoFocus
                   value={this.state.username}
                   onChange={this.handleChange}
+                  comp={this}
               />
             </Grid>
             <Grid item xs={12}>
@@ -76,11 +105,24 @@ class Login extends React.Component{
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                errorMessage={errorMessage}
+            displayError={displayError}
                 value={this.state.password}
                 onChange={this.handleChange}
+                comp={this}
               />
             </Grid>
           </Grid>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checked}
+                color="primary"
+                onChange={(_, checked) => this.setState({ checked })}
+              />
+            }
+            label="Remember me"
+          />
           <Button
             type="submit"
             fullWidth

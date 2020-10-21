@@ -1,12 +1,15 @@
 const express = require('express');
 const { mongo } = require('mongoose');
 const router = express.Router();
-
+var cors = require('cors')
 const Profile = require('../../models/profile');
 
+var corsOptions = {
+    origin: 'http://localhost:3000',
+  }
+router.use(cors(corsOptions))
 
-
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
     // checks if account exists with username and password
     var user = req.body.username;
     var pass = req.body.password;
@@ -15,7 +18,7 @@ router.get('/login', (req, res) => {
     .exec()
     .then( accounts =>{
         if (accounts.length == 0 ) {
-            res.status(404).json({
+            res.status(422).json({
                 message: "username or password is incorrect"
             });
         }else if (accounts.length == 1 ) {
