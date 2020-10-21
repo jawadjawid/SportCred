@@ -46,9 +46,6 @@ const ProfileSchema = new Schema({
         favSport:{
             type: String
         },
-        age:{
-            type: String
-        },
         levelPlayed:{
             type: String
         },
