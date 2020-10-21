@@ -89,7 +89,7 @@ class Profile extends React.Component {
 
         return (<div className={classes.Background}>
                 <ThemeProvider theme={theme1}>
-                    <NavBar value="/profile"/>
+                    <NavBar/>
                 <CssBaseline/>
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>

@@ -19,7 +19,7 @@ const styles = (theme) => ({
                 },
             indicator: {
                 backgroundColor: '#ffd300',
-            }
+            },
         }
     });
 
@@ -46,6 +46,8 @@ function NavBar(props) {
                 <Tab label="Picks & Predictions" component={Link} style={{'textDecoration': 'none'}} className={classes.tab} to="/profile"/>
                 <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
                 <Tab label="Debate & Analysis" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
+                <div style={{flex:'1'}}>
+                </div>
                 <Tab icon={<EmojiEmotions/>} component={Link} to="/profile" style={{'textDecoration': 'none'}}/>
             </Tabs>
         </AppBar>
