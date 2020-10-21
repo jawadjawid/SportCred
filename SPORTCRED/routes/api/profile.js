@@ -101,8 +101,8 @@ router.get('/getUserProfile/:username', (req, res, next) => {
     const givenUser = req.params.username;
 
     Profile.find({username: givenUser})
-        .select('username fullName dateOfBirth email phone userIcon' +
-            'questionnaire ACSmetrics about posts')
+        .select('username fullName dateOfBirth email phone userIcon ' +
+            'questionnaire.favSport questionnaire.age questionnaire.levelPlayed questionnaire.sportToLearn questionnaire.favTeam ACSmetrics about posts')
         .exec()
         .then(userData => {
             console.log(userData);
