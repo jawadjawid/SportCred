@@ -9,7 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Signup from './signup';
-
+import Login from './Login';
 class Landing extends React.Component {
 
 state = {
@@ -37,15 +37,15 @@ render(){
                 <div>
                     <img className={classes.MainLabel} src = {logo} />
                     <div className={classes.NavBar}>
-                    </div>
-                   {/*<Button className={classes.Login} onClick={this.openLogin.bind(this)}>Login</Button>*/}
+                    
+                   <Button className={classes.Login} onClick={this.openLogin.bind(this)}>Login</Button>
             <Button className={classes.Signup} onClick={this.openSignup.bind(this)}>Sign Up</Button>
+            </div>
                     <Dialog open={this.state.login} >
-                        <DialogTitle>Login</DialogTitle>
-                     <DialogContent >
-                         Start editing to see some magic happen!
-                             <Button onClick = {() => {this.setState({ login: false })}}>Close</Button>
-                      </DialogContent>
+                    <Button  className={classes.PopupExit}  onClick = {() => {this.setState({ login: false })}}>X</Button>
+                        <DialogContent >
+                            <Login ></Login>
+                        </DialogContent>
                     </Dialog>
                     <Dialog open={this.state.signup} >
                         <Button  className={classes.PopupExit}  onClick = {() => {this.setState({ signup: false })}}>X</Button>

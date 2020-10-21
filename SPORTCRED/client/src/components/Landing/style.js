@@ -30,7 +30,7 @@ export const style = theme => ({
         border: theme.palette.primary.main + '1px solid',
         fontSize: '1.25rem',
         height: '20%',
-        marginLeft: '800px',
+        
         marginTop: '11px',
     },
     Signup:{
@@ -39,7 +39,7 @@ export const style = theme => ({
         border: theme.palette.primary.main + '1px solid',
         fontSize: '1.25rem',
         height: '20%',
-        marginLeft: '800px',
+        
         marginTop: '11px',
     },
     PopupExit:{
@@ -56,6 +56,8 @@ export const style = theme => ({
     zIndex: '9',
     display: 'flex',
     justifyContent: 'flex-end',
+    marginLeft: '400px',
+    marginTop: '-30px',
     },
     Motto:{
         color: theme.palette.tertiary.main,
