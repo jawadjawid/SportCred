@@ -48,11 +48,12 @@ export const getUserProfile = async (username, currPage) => {
 
             );
             currPage.setState(data)
+    }).catch(error => {
+        alert('Something went wrong. Please Try again Later.')
     });
 
     const createUserBackground = (data) => {
-        // assuming questionnaire is an array
-        const basicInfo = [{"username":data.username},{"about":data.about},{"fullname":data.fullName},{"dateOfBirth":data.dateOfBirth},{"email":data.email},{"phone":data.phone}];
+        const basicInfo = [{"username":data.username},{"about":data.about},{"fullName":data.fullName},{"dateOfBirth":data.dateOfBirth},{"email":data.email},{"phone":data.phone}];
         const additionalInfo = [ {"favSport": data.questionnaire["favSport"]},
             {"age": data.questionnaire["age"]},
             {"favTeam": data.questionnaire["favTeam"]},
@@ -62,7 +63,7 @@ export const getUserProfile = async (username, currPage) => {
     }
 };
 
-const createQuestionnaire = (profile) => {
+const createQuestionnaireToSendToDB = (profile) => {
      let questionnaire ={};
     for(let i = 6; i < 11; i++){
         const key = Object.keys(profile[i])
@@ -71,64 +72,50 @@ const createQuestionnaire = (profile) => {
     return questionnaire;
 }
 
-const setData = (profile,source) => {
+const setData = (data,source) => {
     switch(String(source)){
         case 'editUserInfo':
             // update only main user info and questionnaire
             return {
-                about:profile[1]["about"],
-                fullName:profile[2]["fullname"],
-                dateOfBirth:profile[3]["dateOfBirth"],
-                email:profile[4]["email"],
-                phone:profile[5]["phone"],
-                questionnaire:createQuestionnaire(profile)
+                about:data[1]["about"],
+                fullName:data[2]["fullName"],
+                dateOfBirth:data[3]["dateOfBirth"],
+                email:data[4]["email"],
+                phone:data[5]["phone"],
+                questionnaire:createQuestionnaireToSendToDB(data)
             }
         case 'iconUpload':
             // profile pic updated
             return {
-                userIcon:profile.userIcon
+                userIcon:data.userIcon
             }
         default:
             // update everything
             return {
-                about:profile[1]["about"],
-                fullName:profile[2]["fullname"],
-                dateOfBirth:profile[3]["dateOfBirth"],
-                email:profile[4]["email"],
-                phone:profile[5]["phone"],
-                questionnaire:createQuestionnaire(profile)
+                about:data[1]["about"],
+                fullName:data[2]["fullName"],
+                dateOfBirth:data[3]["dateOfBirth"],
+                email:data[4]["email"],
+                phone:data[5]["phone"],
+                questionnaire:createQuestionnaireToSendToDB(data)
             }
     }
 }
 
-export const setUserProfile = async (profile,source) => {
-    const dataToSet = setData(profile,source)
+export const setUserProfile = async (data,username,source) => {
+    const dataToSet = setData(data,source);
 
-    axios.put('http://localhost:5000/api/profile/setUserProfile/' + profile[0]["username"], dataToSet)
+    const promise = axios.put('http://localhost:5000/api/profile/setUserProfile/' + username, dataToSet)
         .then(res => {
             if(res.status === 200) return res.data;
         }).then(data => {
+            return true;
+    }).catch(error => {
+        alert('Something went wrong. Please try again later.');
+        return false;
     });
 
-    // currPage.setState({
-    //     info: [
-    //         {"Username":"bobby123"},
-    //         {"Full Name": "Bob Thisismylastnamehaha"},
-    //         {"Date of Birth":"02/03/2000"},
-    //         {"Email": "bobbybobbob@ilikeball.com"},
-    //         {"Favorite Sport": "Basketball"},
-    //         {"Favorite Player": "Jamal Jamal"},
-    //         {"Favorite Team": "Miami Heat"},
-    //         {"Odd Sport":"cricket"},
-    //         {"Highest Level of Sports Played": "college"}
-    //     ]
-    // }, () => {
-    //     console.log('the new state');
-    //     console.log(currPage.state);
-    // });
-
-
-
+    return promise;
 };
 
 

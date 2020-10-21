@@ -69,11 +69,14 @@ const UserIconUpload = (props) => {
         setImage({url:'',formData: new FormData()});
     }
 
-    const save = () => {
+    const save = async () => {
         props.close();
-        setUserProfile(props.username, {userIcon:image.formData},'iconUpload');
-        props.setImgSrc(image.url);
-        setImage({url:'',formData: new FormData()});
+        if (await setUserProfile({userIcon: image.formData},props.username ,'iconUpload')){
+            props.setImgSrc(image.url);
+            setImage({url: '', formData: new FormData()});
+        } else {
+            setImage({url:'',formData: new FormData()});
+        }
     }
 
     return (<Dialog open={props.open} onClose={props.close} fullWidth="true" maxWidth="sm">

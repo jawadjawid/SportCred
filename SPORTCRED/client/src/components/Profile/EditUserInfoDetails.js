@@ -95,6 +95,9 @@ class EditUserInfoDetails extends React.Component {
         if (nextProps.info !== this.state.info) {
             this.setState({info:nextProps.info});
         }
+        if(nextProps.backUp !== this.state.backUp){
+            this.setState({backUp:nextProps.backUp});
+        }
     }
 
     componentDidMount() {
@@ -159,11 +162,18 @@ class EditUserInfoDetails extends React.Component {
         }
     }
 
-    save = () => {
+    save = async () => {
         const info = JSON.parse(JSON.stringify(this.state.info));
-        this.setState({'backUp': info});
-        this.props.setProfileState({userBackground: info});
-        setUserProfile(info, 'editUserInfo');
+        const ha = await setUserProfile(info,info[1]["username"] ,'editUserInfo');
+        if (ha === true) {
+            this.setState({'backUp': info});
+            this.props.setProfileState({userBackground: info});
+        } else {
+            const backUpCopy = JSON.parse(JSON.stringify(this.state.backUp));
+            this.setState({'info': backUpCopy});
+            this.props.setInfo(backUpCopy);
+            this.props.setProfileState({userBackground: backUpCopy});
+        }
         this.props.close();
     }
 
@@ -171,6 +181,7 @@ class EditUserInfoDetails extends React.Component {
         const backUpCopy = JSON.parse(JSON.stringify(this.state.backUp));
         this.setState({'info': backUpCopy});
         this.props.setInfo(backUpCopy);
+        this.props.setProfileState({userBackground: backUpCopy});
         this.props.close();
     }
 

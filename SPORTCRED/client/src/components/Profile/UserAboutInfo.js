@@ -37,7 +37,7 @@ const UserAboutInfo = (props) => {
                 </Button></Typography>
                 <Typography><ChatBubbleIcon style={{'margin-right':'5px'}}/> {background[1]["about"]}</Typography>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
-                <Typography><EmojiEmotions style={{'margin-right':'5px'}}/> {background[2]["fullname"]}</Typography>
+                <Typography><EmojiEmotions style={{'margin-right':'5px'}}/> {background[2]["fullName"]}</Typography>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
                 <Typography><Cake style={{'margin-right':'10px'}}/>{background[3]["dateOfBirth"]}</Typography>
                 <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
