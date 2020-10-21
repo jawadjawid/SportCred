@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {mapQuestionnairePromptToDBKey} from "../components/Profile/util";
 // A function to send a POST request with the new user info
 export const getUserProfile = async (username, currPage) => {
 
