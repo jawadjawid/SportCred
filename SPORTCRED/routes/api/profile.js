@@ -5,22 +5,69 @@ const router = express.Router();
 const Profile = require('../../models/profile');
 
 
+
+router.get('/login', (req, res) => {
+    // checks if account exists with username and password
+    var user = req.body.username;
+    var pass = req.body.password;
+    console.log(user+ "  " + pass);
+    Profile.find({username:user,password:pass})
+    .exec()
+    .then( accounts =>{
+        if (accounts.length == 0 ) {
+            res.status(404).json({
+                message: "username or password is incorrect"
+            });
+        }else if (accounts.length == 1 ) {
+            res.status(200).json({
+                message: "login successfull"
+            });
+        }else {
+            res.status(400).json({
+                message: "this means duplicate usernames exists!!!"
+            });
+        }
+    });
+});
+
 router.get('/', (req, res) => {
+    // gets a user's profile from username
+    // Note: Posts and ACS fields only show objectIds 
+    // (can't be accessed by front end using this request)
+
+    Profile.find({username:req.body.username})
+        .then(data => {
+            if (data.length == 0){
+                res.status(404).json({message:"This username does not exist"})
+           }else res.status(200).json(data)})
+           .catch(error => {
+            console.log(error)
+            res.status(500).json({error: error});
+         });
+});
+
+
+router.get('/all', (req, res) => {
     Profile.find()
         .sort({date: -1})
         .then(data => res.json(data));
 });
 
-router.post('/', (req, res) => {
+router.post('/signup', (req, res) => { 
     const profile = new Profile({
         username: req.body.username,
+        password: req.body.password,
         phone: req.body.phone,
         email: req.body.email,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        fullname: req.body.firstName,
         DOB: req.body.DOB,
         picture: req.body.picture,
-        about: req.body.about
+        about: req.body.about,
+        "questionnaire.favSport": req.body.questionnaire.favSport,
+        "questionnaire.age": req.body.questionnaire.age,
+        "questionnaire.levelPlayed": req.body.questionnaire.levelPlayed,
+        "questionnaire.sportToLearn": req.body.questionnaire.sportToLearn,
+        "questionnaire.favTeam": req.body.questionnaire.favTeam
     })
     profile.save()
         .then(data => res.json(data))
@@ -32,12 +79,16 @@ router.post('/', (req, res) => {
         });
 });
 
-router.delete('/:username', (req, res, next) => {
-    Profile.deleteOne({ username: req.params.username})
-    .then(() => {
-        res.status(200).json({
-          message: 'Deleted!'
-        });
+router.delete('/', (req, res, next) => {
+    Profile.deleteOne({ username: req.body.username})
+    .then(data => {
+        if(data.n == 0 ){
+            console.log("no user deleted");
+            res.status(404).json(data);
+        }else{
+            console.log(" user was successfully deleted");
+            res.status(200).json(data);
+        }
       })
     .catch((error) => {
         res.status(400).json({
@@ -131,142 +182,142 @@ router.put('/updatePhone/:username', (req, res, next) => {
         });
 });
 
-router.put('/updateEmail/:username', (req, res, next) => {
-    console.log("Hitting update email endpt with id " + req.params.username)
+// router.put('/updateEmail/:username', (req, res, next) => {
+//     console.log("Hitting update email endpt with id " + req.params.username)
 
-    // If email key is not in JSON body then return 400 status
-    if ((typeof req.body.email) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
+//     // If email key is not in JSON body then return 400 status
+//     if ((typeof req.body.email) === 'undefined') {
+//         res.status(400).json({
+//             error: error
+//         })
+//     }
 
-    Profile.updateOne({ username: req.params.username }, { email: req.body.email })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
+//     Profile.updateOne({ username: req.params.username }, { email: req.body.email })
+//         .then(() => {
+//             res.status(200).json({
+//                 message: 'updated successfully'
+//             });
+//         })
+//         .catch(error => {
+//             res.status(400).json({
+//                 error: error
+//             });
+//         });
+// });
 
-router.put('/updateFirstName/:username', (req, res, next) => {
-    console.log("Hitting update first name endpt with id " + req.params.username)
+// router.put('/updateFirstName/:username', (req, res, next) => {
+//     console.log("Hitting update first name endpt with id " + req.params.username)
 
-    // If firstName key is not in JSON body then return 400 status
-    if ((typeof req.body.firstName) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
+//     // If firstName key is not in JSON body then return 400 status
+//     if ((typeof req.body.firstName) === 'undefined') {
+//         res.status(400).json({
+//             error: error
+//         })
+//     }
 
-    Profile.updateOne({ username: req.params.username }, { firstName: req.body.firstName })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
+//     Profile.updateOne({ username: req.params.username }, { firstName: req.body.firstName })
+//         .then(() => {
+//             res.status(200).json({
+//                 message: 'updated successfully'
+//             });
+//         })
+//         .catch(error => {
+//             res.status(400).json({
+//                 error: error
+//             });
+//         });
+// });
 
-router.put('/updateLastName/:username', (req, res, next) => {
-    console.log("Hitting update last name endpt with id " + req.params.username)
+// router.put('/updateLastName/:username', (req, res, next) => {
+//     console.log("Hitting update last name endpt with id " + req.params.username)
 
-    // If lastName key is not in JSON body then return 400 status
-    if ((typeof req.body.lastName) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
+//     // If lastName key is not in JSON body then return 400 status
+//     if ((typeof req.body.lastName) === 'undefined') {
+//         res.status(400).json({
+//             error: error
+//         })
+//     }
 
-    Profile.updateOne({ username: req.params.username }, { lastName: req.body.lastName })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
+//     Profile.updateOne({ username: req.params.username }, { lastName: req.body.lastName })
+//         .then(() => {
+//             res.status(200).json({
+//                 message: 'updated successfully'
+//             });
+//         })
+//         .catch(error => {
+//             res.status(400).json({
+//                 error: error
+//             });
+//         });
+// });
 
-router.put('/updateDOB/:username', (req, res, next) => {
-    console.log("Hitting update DOB endpt with id " + req.params.username)
+// router.put('/updateDOB/:username', (req, res, next) => {
+//     console.log("Hitting update DOB endpt with id " + req.params.username)
 
-    // If DOB key is not in JSON body then return 400 status
-    if ((typeof req.body.DOB) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
+//     // If DOB key is not in JSON body then return 400 status
+//     if ((typeof req.body.DOB) === 'undefined') {
+//         res.status(400).json({
+//             error: error
+//         })
+//     }
 
-    Profile.updateOne({ username: req.params.username }, { DOB: req.body.DOB })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
+//     Profile.updateOne({ username: req.params.username }, { DOB: req.body.DOB })
+//         .then(() => {
+//             res.status(200).json({
+//                 message: 'updated successfully'
+//             });
+//         })
+//         .catch(error => {
+//             res.status(400).json({
+//                 error: error
+//             });
+//         });
+// });
 
-router.put('/updatePicture/:username', (req, res, next) => {
-    console.log("Hitting update picture endpt with id " + req.params.username)
+// router.put('/updatePicture/:username', (req, res, next) => {
+//     console.log("Hitting update picture endpt with id " + req.params.username)
 
-    // If picture key is not in JSON body then return 400 status
-    if ((typeof req.body.picture) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
+//     // If picture key is not in JSON body then return 400 status
+//     if ((typeof req.body.picture) === 'undefined') {
+//         res.status(400).json({
+//             error: error
+//         })
+//     }
 
-    Profile.updateOne({ username: req.params.username }, { picture: req.body.picture })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
+//     Profile.updateOne({ username: req.params.username }, { picture: req.body.picture })
+//         .then(() => {
+//             res.status(200).json({
+//                 message: 'updated successfully'
+//             });
+//         })
+//         .catch(error => {
+//             res.status(400).json({
+//                 error: error
+//             });
+//         });
+// });
 
-router.put('/updateAbout/:username', (req, res, next) => {
-    console.log("Hitting update about endpt with id " + req.params.username)
+// router.put('/updateAbout/:username', (req, res, next) => {
+//     console.log("Hitting update about endpt with id " + req.params.username)
 
-    // If about key is not in JSON body then return 400 status
-    if ((typeof req.body.about) === 'undefined') {
-        res.status(400).json({
-            error: error
-        })
-    }
+//     // If about key is not in JSON body then return 400 status
+//     if ((typeof req.body.about) === 'undefined') {
+//         res.status(400).json({
+//             error: error
+//         })
+//     }
 
-    Profile.updateOne({ username: req.params.username }, { about: req.body.about })
-        .then(() => {
-            res.status(200).json({
-                message: 'updated successfully'
-            });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        });
-});
+//     Profile.updateOne({ username: req.params.username }, { about: req.body.about })
+//         .then(() => {
+//             res.status(200).json({
+//                 message: 'updated successfully'
+//             });
+//         })
+//         .catch(error => {
+//             res.status(400).json({
+//                 error: error
+//             });
+//         });
+// });
 
 module.exports = router;

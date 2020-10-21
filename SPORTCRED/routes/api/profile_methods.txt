@@ -1,0 +1,21 @@
+router.get('/', (req, res)
+
+router.post('/', (req, res) 
+
+router.delete('/:username', (req, res, next)
+
+router.put('/setUserProfile/:username', (req, res, next) 
+
+router.put('/updatePhone/:username', (req, res, next)
+
+router.put('/updateEmail/:username', (req, res, next) 
+
+router.put('/updateFirstName/:username', (req, res, next)
+
+router.put('/updateLastName/:username', (req, res, next)
+
+router.put('/updateDOB/:username', (req, res, next)
+
+router.put('/updatePicture/:username', (req, res, next)
+
+router.put('/updateAbout/:username', (req, res, next) 
