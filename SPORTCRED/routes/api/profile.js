@@ -97,6 +97,29 @@ router.delete('/', (req, res, next) => {
       });
 });
 
+router.get('/getUserProfile/:username', (req, res, next) => {
+    const givenUser = req.params.username;
+
+    Profile.find({username: givenUser})
+        .select('username fullName dateOfBirth email phone userIcon' +
+            'questionnaire ACSmetrics about posts')
+        .exec()
+        .then(userData => {
+            console.log(userData);
+
+            if(userData) {
+                res.status(200).json(userData);
+            } else {
+                res.status(404).json({
+                    message: 'username not in database'});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+});
+
 router.put('/setUserProfile/:username', (req, res, next) => {
 
     // Handles req.body validation
