@@ -9,6 +9,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Signup from './signup';
+import SignupIndex from './SignUpIndex';
+
 import Login from './Login';
 class Landing extends React.Component {
 
@@ -50,7 +52,7 @@ render(){
                     <Dialog open={this.state.signup} >
                         <Button  className={classes.PopupExit}  onClick = {() => {this.setState({ signup: false })}}>X</Button>
                         <DialogContent >
-                            <Signup ></Signup>
+                            <SignupIndex ></SignupIndex>
                         </DialogContent>
                     </Dialog>
                 </div>

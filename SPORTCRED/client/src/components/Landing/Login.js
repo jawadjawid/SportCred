@@ -106,7 +106,7 @@ class Login extends React.Component{
                 id="password"
                 autoComplete="current-password"
                 errorMessage={errorMessage}
-            displayError={displayError}
+                displayError={displayError}
                 value={this.state.password}
                 onChange={this.handleChange}
                 comp={this}

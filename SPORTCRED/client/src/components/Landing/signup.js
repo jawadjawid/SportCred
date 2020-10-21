@@ -17,9 +17,13 @@ import {withStyles} from '@material-ui/core';
 import { register } from '../../backendConnector/signup';
 
 import { withRouter } from 'react-router-dom';
-import Divider from "@material-ui/core/Divider";
 
 class Signup extends React.Component{
+
+  state = {
+    errorMessage: '',
+    showLoginButton: false
+  };
 
   constructor(props) {
     super(props);
@@ -28,10 +32,12 @@ class Signup extends React.Component{
       "password": "",
       "phone": "",
       "email": "",
-      "fullname":"",
-      "DOB": "",
+      "fullName":"",
+      "dateOfBirth": "",
       "picture": "",
       "about": "",
+      displayError: false,
+      "errorMessage": "",
       "questionnaire":{
         "favSport": "",
         "levelPlayed": "",
@@ -41,10 +47,7 @@ class Signup extends React.Component{
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.verifyEmail = this.verifyEmail.bind(this);
-
     this.handleQuestionnaireChange = this.handleQuestionnaireChange.bind(this);
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -57,25 +60,16 @@ class Signup extends React.Component{
       questionnaire: Object.assign({}, this.state.questionnaire, {[event.target.name]: event.target.value})
     });  }
 
-  verifyEmail(email) {
-    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if ( re.test(email) ) {
-      // this is a valid email address
-      // call setState({email: email}) to update the email
-      // or update the data in redux store.
-    }
-    else {
-      console.log('I was triggered during componentDidMount')
-    }
-  }
-
   handleSubmit(event) {
+
     event.preventDefault();
-    register(this.state).then(r => "");
+    register(this)
+    console.log(this.state.errorMessage);
   }
 
   render(){
-    const { classes} = this.props;
+    const { classes, handleNext} = this.props;
+    const { errorMessage, displayError} = this.state;
 
     return (
       <React.Fragment>
@@ -88,7 +82,7 @@ class Signup extends React.Component{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+        <form className={classes.form} noValidate onSubmit={{handleNext}}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -97,6 +91,7 @@ class Signup extends React.Component{
                   variant="outlined"
                   required
                   fullWidth
+                  error={displayError}
                   id="userName"
                   label="User Name"
                   autoFocus
@@ -107,11 +102,12 @@ class Signup extends React.Component{
             <Grid item xs={12}>
               <TextField
                 //autoComplete="fname"
-                name="fullname"
+                name="fullName"
                 variant="outlined"
                 required
                 fullWidth
                 id="fullName"
+                error={displayError}
                 label="Full Name"
                 autoFocus
                 value={this.state.fullName}
@@ -124,13 +120,12 @@ class Signup extends React.Component{
                 required
                 fullWidth
                 id="email"
-               // displayError={displayError}
                 type="email"
+                error={displayError}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
                 value={this.state.email}
-                onChange={this.verifyEmail}
                 onChange={this.handleChange}
               />
             </Grid>
@@ -141,6 +136,7 @@ class Signup extends React.Component{
                 fullWidth
                 name="password"
                 label="Password"
+                error={displayError}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -155,9 +151,10 @@ class Signup extends React.Component{
                   required
                   fullWidth
                   id="dateOfBirth"
-                  name="DOB"
+                  name="dateOfBirth"
                   type='date'
-                  value={this.state.DOB}
+                  error={displayError}
+                  value={this.state.dateOfBirth}
                   onChange={this.handleChange}
               />
             </Grid>
@@ -166,6 +163,7 @@ class Signup extends React.Component{
                   variant="outlined"
                   name="phone"
                   label="Phone"
+                  error={displayError}
                   required
                   fullWidth
                   id="phone"
