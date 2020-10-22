@@ -15,26 +15,41 @@ import Container from '@material-ui/core/Container';
 import {style} from './style';
 import {withStyles} from '@material-ui/core';
 import { register } from '../../backendConnector/signup';
+import { Redirect } from 'react-router';
+
 
 import { withRouter } from 'react-router-dom';
-import Divider from "@material-ui/core/Divider";
 
 class Signup extends React.Component{
+
+  state = {
+    errorMessage: '',
+    showLoginButton: false
+  };
 
   constructor(props) {
     super(props);
     this.state = {
       "username": '',
+      "usernameError": false,
       "password": "",
+      "passwordError": false,
       "phone": "",
+      "phoneError": false,
       "email": "",
-      "fullname":"",
-      "DOB": "",
+      "emailError": false,
+      "fullName":"",
+      "fullNameError": false,
+
+      "dateOfBirth": "",
+      "dateOfBirthError": false,
       "picture": "",
       "about": "",
+      displayError: false,
+      redirect: false,
+      "errorMessage": "",
       "questionnaire":{
         "favSport": "",
-        "age": "",
         "levelPlayed": "",
         "sportToLearn": "",
         "favTeam": ""
@@ -42,6 +57,7 @@ class Signup extends React.Component{
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleQuestionnaireChange = this.handleQuestionnaireChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -49,13 +65,31 @@ class Signup extends React.Component{
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  handleQuestionnaireChange(event) {
+    this.setState({
+      questionnaire: Object.assign({}, this.state.questionnaire, {[event.target.name]: event.target.value})
+    });  }
+
   handleSubmit(event) {
     event.preventDefault();
-    register(this.state).then(r => "");
+    register(this)
+    console.log(this.state.errorMessage);
+  }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/login' />
+    }
   }
 
   render(){
     const { classes} = this.props;
+    const { usernameError,passwordError, phoneError, emailError,dateOfBirthError, fullNameError} = this.state;
 
     return (
       <React.Fragment>
@@ -77,6 +111,7 @@ class Signup extends React.Component{
                   variant="outlined"
                   required
                   fullWidth
+                  error={usernameError}
                   id="userName"
                   label="User Name"
                   autoFocus
@@ -87,11 +122,12 @@ class Signup extends React.Component{
             <Grid item xs={12}>
               <TextField
                 //autoComplete="fname"
-                name="fullname"
+                name="fullName"
                 variant="outlined"
                 required
                 fullWidth
                 id="fullName"
+                error={fullNameError}
                 label="Full Name"
                 autoFocus
                 value={this.state.fullName}
@@ -104,8 +140,8 @@ class Signup extends React.Component{
                 required
                 fullWidth
                 id="email"
-               // displayError={displayError}
                 type="email"
+                error={emailError}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -120,6 +156,7 @@ class Signup extends React.Component{
                 fullWidth
                 name="password"
                 label="Password"
+                error={passwordError}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -134,10 +171,10 @@ class Signup extends React.Component{
                   required
                   fullWidth
                   id="dateOfBirth"
-                  name="DOB"
+                  name="dateOfBirth"
                   type='date'
-                  defaultValue='sad'
-                  value={this.state.DOB}
+                  error={dateOfBirthError}
+                  value={this.state.dateOfBirth}
                   onChange={this.handleChange}
               />
             </Grid>
@@ -146,6 +183,7 @@ class Signup extends React.Component{
                   variant="outlined"
                   name="phone"
                   label="Phone"
+                  error={phoneError}
                   required
                   fullWidth
                   id="phone"
@@ -153,14 +191,59 @@ class Signup extends React.Component{
                   onChange={this.handleChange}
               />
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="favSport"
+                  label="Favourite Sport"
+                  fullWidth
+                  id="favSport"
+                  value={this.state.questionnaire.favSport}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="levelPlayed"
+                  label="Level Played"
+                  fullWidth
+                  id="levelPlayed"
+                  value={this.state.questionnaire.levelPlayed}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="sportToLearn"
+                  label="Sport To Learn"
+                  fullWidth
+                  id="sportToLearn"
+                  value={this.state.questionnaire.sportToLearn}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                  variant="outlined"
+                  name="favTeam"
+                  label="Favourite Team"
+                  fullWidth
+                  id="favTeam"
+                  value={this.state.questionnaire.favTeam}
+                  onChange={this.handleQuestionnaireChange}
+              />
+            </Grid>
           </Grid>
+          {this.renderRedirect()}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-          >
+            >
             Sign Up
           </Button >
         </form>

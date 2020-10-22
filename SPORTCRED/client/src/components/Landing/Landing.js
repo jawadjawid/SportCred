@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Signup from './signup';
+import SignupIndex from './SignUpIndex';
+
 import Login from './Login';
 class Landing extends React.Component {
     constructor(props) {
@@ -39,8 +41,6 @@ render(){
                 <div>
                     <img className={classes.MainLabel} src = {logo} />
                     <div className={classes.NavBar}>
-                    
-                   {/* <Button className={classes.Login} onClick={this.openLogin.bind(this)}>Login</Button> */}
                    <Button className={classes.Login} href='/login'>Login</Button>
             <Button className={classes.Signup} onClick={this.openSignup.bind(this)}>Sign Up</Button>
             </div>
@@ -57,7 +57,7 @@ render(){
                         </DialogContent>
                     </Dialog>
                 </div>
-                <h1 className={classes.Motto}>Hoops to troops</h1>
+                {/*<h1 className={classes.Motto}>Hoops to troops</h1>*/}
             </div>
         </div>
     )

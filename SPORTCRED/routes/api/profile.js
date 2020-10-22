@@ -121,9 +121,9 @@ router.put('/setUserProfile/:username', (req, res, next) => {
     for(var key in req.body) {
         if(req.body.hasOwnProperty(key)){
             console.log("key: " + key + ", value: " + req.body[key])
-
+            const nonRequired = ['about','userIcon'];
             // Check that a key has a non-empty value
-            if(req.body[key] == ""){
+            if(req.body[key] == "" && nonRequired.indexOf(key) === -1){
                 return res.status(400).json({
                     message: "The key, \'" + key + "\' has an empty field"
                 });
@@ -139,10 +139,10 @@ router.put('/setUserProfile/:username', (req, res, next) => {
                 }
             }
 
-            // Check for properly formatted DD/MM/YYYY format in DOB request
+            // Check for properly formatted YYYY/MM/DD format in DOB request
             if(key == "dateOfBirth") {
                 console.log("DOB validation")
-                if(!req.body[key].match(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/)){
+                if(!req.body[key].match(/(\d{4})-(\d{2})-(\d{2})/)){
                     return res.status(400).json({
                         message: "DOB requires DD/MM/YYYY format"
                     });
