@@ -68,7 +68,7 @@ class Signup extends React.Component{
   }
 
   render(){
-    const { classes, handleNext} = this.props;
+    const { classes} = this.props;
     const { errorMessage, displayError} = this.state;
 
     return (
@@ -82,7 +82,7 @@ class Signup extends React.Component{
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={{handleNext}}>
+        <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
