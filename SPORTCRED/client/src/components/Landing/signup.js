@@ -15,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import {style} from './style';
 import {withStyles} from '@material-ui/core';
 import { register } from '../../backendConnector/signup';
+import { Redirect } from 'react-router';
+
 
 import { withRouter } from 'react-router-dom';
 
@@ -37,6 +39,7 @@ class Signup extends React.Component{
       "picture": "",
       "about": "",
       displayError: false,
+      redirect: false,
       "errorMessage": "",
       "questionnaire":{
         "favSport": "",
@@ -61,11 +64,22 @@ class Signup extends React.Component{
     });  }
 
   handleSubmit(event) {
-
     event.preventDefault();
     register(this)
     console.log(this.state.errorMessage);
   }
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/login' />
+    }
+  }
+
 
   render(){
     const { classes} = this.props;
@@ -216,13 +230,14 @@ class Signup extends React.Component{
               />
             </Grid>
           </Grid>
+          {this.renderRedirect()}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-          >
+            >
             Sign Up
           </Button >
         </form>

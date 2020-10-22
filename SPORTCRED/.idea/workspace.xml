@@ -33,6 +33,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8f68cf20-943b-4ad4-afce-f1c424481a5e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/backendConnector/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/backendConnector/signup.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Landing.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Landing.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/Landing/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/signup.js" afterDir="false" />
     </list>
@@ -51,8 +52,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="ProjectId" id="1jDNdj6Fa3ZQsIGsmik1KhUAuSh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="RunManager" selected="JavaScript Debug.fronend">
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="npm.dev">
     <configuration name="fronend" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -76,6 +88,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="jawad: added error handling, and working on redricting to sucusess page">
       <created>1603322067578</created>
@@ -84,8 +97,19 @@
       <option name="project" value="LOCAL" />
       <updated>1603322067578</updated>
     </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f68cf20-943b-4ad4-afce-f1c424481a5e" name="Default Changelist" comment="" />
+      <created>1603334792535</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603334792535</updated>
+      <workItem from="1603334793815" duration="2252000" />
+    </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -112,26 +136,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="888" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1603313412389" />
-    <state width="1515" height="26" key="GridCell.Tab.0.bottom" timestamp="1603319148090">
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom" timestamp="1603334857725">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1259" height="155" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603251856730" />
-    <state width="1515" height="26" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603319148090" />
-    <state width="1515" height="26" key="GridCell.Tab.0.center" timestamp="1603319148090">
+    <state width="1515" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603334857725" />
+    <state width="1515" height="210" key="GridCell.Tab.0.center" timestamp="1603334857725">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1259" height="155" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603251856730" />
-    <state width="1515" height="26" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603319148090" />
-    <state width="1515" height="26" key="GridCell.Tab.0.left" timestamp="1603319148089">
+    <state width="1515" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603334857725" />
+    <state width="1515" height="210" key="GridCell.Tab.0.left" timestamp="1603334857725">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1259" height="155" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603251856730" />
-    <state width="1515" height="26" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603319148089" />
-    <state width="1515" height="26" key="GridCell.Tab.0.right" timestamp="1603319148090">
+    <state width="1515" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603334857725" />
+    <state width="1515" height="210" key="GridCell.Tab.0.right" timestamp="1603334857725">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1259" height="155" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603251856730" />
-    <state width="1515" height="26" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603319148090" />
+    <state width="1515" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603334857725" />
     <state width="1515" height="26" key="GridCell.Tab.1.bottom" timestamp="1603319219762">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -180,6 +204,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1515" height="37" key="GridCell.Tab.3.right/0.0.1536.824@0.0.1536.824" timestamp="1603316712364" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1603335901134">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1603335901134" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -187,19 +215,16 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/client/src/backendConnector/signup.js</url>
           <line>16</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/client/src/components/Landing/SignUpIndex.js</url>
           <line>20</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/client/src/components/Landing/signup.js</url>
-          <line>84</line>
-          <properties lambdaOrdinal="-1" />
+          <line>102</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>

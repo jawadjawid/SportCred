@@ -17,7 +17,8 @@ export const register = (registerComp) => {
             if (json.status == 200) {
                 registerComp.setState({
                     errorMessage: "Success",
-                    displayError: false
+                    displayError: false,
+                    redirect: true
                 });
             } else {
                 registerComp.setState({

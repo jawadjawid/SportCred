@@ -41,8 +41,6 @@ render(){
                 <div>
                     <img className={classes.MainLabel} src = {logo} />
                     <div className={classes.NavBar}>
-                    
-                   {/* <Button className={classes.Login} onClick={this.openLogin.bind(this)}>Login</Button> */}
                    <Button className={classes.Login} href='/login'>Login</Button>
             <Button className={classes.Signup} onClick={this.openSignup.bind(this)}>Sign Up</Button>
             </div>
