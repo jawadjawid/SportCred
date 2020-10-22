@@ -68,7 +68,7 @@ class Signup extends React.Component{
   }
 
   render(){
-    const { classes, handleNext} = this.props;
+    const { classes} = this.props;
     const { errorMessage, displayError} = this.state;
 
     return (
