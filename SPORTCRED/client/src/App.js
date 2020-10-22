@@ -82,7 +82,6 @@ class App extends React.Component {
     
       state = {
         currentUser: null,
-        userType: null,
         isLoggedIn: false,
         isReadingCookie: true
       };

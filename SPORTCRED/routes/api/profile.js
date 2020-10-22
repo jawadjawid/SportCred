@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
     .then( accounts =>{
         if (accounts.length == 0 ) {
             res.status(422).json({
-                message: "username or password is incorrect"
+                message: "Your Username or Password is incorrect"
             });
         }else if (accounts.length == 1 ) {
             res.status(200).json({
@@ -324,15 +324,29 @@ router.put('/updateAbout/:username', (req, res, next) => {
 });
 
 
-// A route to check if a use is logged in on the session cookie
-router.get('/check-session', (req, res) => {
+// A route to check if a user is logged in on the session cookie
+router.get('/user/check-session', (req, res) => {
     const { username, isLoggedIn } = req.session;
-  
+    console.log(req.session)
+    console.log('inside check' + isLoggedIn)
     if (isLoggedIn) {
-      res.send({ currentUser: username, userType: userType });
+        
+      res.send({ currentUser: username});
     } else {
       res.status(401).send();
     }
   });
   
 module.exports = router;
+
+
+// A route to logout a user
+router.get('/logout', (req, res) => {
+    req.session.destroy((error) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.redirect('/');
+      }
+    });
+  });

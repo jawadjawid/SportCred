@@ -4,6 +4,7 @@ import Landing from './components/Landing/Landing'
 import Profile from './components/Profile/Profile';
 import Loading from './Loading';
 import Login from './components/Login/Login';
+import { logout } from '../src/backendConnector/login';
 export default props => {
 
     return (
@@ -13,6 +14,7 @@ export default props => {
                 <AuthRoute exact path='/login' props={props} component={Login}/>
                 <Landingpage exact path='/' props={props} component={Landing}/>
                 <ProfileRoute exact path='/profile' props={props} component={Profile}/>
+                <Route exact path='/logout' component={() => SignOut(props)}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
         </BrowserRouter>
@@ -43,6 +45,11 @@ const ProfileRoute = ({component: Component, props, ...rest}) => {
 };
 
 
+const SignOut = (props) => {
+    logout(props.app);
+    return <Redirect to={{ pathname: '/' }}/>;
+  };
+
 const Landingpage = ({component: Component, props, ...rest}) => {
     return <Component {...props} />
 };
@@ -68,12 +75,12 @@ const AuthenticateRoute = ({ component: Component, props, ...rest }) => {
         {...rest}
         render={({ history }) => {
           if (!isLoggedIn && !isReadingCookie) {
-            console.log('isloggedin' + !isLoggedIn)
-            console.log('isReading cookie' + !isReadingCookie)
+            console.log('isloggedin' + isLoggedIn)
+            console.log('isReading cookie' + isReadingCookie)
             return <Redirect to={{ pathname: '/' }}/>;
           } else if (isReadingCookie) {
              return <Loading/>;
-            console.log('ReadingCookie' + isReadingCookie)
+            
           }
           return <Component {...props} history={history}/>
         }}

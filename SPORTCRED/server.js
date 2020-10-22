@@ -8,9 +8,9 @@ const profiles = require('./routes/api/profile');
 const app = express();
 app.use(bodyParser.json());
 
-
+var routesArray = ['/login','/','/profile']
 // Create a session cookie
-app.use(session({
+app.use(routesArray,session({
     secret: 'pisession',
     resave: false,
     saveUninitialized: false,
@@ -28,5 +28,5 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/api/profile', profiles);
 
 const port = 5000;
-app.listen(port, () => console.log('Server started at port '+{port}));
+app.listen(port, () => console.log(`Server started at port ${port}`));
 

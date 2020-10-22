@@ -74,7 +74,7 @@ class Login extends React.Component{
         </Typography>
         <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
-          <Grid item xs={20}>
+          <Grid item xs={12}>
           <TextField className={classes.Errorlabel}
             value={this.state.errorMessage}
             onChange={event => this.setState({ text: event.target.value })}

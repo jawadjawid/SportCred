@@ -1,6 +1,6 @@
 
 export const readCookie = (app) => {
-    const url = 'http://localhost:5000/api/profile/check-session';
+    const url = 'http://localhost:5000/api/profile/user/check-session';
   
     fetch(url)
       .then(res => {
@@ -53,7 +53,6 @@ export const login = (loginComp, app) => {
             displayError: true,
             errorMessage: json.message
           });
-          console.log('here')
         } else {
             console.log('loginsucess')
             console.log(json.message)
@@ -71,4 +70,19 @@ export const login = (loginComp, app) => {
       });
   };
 
-
+  export const logout = (app) => {
+    const url = 'http://localhost:5000/api/profile/logout';
+  
+    fetch(url)
+      .then(() => {
+        app.setState({
+          currentUser: null,
+          userType: null,
+          isLoggedIn: false,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  

@@ -49,12 +49,8 @@ class Login extends React.Component{
         localStorage.removeItem('password');
         localStorage.removeItem('checked');
       }
-  
-    console.log(typeof(this))
-    console.log(this)
-    // login(userinfo).then(r => "");
+
     login(this, this.props.app);
-    console.log(this.state.errorMessage)
   }
 
   render(){
@@ -74,7 +70,7 @@ class Login extends React.Component{
         </Typography>
         <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
           <Grid container spacing={2}>
-          <Grid item xs={20}>
+          <Grid item xs={12}>
           <TextField className={classes.Errorlabel}
             value={this.state.errorMessage}
             onChange={event => this.setState({ text: event.target.value })}
