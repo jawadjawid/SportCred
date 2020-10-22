@@ -32,8 +32,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f68cf20-943b-4ad4-afce-f1c424481a5e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/Landing.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/Landing.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +100,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603334792535</updated>
-      <workItem from="1603334793815" duration="5687000" />
+      <workItem from="1603334793815" duration="6055000" />
     </task>
     <task id="LOCAL-00002" summary="jawad: fixed issue with redircting to loign">
       <created>1603337328659</created>
@@ -124,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603340251432</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="jawad: fixed issue with dob backend error handling">
+      <created>1603340508591</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1603340508591</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,7 +152,8 @@
     <MESSAGE value="jawad: added error handling, and working on redricting to sucusess page" />
     <MESSAGE value="jawad: fixed issue with redircting to loign" />
     <MESSAGE value="jawad: fixed issue with requering thr about field" />
-    <option name="LAST_COMMIT_MESSAGE" value="jawad: fixed issue with requering thr about field" />
+    <MESSAGE value="jawad: fixed issue with dob backend error handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="jawad: fixed issue with dob backend error handling" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603307968869">

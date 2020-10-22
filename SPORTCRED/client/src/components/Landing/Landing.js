@@ -57,7 +57,7 @@ render(){
                         </DialogContent>
                     </Dialog>
                 </div>
-                <h1 className={classes.Motto}>Hoops to troops</h1>
+                {/*<h1 className={classes.Motto}>Hoops to troops</h1>*/}
             </div>
         </div>
     )
