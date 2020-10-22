@@ -1,12 +1,15 @@
 const express = require('express');
 const { mongo } = require('mongoose');
 const router = express.Router();
-
+var cors = require('cors')
 const Profile = require('../../models/profile');
 
+var corsOptions = {
+    origin: 'http://localhost:3000',
+  }
+router.use(cors(corsOptions))
 
-
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
     // checks if account exists with username and password
     var user = req.body.username;
     var pass = req.body.password;
@@ -15,16 +18,12 @@ router.get('/login', (req, res) => {
     .exec()
     .then( accounts =>{
         if (accounts.length == 0 ) {
-            res.status(404).json({
-                message: "username or password is incorrect"
+            res.status(422).json({
+                message: "Your Username or Password is incorrect"
             });
         }else if (accounts.length == 1 ) {
             res.status(200).json({
                 message: "login successfull"
-            });
-        }else {
-            res.status(400).json({
-                message: "this means duplicate usernames exists!!!"
             });
         }
     });
@@ -324,4 +323,30 @@ router.put('/updateAbout/:username', (req, res, next) => {
         });
 });
 
+
+// A route to check if a user is logged in on the session cookie
+router.get('/user/check-session', (req, res) => {
+    const { username, isLoggedIn } = req.session;
+    console.log(req.session)
+    console.log('inside check' + isLoggedIn)
+    if (isLoggedIn) {
+        
+      res.send({ currentUser: username});
+    } else {
+      res.status(401).send();
+    }
+  });
+  
 module.exports = router;
+
+
+// A route to logout a user
+router.get('/logout', (req, res) => {
+    req.session.destroy((error) => {
+      if (error) {
+        res.status(500).send(error);
+      } else {
+        res.redirect('/');
+      }
+    });
+  });

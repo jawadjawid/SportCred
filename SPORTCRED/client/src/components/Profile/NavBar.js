@@ -47,6 +47,7 @@ function NavBar(props) {
                 <div style={{flex:'1'}}>
                 </div>
                 <Tab icon={<EmojiEmotions/>} component={Link} to="/profile" style={{'textDecoration': 'none'}}/>
+                <Tab label="Logout" component={Link} style={{'textDecoration': 'none'}} to="/logout"/>
             </Tabs>
         </AppBar>
 

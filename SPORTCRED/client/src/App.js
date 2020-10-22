@@ -4,6 +4,7 @@ import './App.css';
 import Routes from './Routes';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
+import { readCookie } from './backendConnector/login';
 
 const theme = createMuiTheme({
     overrides:{
@@ -25,6 +26,8 @@ const theme = createMuiTheme({
         quinary:{
             main: '#FFE400'
         },
+        type: 'dark',
+
         quaternary:{
             main: '#14A76C'
         },
@@ -70,9 +73,18 @@ const theme = createMuiTheme({
 
 class App extends React.Component {
 
-    state = {
-        currentUser: null
-    };
+    componentDidMount() {
+          if (!['/login'].includes(window.location.pathname)) {
+          readCookie(this);
+         }
+      
+    }
+    
+      state = {
+        currentUser: null,
+        isLoggedIn: false,
+        isReadingCookie: true
+      };
 
     render() {
         return (

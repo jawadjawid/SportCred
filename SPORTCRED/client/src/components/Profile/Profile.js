@@ -18,7 +18,10 @@ import ListItem from "@material-ui/core/ListItem";
 import NavBar from "./NavBar";
 
 class Profile extends React.Component {
-
+    constructor(props) {
+        super(props);
+      }
+    
     state = {
         userIcon:"",
         about:"",
@@ -67,7 +70,8 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-        getUserProfile('holeesin',this);
+        const {  currentUser } = this.props;
+        getUserProfile(currentUser,this);
     }
 
     render() {

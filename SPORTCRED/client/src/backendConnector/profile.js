@@ -49,7 +49,6 @@ export const getUserProfile = async (username, currPage) => {
     const createUserBackground = (data) => {
         const basicInfo = [{"username":data.username},{"about":data.about},{"fullName":data.fullName},{"dateOfBirth":data.dateOfBirth},{"email":data.email},{"phone":data.phone}];
         const additionalInfo = [ {"favSport": data.questionnaire["favSport"]},
-            {"age": data.questionnaire["age"]},
             {"favTeam": data.questionnaire["favTeam"]},
             {"sportToLearn":data.questionnaire["sportToLearn"]},
             {"levelPlayed": data.questionnaire["levelPlayed"]}];
@@ -59,7 +58,7 @@ export const getUserProfile = async (username, currPage) => {
 
 const createQuestionnaireToSendToDB = (profile) => {
      let questionnaire ={};
-    for(let i = 6; i < 11; i++){
+    for(let i = 6; i < 10; i++){
         const key = Object.keys(profile[i])
         questionnaire[key] = profile[i][key];
     }
