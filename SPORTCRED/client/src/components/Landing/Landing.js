@@ -52,7 +52,7 @@ render(){
                     <Dialog open={this.state.signup} >
                         <Button  className={classes.PopupExit}  onClick = {() => {this.setState({ signup: false })}}>X</Button>
                         <DialogContent >
-                            <SignupIndex ></SignupIndex>
+                            <Signup ></Signup>
                         </DialogContent>
                     </Dialog>
                 </div>
