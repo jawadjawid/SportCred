@@ -31,11 +31,18 @@ class Signup extends React.Component{
     super(props);
     this.state = {
       "username": '',
+      "usernameError": false,
       "password": "",
+      "passwordError": false,
       "phone": "",
+      "phoneError": false,
       "email": "",
+      "emailError": false,
       "fullName":"",
+      "fullNameError": false,
+
       "dateOfBirth": "",
+      "dateOfBirthError": false,
       "picture": "",
       "about": "",
       displayError: false,
@@ -80,10 +87,9 @@ class Signup extends React.Component{
     }
   }
 
-
   render(){
     const { classes} = this.props;
-    const { errorMessage, displayError} = this.state;
+    const { usernameError,passwordError, phoneError, emailError,dateOfBirthError, fullNameError} = this.state;
 
     return (
       <React.Fragment>
@@ -105,7 +111,7 @@ class Signup extends React.Component{
                   variant="outlined"
                   required
                   fullWidth
-                  error={displayError}
+                  error={usernameError}
                   id="userName"
                   label="User Name"
                   autoFocus
@@ -121,7 +127,7 @@ class Signup extends React.Component{
                 required
                 fullWidth
                 id="fullName"
-                error={displayError}
+                error={fullNameError}
                 label="Full Name"
                 autoFocus
                 value={this.state.fullName}
@@ -135,7 +141,7 @@ class Signup extends React.Component{
                 fullWidth
                 id="email"
                 type="email"
-                error={displayError}
+                error={emailError}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -150,7 +156,7 @@ class Signup extends React.Component{
                 fullWidth
                 name="password"
                 label="Password"
-                error={displayError}
+                error={passwordError}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -167,7 +173,7 @@ class Signup extends React.Component{
                   id="dateOfBirth"
                   name="dateOfBirth"
                   type='date'
-                  error={displayError}
+                  error={dateOfBirthError}
                   value={this.state.dateOfBirth}
                   onChange={this.handleChange}
               />
@@ -177,7 +183,7 @@ class Signup extends React.Component{
                   variant="outlined"
                   name="phone"
                   label="Phone"
-                  error={displayError}
+                  error={phoneError}
                   required
                   fullWidth
                   id="phone"
