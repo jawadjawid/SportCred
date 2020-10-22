@@ -33,8 +33,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8f68cf20-943b-4ad4-afce-f1c424481a5e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/backendConnector/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/backendConnector/signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Landing/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Landing/signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/profile.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603334792535</updated>
-      <workItem from="1603334793815" duration="5262000" />
+      <workItem from="1603334793815" duration="5687000" />
     </task>
     <task id="LOCAL-00002" summary="jawad: fixed issue with redircting to loign">
       <created>1603337328659</created>
@@ -118,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603337585524</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="jawad: fixed issue with requering thr about field">
+      <created>1603340251432</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1603340251432</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
