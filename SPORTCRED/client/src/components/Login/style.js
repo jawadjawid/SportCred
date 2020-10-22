@@ -68,8 +68,8 @@ export const style = theme => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        type: 'dark'
-
+        type: 'dark',
+        padding: '0% 30%'
         //backgroundColor: theme.palette.primary.main,
     },
       avatar: {
@@ -85,5 +85,6 @@ export const style = theme => ({
       },
       Errorlabel:{
         minWidth: '287px',
+        color: 'red',
       }
   })

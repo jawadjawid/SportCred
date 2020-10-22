@@ -1,19 +1,36 @@
-import axios from 'axios';
-// A function to send a POST request to login
 
-// let config = {
-//     headers: {
-//       header1: value,
-//     }
-//   }
+export const readCookie = (app) => {
+    const url = 'http://localhost:5000/api/profile/user/check-session';
+  
+    fetch(url)
+      .then(res => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then(json => {
+        if (json && json.currentUser) {
+          app.setState({
+            currentUser: json.currentUser,
+            
+            isLoggedIn: true,
+            isReadingCookie: false
+          });
+        } else {
+          app.setState({
+            isReadingCookie: false
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
 
-// export const login = async (userModel) => {
-//     axios.get('http://localhost:5000/api/profile/login', userModel)
-//         .then(res => console.log(res.data));
-// };
 
 
-// A function to send a POST request with the user to be logged in
+
 export const login = (loginComp, app) => {
     const request = new Request('http://localhost:5000/api/profile/login', {
       method: 'post',
@@ -25,25 +42,27 @@ export const login = (loginComp, app) => {
         'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
       }
     });
-  
     // Send the request with fetch()
-    fetch(request)
+    fetch(request,loginComp.state)
       .then(res => {
         return res.json();
       })
       .then(json => {
-        if (json.message !== undefined) {
+        if (json.message !== 'login successfull') {
           loginComp.setState({
             displayError: true,
             errorMessage: json.message
           });
         } else {
+            console.log('loginsucess')
+            console.log(json.message)
           app.setState({
-            currentUser: json.currentUser,
-            userType: json.userType,
+            currentUser:loginComp.state.username,
             isLoggedIn: true,
             isReadingCookie: false
           });
+          console.log(app);
+          console.log(app.state.currentUser);
         }
       })
       .catch(error => {
@@ -51,4 +70,19 @@ export const login = (loginComp, app) => {
       });
   };
 
-
+  export const logout = (app) => {
+    const url = 'http://localhost:5000/api/profile/logout';
+  
+    fetch(url)
+      .then(() => {
+        app.setState({
+          currentUser: null,
+          userType: null,
+          isLoggedIn: false,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  

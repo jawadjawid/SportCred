@@ -49,12 +49,8 @@ class Login extends React.Component{
         localStorage.removeItem('password');
         localStorage.removeItem('checked');
       }
-  
-    console.log(typeof(this))
-    console.log(this)
-    // login(userinfo).then(r => "");
+
     login(this, this.props.app);
-    console.log(this.state.errorMessage)
   }
 
   render(){
