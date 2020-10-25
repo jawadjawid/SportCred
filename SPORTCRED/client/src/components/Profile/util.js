@@ -48,7 +48,8 @@ export const mapDBKeyToQuestionnairePrompt = {
     "email":"Email",
     "fullName":"Full Name",
     "dateOfBirth":"Date of Birth",
-    "about":"About"
+    "about":"About",
+    "password":"Password"
 }
 
 export const mapQuestionnairePromptToDBKey = {
