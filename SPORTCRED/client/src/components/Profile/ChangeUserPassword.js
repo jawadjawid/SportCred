@@ -24,11 +24,42 @@ const styles = {
 export default class ChangeUserPassword extends React.Component {
 
     state = {
-        passwordChangeOptionsShown: false
+        passwordChangeOptionsShown: false,
+        errors : {
+            'cpass':false,
+            'npass':false,
+            'cnpass':false
+        }
+    }
+
+    errorMsgs = {
+        "notMatch": "Passwords do not match",
+        "blank": "Cannot leave field blank",
+        "incorrect":"Incorrect current password"
     }
 
     handleChangePassword = (event) => {
+        if(this.state.passwordChangeOptionsShown === true){
+
+        }
         this.setState({passwordChangeOptionsShown:!this.state.passwordChangeOptionsShown});
+    }
+
+    handleErrors = (field,value) => {
+       if(value.localeCompare("") === 0) {
+           let newState = {errors:this.state.errors};
+           newState['errors'][field] = true;
+           this.setState(newState);
+       }
+    }
+
+    renderButtonText = () => {
+        if(this.state.passwordChangeOptionsShown){
+            return <React.Fragment> Save Changes </React.Fragment>;
+        }
+        else {
+            return <React.Fragment>Change Password</React.Fragment>;
+        }
     }
 
     renderPasswordChangeOptions = () => {
@@ -39,7 +70,9 @@ export default class ChangeUserPassword extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
-                <Input type="password"/>
+                <Input type="password" error={this.state.errors.cpass} onBlur={(event)=>{
+                    this.handleErrors("cpass",event.target.value)
+                }}/>
                 </span>
                     </Grid>
                     <Grid item xs={6}>
@@ -47,7 +80,10 @@ export default class ChangeUserPassword extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
-                <Input type="password"/>
+                <Input type="password" error={this.state.errors.npass} onBlur={(event)=>{
+                    this.handleErrors("npass",event.target.value)
+                }}/>
+                <span style={{'color':'red'}}> wrong password homie</span>
                 </span>
                     </Grid>
                     <Grid item xs={6}>
@@ -55,7 +91,9 @@ export default class ChangeUserPassword extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
-                <Input type="password"/>
+                <Input type="password" ref="cnpass"  error={this.state.errors.cnpass} onBlur={(event)=>{
+                    this.handleErrors("cnpass",event.target.value)
+                }}/>
                 </span>
                     </Grid>
                 </Grid>
@@ -73,7 +111,7 @@ export default class ChangeUserPassword extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                     <span style={{display: 'block', 'width': '100%'}}>
-                        <Button style={{float: 'right', outline: 'none'}} onClick={this.handleChangePassword}> Change Password</Button>
+                        <Button style={{float: 'right', outline: 'none'}} onClick={this.handleChangePassword}>{this.renderButtonText()}</Button>
                     </span>
                 </Grid>
             </Grid>
