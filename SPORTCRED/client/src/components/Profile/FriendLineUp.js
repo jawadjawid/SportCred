@@ -46,7 +46,7 @@ export default class FriendLineUp extends React.Component {
         return (
             <React.Fragment>
                 <Card style={{padding: "1rem",margin:"1rem 0"}}>
-                    <Typography variant="h1" component="h1"  color="secondary">Friends Line Up</Typography>
+                    <Typography variant="h1" component="h1"  color="secondary">Radar List</Typography>
                     <FixedSizeList height={300} width={280} itemSize={30} itemCount={this.props.friends.length}>
                         {this.renderRow}
                     </FixedSizeList>
