@@ -23,8 +23,49 @@ const styles = {
 
 export default class ChangeUserPassword extends React.Component {
 
+    state = {
+        passwordChangeOptionsShown: false
+    }
+
+    handleChangePassword = (event) => {
+        this.setState({passwordChangeOptionsShown:!this.state.passwordChangeOptionsShown});
+    }
+
+    renderPasswordChangeOptions = () => {
+            if(this.state.passwordChangeOptionsShown){
+                return <Grid container spacing={0}>
+                    <Grid item xs={6}>
+                        <Typography variant="h5" style={styles.PasswordText}> Current Password</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                <span style={styles.InputSpan}>
+                <Input type="password"/>
+                </span>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="h5" style={styles.PasswordText}> New Password</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                <span style={styles.InputSpan}>
+                <Input type="password"/>
+                </span>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography variant="h5" style={styles.PasswordText}> Confirm New Password</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                <span style={styles.InputSpan}>
+                <Input type="password"/>
+                </span>
+                    </Grid>
+                </Grid>
+            } else {
+                return <React.Fragment></React.Fragment>
+            }
+    }
+
     render() {
-        return <React.Fragment>
+        return (<React.Fragment>
             <Grid container spacing={0}>
                 <Grid item xs={6}><b>
                     <Typography variant="h4" style={{color: '#ece7e7'}}> Password</Typography>
@@ -32,39 +73,13 @@ export default class ChangeUserPassword extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                     <span style={{display: 'block', 'width': '100%'}}>
-                        &#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;
-                        <Button style={{float: 'right', outline: 'none'}}> Change Password</Button>
+                        <Button style={{float: 'right', outline: 'none'}} onClick={this.handleChangePassword}> Change Password</Button>
                     </span>
                 </Grid>
             </Grid>
             {/*<Divider style={{'margin-bottom':'10px'}}/>*/}
-            <Grid container spacing={0}>
-                <Grid item xs={6}>
-                    <Typography variant="h5" style={styles.PasswordText}> Current Password</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <span style={styles.InputSpan}>
-                        <Input type="password"/>
-                    </span>
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography variant="h5" style={styles.PasswordText}> New Password</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <span style={styles.InputSpan}>
-                        <Input type="password"/>
-                    </span>
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography variant="h5" style={styles.PasswordText}> Confirm New Password</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                    <span style={styles.InputSpan}>
-                        <Input type="password"/>
-                    </span>
-                </Grid>
-            </Grid>
+            {this.renderPasswordChangeOptions()}
             <Divider style={{'margin':'10px 0'}}/>
-        </React.Fragment>
+        </React.Fragment>)
     }
 }
