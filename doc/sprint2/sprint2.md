@@ -1,5 +1,5 @@
 # Goals
-Complete user stories for this sprint so that we have an application that allows users to sign up, log in, and see/update their profile information. We also want to have a homepage so users are welcomed once they sign in and they're able to access the other pages of the application from the welcome page. 
+Complete user stories for this sprint so that we have an application that allows users to make picks and predictions, make posts in the open court and interact with other user's posts, change their password and be able to log out of the application.
 
 # Stories
 IL-3: As Amanda, I want a homepage, so that I can access application’s other pages from there  
