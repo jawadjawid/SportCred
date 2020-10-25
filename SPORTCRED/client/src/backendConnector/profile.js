@@ -115,5 +115,20 @@ export const setUserProfile = async (data,username,source) => {
     return promise;
 };
 
+export const getUserPassword = async (username, currPage) => {
+    axios.get('http://localhost:5000/api/profile/getUserPassword/'+ username).then((res) => {
+        if(res.status === 200) {
+            return res.data[0];
+        }
+    }).then(data => {
+        currPage.setState(data);
+        return true;
+    }).catch(error => {
+        alert('Something went wrong. Please Try again Later.')
+        return false;
+    });
+
+}
+
 
 

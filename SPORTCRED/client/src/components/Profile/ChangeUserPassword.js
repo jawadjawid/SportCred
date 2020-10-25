@@ -8,6 +8,8 @@ import EditableText from "./EditText";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const styles = {
     InputSpan : {
@@ -25,10 +27,23 @@ export default class ChangeUserPassword extends React.Component {
 
     state = {
         passwordChangeOptionsShown: false,
-        errors : {
-            'cpass':false,
-            'npass':false,
-            'cnpass':false
+        successfulPassChange:false,
+        fields : {
+            cpass:{
+                value:'',
+                error:false,
+                errorMsg:''
+            },
+            npass:{
+                value:'',
+                error:false,
+                errorMsg:''
+            },
+            cnpass:{
+                value:'',
+                error:false,
+                errorMsg:''
+            },
         }
     }
 
@@ -40,17 +55,51 @@ export default class ChangeUserPassword extends React.Component {
 
     handleChangePassword = (event) => {
         if(this.state.passwordChangeOptionsShown === true){
-
+            this.setState({successfulPassChange:true});
         }
         this.setState({passwordChangeOptionsShown:!this.state.passwordChangeOptionsShown});
     }
 
-    handleErrors = (field,value) => {
-       if(value.localeCompare("") === 0) {
-           let newState = {errors:this.state.errors};
-           newState['errors'][field] = true;
-           this.setState(newState);
-       }
+    handleSuccessfulPassChangeClose= (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({successfulPassChange:false});
+        }
+
+    setValueThenHandleError = (field,value)  => {
+        let newFields = {...this.state.fields};
+        let newField = {...newFields[field]};
+        newField.value = value;
+        newFields[field] = newField;
+        this.setState({fields: newFields},()=>{
+            this.handleErrors(field);
+        });
+    }
+
+    setError = (field,error, errorMsg) => {
+        let newFields = {...this.state.fields};
+        let newField = {...newFields[field]};
+        newField.error = error;
+        newField.errorMsg = errorMsg;
+        newFields[field] = newField;
+        this.setState({fields: newFields});
+    }
+
+    handleErrors = (field) => {
+        const value = this.state.fields[field].value;
+        if(value.localeCompare("") === 0) {
+          this.setError(field,true,this.errorMsgs.blank);
+          return;
+        }
+
+        if(field.localeCompare("cnpass") === 0 && this.state.fields['npass'].value.localeCompare(value) !==0){
+            this.setError(field,true,this.errorMsgs.notMatch);
+            return;
+        }
+
+       this.setError(field,false,'');
     }
 
     renderButtonText = () => {
@@ -70,9 +119,10 @@ export default class ChangeUserPassword extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
-                <Input type="password" error={this.state.errors.cpass} onBlur={(event)=>{
-                    this.handleErrors("cpass",event.target.value)
+                <Input type="password" error={this.state.fields.cpass.error} onBlur={(event)=>{
+                    this.setValueThenHandleError("cpass",event.target.value);
                 }}/>
+                <span style={{'color':'red'}}>{this.state.fields.cpass.errorMsg}</span>
                 </span>
                     </Grid>
                     <Grid item xs={6}>
@@ -80,10 +130,10 @@ export default class ChangeUserPassword extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
-                <Input type="password" error={this.state.errors.npass} onBlur={(event)=>{
-                    this.handleErrors("npass",event.target.value)
+                <Input type="password" error={this.state.fields.npass.error} onBlur={(event)=>{
+                    this.setValueThenHandleError("npass",event.target.value);
                 }}/>
-                <span style={{'color':'red'}}> wrong password homie</span>
+                <span style={{'color':'red'}}>{this.state.fields.npass.errorMsg}</span>
                 </span>
                     </Grid>
                     <Grid item xs={6}>
@@ -91,20 +141,27 @@ export default class ChangeUserPassword extends React.Component {
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
-                <Input type="password" ref="cnpass"  error={this.state.errors.cnpass} onBlur={(event)=>{
-                    this.handleErrors("cnpass",event.target.value)
+                <Input type="password" ref="cnpass"  error={this.state.fields.cnpass.error} onBlur={(event)=>{
+                    this.setValueThenHandleError("cnpass",event.target.value);
                 }}/>
+                <span style={{'color':'red'}}>{this.state.fields.cnpass.errorMsg}</span>
                 </span>
                     </Grid>
                 </Grid>
             } else {
-                return <React.Fragment></React.Fragment>
+                return null
             }
     }
 
     render() {
-        return (<React.Fragment>
-            <Grid container spacing={0}>
+        return (
+            <React.Fragment>
+                <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={this.state.successfulPassChange} autoHideDuration={6000} onClose={this.handleSuccessfulPassChangeClose}>
+                    <Alert onClose={this.handleSuccessfulPassChangeClose} severity="success">
+                        Password changed successfully!
+                    </Alert>
+                </Snackbar>
+                <Grid container spacing={0}>
                 <Grid item xs={6}><b>
                     <Typography variant="h4" style={{color: '#ece7e7'}}> Password</Typography>
                 </b>
