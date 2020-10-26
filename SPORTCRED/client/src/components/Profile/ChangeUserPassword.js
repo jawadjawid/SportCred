@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import {getUserPassword} from "../../backendConnector/profile";
 
 const styles = {
     InputSpan : {
@@ -24,25 +25,29 @@ const styles = {
 }
 
 export default class ChangeUserPassword extends React.Component {
-
     state = {
+        currUserPassword:'testy',
         passwordChangeOptionsShown: false,
         successfulPassChange:false,
+        buttonDisabled:false,
         fields : {
             cpass:{
                 value:'',
                 error:false,
-                errorMsg:''
+                errorMsg:'',
+                initialBlank:true
             },
             npass:{
                 value:'',
                 error:false,
-                errorMsg:''
+                errorMsg:'',
+                initialBlank:true
             },
             cnpass:{
                 value:'',
                 error:false,
-                errorMsg:''
+                errorMsg:'',
+                initialBlank:true
             },
         }
     }
@@ -53,11 +58,34 @@ export default class ChangeUserPassword extends React.Component {
         "incorrect":"Incorrect current password"
     }
 
+    componentDidMount() {
+        // getUserPassword(this.props.username,this);
+    }
+
     handleChangePassword = (event) => {
-        if(this.state.passwordChangeOptionsShown === true){
-            this.setState({successfulPassChange:true});
+        if(this.state.passwordChangeOptionsShown){
+            this.setState({successfulPassChange:true,passwordChangeOptionsShown:false, fields : {
+                    cpass:{
+                        value:'',
+                        error:false,
+                        errorMsg:'',
+                        initialBlank:true
+                    },
+                    npass:{
+                        value:'',
+                        error:false,
+                        errorMsg:'',
+                        initialBlank:true
+                    },
+                    cnpass:{
+                        value:'',
+                        error:false,
+                        errorMsg:'',
+                        initialBlank:true
+                    }}});
+        } else{
+            this.setState({passwordChangeOptionsShown:true,buttonDisabled:true});
         }
-        this.setState({passwordChangeOptionsShown:!this.state.passwordChangeOptionsShown});
     }
 
     handleSuccessfulPassChangeClose= (event, reason) => {
@@ -84,22 +112,46 @@ export default class ChangeUserPassword extends React.Component {
         newField.error = error;
         newField.errorMsg = errorMsg;
         newFields[field] = newField;
-        this.setState({fields: newFields});
+        if(error){
+            this.setState({buttonDisabled: true}, () => {
+                this.setState({fields: newFields});
+            });
+        } else {
+            newField.initialBlank = false;
+                this.setState({fields: newFields}, () => {
+                    const anyError = this.state.fields.cpass.error || this.state.fields.npass.error || this.state.fields.cnpass.error;
+                    const initialBlanks = this.state.fields.cpass.initialBlank || this.state.fields.npass.initialBlank || this.state.fields.cnpass.initialBlank;
+                    if(!anyError && !initialBlanks) {
+                        this.setState({buttonDisabled: false});
+                    }
+            });
+        }
+
     }
 
-    handleErrors = (field) => {
+    handleErrors = async (field) => {
         const value = this.state.fields[field].value;
         if(value.localeCompare("") === 0) {
-          this.setError(field,true,this.errorMsgs.blank);
+          await this.setError(field,true,this.errorMsgs.blank);
           return;
         }
 
-        if(field.localeCompare("cnpass") === 0 && this.state.fields['npass'].value.localeCompare(value) !==0){
-            this.setError(field,true,this.errorMsgs.notMatch);
+        if(field.localeCompare("cpass") === 0 && this.state.currUserPassword.localeCompare(value) !== 0){
+            await this.setError("cpass",true,this.errorMsgs.incorrect);
             return;
         }
 
-       this.setError(field,false,'');
+        if(field.localeCompare("cnpass") === 0 && this.state.fields['npass'].value.localeCompare(value) !==0){
+            await this.setError("cnpass",true,this.errorMsgs.notMatch);
+            return;
+        }
+
+        if(field.localeCompare("npass") === 0 && this.state.fields['cnpass'].value.localeCompare(value) === 0){
+            await this.setError("cnpass",false,'');
+        }
+
+
+       await this.setError(field,false,'');
     }
 
     renderButtonText = () => {
@@ -113,7 +165,7 @@ export default class ChangeUserPassword extends React.Component {
 
     renderPasswordChangeOptions = () => {
             if(this.state.passwordChangeOptionsShown){
-                return <Grid container spacing={0}>
+                return <Grid container spacing={0} style={{'margin-top':'-17px'}}>
                     <Grid item xs={6}>
                         <Typography variant="h5" style={styles.PasswordText}> Current Password</Typography>
                     </Grid>
@@ -168,7 +220,7 @@ export default class ChangeUserPassword extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                     <span style={{display: 'block', 'width': '100%'}}>
-                        <Button style={{float: 'right', outline: 'none'}} onClick={this.handleChangePassword}>{this.renderButtonText()}</Button>
+                        <Button style={{float: 'right', outline: 'none'}} onClick={this.handleChangePassword} disabled={this.state.buttonDisabled}>{this.renderButtonText()}</Button>
                     </span>
                 </Grid>
             </Grid>

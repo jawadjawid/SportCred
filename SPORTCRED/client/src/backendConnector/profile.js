@@ -121,7 +121,7 @@ export const getUserPassword = async (username, currPage) => {
             return res.data[0];
         }
     }).then(data => {
-        currPage.setState(data);
+        currPage.setState({currUserPass:data.password});
         return true;
     }).catch(error => {
         alert('Something went wrong. Please Try again Later.')
