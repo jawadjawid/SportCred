@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
-import {getUserPassword} from "../../backendConnector/profile";
+import {getUserPassword, setUserProfile} from "../../backendConnector/profile";
 
 const styles = {
     InputSpan : {
@@ -29,6 +29,7 @@ export default class ChangeUserPassword extends React.Component {
         currUserPassword:'testy',
         passwordChangeOptionsShown: false,
         successfulPassChange:false,
+        unsuccessfulPassChange:false,
         buttonDisabled:false,
         fields : {
             cpass:{
@@ -62,9 +63,11 @@ export default class ChangeUserPassword extends React.Component {
         // getUserPassword(this.props.username,this);
     }
 
-    handleChangePassword = (event) => {
+    handleChangePassword = async (event) => {
         if(this.state.passwordChangeOptionsShown){
-            this.setState({successfulPassChange:true,passwordChangeOptionsShown:false, fields : {
+            const newPassCopy = this.state.fields.npass.value.slice();
+            const isPassChange = (await setUserProfile(newPassCopy,this.props.username,'changeUserPass'))?'successfulPassChange':'unsuccessfulPassChange';
+            let newState = {currUserPassword:newPassCopy,successfulPassChange:true,passwordChangeOptionsShown:false, fields : {
                     cpass:{
                         value:'',
                         error:false,
@@ -82,7 +85,9 @@ export default class ChangeUserPassword extends React.Component {
                         error:false,
                         errorMsg:'',
                         initialBlank:true
-                    }}});
+                    }}};
+            newState[isPassChange] = true;
+            this.setState(newState);
         } else{
             this.setState({passwordChangeOptionsShown:true,buttonDisabled:true});
         }
@@ -94,7 +99,15 @@ export default class ChangeUserPassword extends React.Component {
         }
 
         this.setState({successfulPassChange:false});
+    }
+
+    handleUnsuccessfulPassChangeClose= (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
         }
+
+        this.setState({unsuccessfulPassChange:false});
+    }
 
     setValueThenHandleError = (field,value)  => {
         let newFields = {...this.state.fields};
@@ -213,9 +226,14 @@ export default class ChangeUserPassword extends React.Component {
                         Password changed successfully!
                     </Alert>
                 </Snackbar>
+                <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={this.state.unsuccessfulPassChange} autoHideDuration={6000} onClose={this.handleSuccessfulPassChangeClose}>
+                    <Alert onClose={this.handleUnsuccessfulPassChangeClose} severity="error">
+                        Password changed unsuccessfully!
+                    </Alert>
+                </Snackbar>
                 <Grid container spacing={0}>
                 <Grid item xs={6}><b>
-                    <Typography variant="h4" style={{color: '#ece7e7'}}> Password</Typography>
+                    <Typography variant="h2" style={{color: '#ece7e7'}}> Password</Typography>
                 </b>
                 </Grid>
                 <Grid item xs={6}>

@@ -178,10 +178,10 @@ class EditUserInfoDetails extends React.Component {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
+                            <ChangeUserPassword username={this.props.info[0]["username"]}/>
                             <Typography variant="h2" style={{'margin-bottom': '10px', color: 'white'}}>
                                 Basic Information
                             </Typography>
-                            <ChangeUserPassword username={this.props.info[0]["username"]}/>
                             <FixedSizeList height={300} itemSize={40} itemCount={this.basicInfo.length}
                                            style={{'display': 'inline'}}>
                                 {this.renderRowBasic}

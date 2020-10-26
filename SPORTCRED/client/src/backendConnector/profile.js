@@ -77,6 +77,10 @@ const setData = async (data, source) => {
                 phone: data[5]["phone"],
                 questionnaire: createQuestionnaireToSendToDB(data)
             }
+        case 'changeUserPass':
+            return {
+                password:data
+            }
         case 'iconUpload':
             // profile pic updated
             const pic = await axios.post('https://api.cloudinary.com/v1_1/dhdevhapy/image/upload', data.userIcon
