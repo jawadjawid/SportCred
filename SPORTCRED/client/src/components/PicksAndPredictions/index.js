@@ -4,10 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 
-import UserBasicInfo from "./UserBasicInfo";
-import UserACSScore from "./UserACSScore";
-import FriendLineUp from "./FriendLineUp";
-import UserAboutInfo from "./UserAboutInfo";
 import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
@@ -20,8 +16,8 @@ import NavBar from "../NavBar";
 class Profile extends React.Component {
     constructor(props) {
         super(props);
-      }
-    
+    }
+
     state = {
         userIcon:"",
         about:"",
@@ -84,34 +80,31 @@ class Profile extends React.Component {
             this.setState({userBackground:copy}, () => {
                 console.log(info);
                 console.log(this.state);
-                });
+            });
         }
 
         return (<div className={classes.Background}>
-                    <NavBar/>
+                <NavBar/>
                 <CssBaseline/>
                 <div>
-                <Grid container spacing={3} className={classes.GridContainer}>
-                    <Grid item xs={3} className={classes.GridItemLeft}>
-                        <UserBasicInfo fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
-                        <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
-                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
-                        <FriendLineUp friends={this.state.friends}/>
+                    <Grid container spacing={3} className={classes.GridContainer}>
+                        <Grid item xs={3} className={classes.GridItemLeft}>
+
+                        </Grid>
+                        <Grid item xs={9} className={classes.GridItemRight}>
+                            <React.Fragment >
+                                <Card raised>
+                                    <List >
+                                        <ListItem style={{ justifyContent:'center' }}>
+                                            <Typography variant="h1" component="h1" >Posts will be here</Typography>
+                                        </ListItem >
+                                    </List>
+                                </Card>
+                            </React.Fragment>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={9} className={classes.GridItemRight}>
-                        <React.Fragment >
-                            <Card raised>
-                                <List >
-                                    <ListItem style={{ justifyContent:'center' }}>
-                                        <Typography variant="h1" component="h1" >Posts will be here</Typography>
-                                    </ListItem >
-                                </List>
-                            </Card>
-                        </React.Fragment>
-                    </Grid>
-                </Grid>
                 </div>
-        </div>
+            </div>
         );
     }
 }
