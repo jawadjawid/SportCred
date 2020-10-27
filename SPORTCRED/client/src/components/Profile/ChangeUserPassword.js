@@ -19,7 +19,7 @@ const styles = {
     },
     PasswordText: {
         color: '#ece7e7',
-        'margin-left':'40px',
+      //  'margin-left':'40px',
         'padding-top':'15px'
     }
 }
@@ -169,7 +169,7 @@ export default class ChangeUserPassword extends React.Component {
 
     renderButtonText = () => {
         if(this.state.passwordChangeOptionsShown){
-            return <React.Fragment> Save Changes </React.Fragment>;
+            return <React.Fragment> Save New Password </React.Fragment>;
         }
         else {
             return <React.Fragment>Change Password</React.Fragment>;
@@ -178,9 +178,9 @@ export default class ChangeUserPassword extends React.Component {
 
     renderPasswordChangeOptions = () => {
             if(this.state.passwordChangeOptionsShown){
-                return <Grid container spacing={0} style={{'margin-top':'-17px'}}>
+                return <Grid container spacing={0} style={{'margin-top':'-10px','margin-bottom':'40px'}}>
                     <Grid item xs={6}>
-                        <Typography variant="h5" style={styles.PasswordText}> Current Password</Typography>
+                        <Typography variant="h4" style={styles.PasswordText}> Current Password</Typography>
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
@@ -191,7 +191,7 @@ export default class ChangeUserPassword extends React.Component {
                 </span>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="h5" style={styles.PasswordText}> New Password</Typography>
+                        <Typography variant="h4" style={styles.PasswordText}> New Password</Typography>
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
@@ -202,7 +202,7 @@ export default class ChangeUserPassword extends React.Component {
                 </span>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography variant="h5" style={styles.PasswordText}> Confirm New Password</Typography>
+                        <Typography variant="h4" style={styles.PasswordText}> Confirm New Password</Typography>
                     </Grid>
                     <Grid item xs={6}>
                 <span style={styles.InputSpan}>
@@ -238,7 +238,7 @@ export default class ChangeUserPassword extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                     <span style={{display: 'block', 'width': '100%'}}>
-                        <Button style={{float: 'right', outline: 'none'}} onClick={this.handleChangePassword} disabled={this.state.buttonDisabled}>{this.renderButtonText()}</Button>
+                        <Button style={{float: 'right', outline: 'none'}} color="secondary" onClick={this.handleChangePassword} disabled={this.state.buttonDisabled}>{this.renderButtonText()}</Button>
                     </span>
                 </Grid>
             </Grid>
