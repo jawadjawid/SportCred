@@ -29,6 +29,20 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/getUserPassword', (req, res) => {
+    // gets a user's password from username
+
+    Profile.find({username:req.body.username})
+        .then(data => {
+            if (data.length == 0){
+                res.status(404).json({message:"This username does not exist"})
+            }else res.status(200).json({password: data[0].password})})
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({error: error});
+        });
+});
+
 router.get('/:username', (req, res) => {
     // gets a user's profile from username
     // Note: Posts and ACS fields only show objectIds 
