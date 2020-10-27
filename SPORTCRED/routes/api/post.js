@@ -10,8 +10,7 @@ router.post('/createPost/:username', (req, res) => {
         return res.status(400).json({message: "postContent field is missing from json"})
     }
 
-    if(req.body.postContent == "")
-    {
+    if(req.body.postContent == "") {
         return res.status(400).json({message: "The post is empty (postContent field is empty)"})
     }
 
