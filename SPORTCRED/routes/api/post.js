@@ -46,12 +46,14 @@ router.post('/getAllPosts', (req, res) => {
 });
 
 router.post('/getPosts/:username', (req, res) => {
+    // Find the profile first and get it's id
     Profile.findOne({username: req.params.username})
     .exec(function(err, profile) {
         if(profile == null) {
             return res.status(400).json({message:"This user does not exist"})
         }
         else {
+            // Query posts using the profiles id 
             Post.find({poster: profile._id})
                 .sort({'postDate': 'desc'})
                 .exec()
