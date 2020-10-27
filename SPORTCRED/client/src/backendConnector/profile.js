@@ -122,7 +122,7 @@ export const setUserProfile = async (data,username,source) => {
 export const getUserPassword = async (username, currPage) => {
     axios.get('http://localhost:5000/api/profile/getUserPassword/'+ username).then((res) => {
         if(res.status === 200) {
-            return res.data[0];
+            return res.data;
         }
     }).then(data => {
         currPage.setState({currUserPass:data.password});

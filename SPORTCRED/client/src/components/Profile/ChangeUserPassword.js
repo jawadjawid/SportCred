@@ -26,7 +26,7 @@ const styles = {
 
 export default class ChangeUserPassword extends React.Component {
     state = {
-        currUserPassword:'testy',
+        currUserPass:'testy',
         passwordChangeOptionsShown: false,
         successfulPassChange:false,
         unsuccessfulPassChange:false,
@@ -60,14 +60,14 @@ export default class ChangeUserPassword extends React.Component {
     }
 
     componentDidMount() {
-        // getUserPassword(this.props.username,this);
+        getUserPassword(this.props.username,this);
     }
 
     handleChangePassword = async (event) => {
         if(this.state.passwordChangeOptionsShown){
             const newPassCopy = this.state.fields.npass.value.slice();
             const isPassChange = (await setUserProfile(newPassCopy,this.props.username,'changeUserPass'))?'successfulPassChange':'unsuccessfulPassChange';
-            let newState = {currUserPassword:newPassCopy,successfulPassChange:true,passwordChangeOptionsShown:false, fields : {
+            let newState = {currUserPass:newPassCopy,successfulPassChange:true,passwordChangeOptionsShown:false, fields : {
                     cpass:{
                         value:'',
                         error:false,
@@ -149,7 +149,7 @@ export default class ChangeUserPassword extends React.Component {
           return;
         }
 
-        if(field.localeCompare("cpass") === 0 && this.state.currUserPassword.localeCompare(value) !== 0){
+        if(field.localeCompare("cpass") === 0 && this.state.currUserPass.localeCompare(value) !== 0){
             await this.setError("cpass",true,this.errorMsgs.incorrect);
             return;
         }
