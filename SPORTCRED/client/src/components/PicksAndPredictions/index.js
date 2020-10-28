@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 
-import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
+import {getUserPicksAndPredictions, setUserPicksAndPredictions} from "../../backendConnector/picksAndPredictions";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
@@ -12,14 +12,18 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import NavBar from "../NavBar";
+import UserAboutInfo from "../Profile/UserAboutInfo";
+import MatchCard from "./MatchCard"
+import UserBasicInfo from "../Profile/UserBasicInfo";
+import {Avatar} from "@material-ui/core";
 
-class Profile extends React.Component {
+class PicksAndPredictions extends React.Component {
     constructor(props) {
         super(props);
     }
 
     state = {
-        userIcon:"",
+        userIcon:"https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Toronto_Raptors_logo.svg/1200px-Toronto_Raptors_logo.svg.png",
         about:"",
         phone:"",
         friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
@@ -65,10 +69,10 @@ class Profile extends React.Component {
         ]
     };
 
-    componentDidMount() {
-        const {  currentUser } = this.props;
-        getUserProfile(currentUser,this);
-    }
+    // componentDidMount() {
+    //     const {  currentUser } = this.props;
+    //     getUserPicksAndPredictions(currentUser,this);
+    // }
 
     render() {
         const {classes} = this.props;
@@ -89,17 +93,15 @@ class Profile extends React.Component {
                 <div>
                     <Grid container spacing={3} className={classes.GridContainer}>
                         <Grid item xs={3} className={classes.GridItemLeft}>
-
                         </Grid>
                         <Grid item xs={9} className={classes.GridItemRight}>
                             <React.Fragment >
-                                <Card raised>
-                                    <List >
-                                        <ListItem style={{ justifyContent:'center' }}>
-                                            <Typography variant="h1" component="h1" >Posts will be here</Typography>
-                                        </ListItem >
-                                    </List>
-                                </Card>
+                                <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
+                                <MatchCard fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                                <br/>
+                                <MatchCard fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                                <br/>
+                                <MatchCard fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
                             </React.Fragment>
                         </Grid>
                     </Grid>
@@ -109,5 +111,5 @@ class Profile extends React.Component {
     }
 }
 
-export default withRouter(withStyles(style)(Profile))
+export default withRouter(withStyles(style)(PicksAndPredictions))
 
