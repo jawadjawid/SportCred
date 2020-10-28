@@ -5,8 +5,9 @@ const ScheduleSchema = new Schema({
     teams: { type: String, 
         match: /[a-zA-Z0-9\s-'()]+ [vs]+ [a-zA-Z0-9\s-'()]+/,
         required: true },
+    // Date format MM/DD/YYYY
     date: { type: String, 
-        match: /(\d{4})-(\d{2})-(\d{2})/, 
+        match: /(\d{2})-(\d{2})-(\d{4})/, 
         required: true },
     time: { type: String, 
         match: /((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/,
