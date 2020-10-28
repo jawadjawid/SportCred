@@ -9,8 +9,8 @@ export default class UserBasicInfo extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            imgSrc: props.userIcon,
-            username: props.username
+            teamA: props.teamA,
+            teamB: props.teamB
         }
     }
 
@@ -26,7 +26,7 @@ export default class UserBasicInfo extends React.Component{
                 <Card>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
-                            <TeamLogo username={this.props.username} userIcon={this.state.imgSrc}/>
+                            <TeamLogo teamA={this.props.teamA} teamB= {this.state.teamB}/>
                         </ListItem>
                     </List>
                 </Card>

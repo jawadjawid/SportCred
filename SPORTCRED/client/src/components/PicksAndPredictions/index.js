@@ -15,59 +15,41 @@ import NavBar from "../NavBar";
 import UserAboutInfo from "../Profile/UserAboutInfo";
 import MatchCard from "./MatchCard"
 import UserBasicInfo from "../Profile/UserBasicInfo";
-import {Avatar} from "@material-ui/core";
+import {Avatar, Button} from "@material-ui/core";
 
 class PicksAndPredictions extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    state = {
-        userIcon:"https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Toronto_Raptors_logo.svg/1200px-Toronto_Raptors_logo.svg.png",
-        about:"",
-        phone:"",
-        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
-            {"fullName": "John Doe", "username": "hi142"},
-            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
-            {"fullName": "Albert Liu", "username": "alberto"},
-            {"fullName": "Mohammad Sajjad", "username": "mohao"},
-            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
-            {"fullName": "John Doe", "username": "hi142"},
-            {"fullName": "Pussy Cat", "username": "meow"},
-            {"fullName": "Albert Liu", "username": "alberto"},
-            {"fullName": "Mohammad Sajjad", "username": "mohao"}
-        ],
-        acsScore:"",
-        acsHistoryReport:[{
-            "acsStart":"35",
-            "acsEnd":"41",
-            "activity":"Trivia with user5223 with final score of 142:42",
-            "date":"Oct 12"
-        },{
-            "acsStart":"31",
-            "acsEnd":"35",
-            "activity":"Debate won w post #4324",
-            "date":"Oct 7"
-        },{
-            "acsStart":"33",
-            "acsEnd":"31",
-            "activity":"Trivia w user3252 with final score of 100:24",
-            "date":"Oct 3"
-        }],
-        userBackground: [
-            {"username":"bobby123"},
-            {"about": "Im dumb"},
-            {"fullName": "Bob Thisismylastnamehaha"},
-            {"dateOfBirth":"02/03/2000"},
-            {"email": "bobbybobbob@ilikeball.com"},
-            {"phone":"sdjjsljdf"},
-            {"favSport": "Basketball"},
-            {"age": "2"},
-            {"favTeam": "Miami Heat"},
-            {"sportToLearn":"cricket"},
-            {"levelPlayed": "college"}
-        ]
-    };
+    state = [
+        {
+            "time": "15:30",
+            "teams": {
+                "teamA": {
+                    "name": "Raptors",
+                    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Toronto_Raptors_logo.svg/1200px-Toronto_Raptors_logo.svg.png"
+                },
+                "teamB": {
+                    "name": "Heats",
+                    "logo": "https://sportslogohistory.com/wp-content/uploads/2017/12/miami_heat_2000-pres.png"
+                }
+            }
+        },
+        {
+            "time": "15:30",
+            "teams": {
+                "teamA": {
+                    "name": "Warriors",
+                    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Golden_State_Warriors_logo.svg/1200px-Golden_State_Warriors_logo.svg.png"
+                },
+                "teamB": {
+                    "name": "Celtics",
+                    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boston_Celtics.svg/1200px-Boston_Celtics.svg.png"
+                }
+            }
+        }
+    ];
 
     // componentDidMount() {
     //     const {  currentUser } = this.props;
@@ -77,7 +59,7 @@ class PicksAndPredictions extends React.Component {
     render() {
         const {classes} = this.props;
 
-        const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
+        // const backUpData = JSON.parse(JSON.stringify(this.state.userBackground));
 
         const setProfileState = (info) => {
             const copy = [...info['userBackground']];
@@ -96,12 +78,19 @@ class PicksAndPredictions extends React.Component {
                         </Grid>
                         <Grid item xs={9} className={classes.GridItemRight}>
                             <React.Fragment >
-                                <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
-                                <MatchCard fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                                {/*<UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>*/}
+                                <Card style={{padding: "0.8rem"}} className={classes.Card}>
+                                    <Typography variant="h1" component="h1" color="quaternary">Upcoming Matches</Typography>
+                                </Card>
+                                <MatchCard teamA={this.state[0].teams.teamA} teamB = {this.state[0].teams.teamB}  setProfileState={setProfileState}/>
                                 <br/>
-                                <MatchCard fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                                <MatchCard teamA={this.state[1].teams.teamA} teamB = {this.state[1].teams.teamB} setProfileState={setProfileState}/>
                                 <br/>
-                                <MatchCard fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                                <MatchCard teamA={this.state[0].teams.teamA} teamB = {this.state[0].teams.teamB}  setProfileState={setProfileState}/>
+                                <br/>
+                                <MatchCard teamA={this.state[1].teams.teamA} teamB = {this.state[1].teams.teamB}  setProfileState={setProfileState}/>
+                                <br/>
+                                <MatchCard teamA={this.state[0].teams.teamA} teamB = {this.state[0].teams.teamB}  setProfileState={setProfileState}/>
                             </React.Fragment>
                         </Grid>
                     </Grid>
