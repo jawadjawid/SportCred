@@ -77,6 +77,10 @@ const setData = async (data, source) => {
                 phone: data[5]["phone"],
                 questionnaire: createQuestionnaireToSendToDB(data)
             }
+        case 'changeUserPass':
+            return {
+                password:data
+            }
         case 'iconUpload':
             // profile pic updated
             const pic = await axios.post('https://api.cloudinary.com/v1_1/dhdevhapy/image/upload', data.userIcon
@@ -114,6 +118,21 @@ export const setUserProfile = async (data,username,source) => {
 
     return promise;
 };
+
+export const getUserPassword = async (username, currPage) => {
+    axios.get('http://localhost:5000/api/profile/getUserPassword/'+ username).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).then(data => {
+        currPage.setState({currUserPass:data.password});
+        return true;
+    }).catch(error => {
+        alert('Something went wrong. Please Try again Later.')
+        return false;
+    });
+
+}
 
 
 

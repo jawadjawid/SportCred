@@ -29,10 +29,10 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/getUserPassword', (req, res) => {
+router.get('/getUserPassword/:username', (req, res) => {
     // gets a user's password from username
 
-    Profile.find({username:req.body.username})
+    Profile.find({username:req.params.username})
         .then(data => {
             if (data.length == 0){
                 res.status(404).json({message:"This username does not exist"})

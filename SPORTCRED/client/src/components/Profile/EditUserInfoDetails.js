@@ -14,22 +14,24 @@ import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import {createMuiTheme} from "@material-ui/core/styles";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import ChangeUserPassword from "./ChangeUserPassword";
 
 const theme1 = createMuiTheme({
     palette: {
-        background:{
-            default:'#61892f',
-            paper:'#1f1f1d'
+        background: {
+            default: '#61892f',
+            paper: '#1f1f1d'
         },
-        secondary:  {
+        secondary: {
             //orange
             main: '#61892f',
-            dark:'#61892f'},
-        type:'dark'
+            dark: '#61892f'
+        },
+        type: 'dark'
     },
     typography: {
         fontFamily:
-            ['Helvetica Neue',', Helvetica'].join(',')
+            ['Helvetica Neue', ', Helvetica'].join(',')
         ,
         h1: {
             fontSize: '1.5rem',
@@ -38,17 +40,17 @@ const theme1 = createMuiTheme({
         h2: {
             fontSize: '1.5rem'
         },
-        h3:{
-            fontSize:'1.2rem'
+        h3: {
+            fontSize: '1.2rem'
         },
-        h4:{
-            fontSize:'1.0rem'
+        h4: {
+            fontSize: '1.0rem'
         },
-        h5:{
-            fontSize:'1.0rem'
+        h5: {
+            fontSize: '0.8rem'
         },
-        h6:{
-            fontSize:'0.5rem'
+        h6: {
+            fontSize: '0.5rem'
         }
     }
 });
@@ -71,10 +73,10 @@ class EditUserInfoDetails extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.info !== this.state.info) {
-            this.setState({info:nextProps.info});
+            this.setState({info: nextProps.info});
         }
-        if(nextProps.backUp !== this.state.backUp){
-            this.setState({backUp:nextProps.backUp});
+        if (nextProps.backUp !== this.state.backUp) {
+            this.setState({backUp: nextProps.backUp});
         }
     }
 
@@ -142,7 +144,7 @@ class EditUserInfoDetails extends React.Component {
 
     save = async () => {
         const info = JSON.parse(JSON.stringify(this.state.info));
-        const ha = await setUserProfile(info,info[0]["username"] ,'editUserInfo');
+        const ha = await setUserProfile(info, info[0]["username"], 'editUserInfo');
         if (ha === true) {
             this.setState({'backUp': info});
             this.props.setProfileState({userBackground: info});
@@ -169,21 +171,22 @@ class EditUserInfoDetails extends React.Component {
         return (
             <ThemeProvider theme={theme1}>
                 <Dialog disableBackdropClick disableEscapeKeyDown open={this.props.open} onClose={this.props.close}
-                        fullWidth="true" maxWidth="md" style={{'color':'#FF0000'}}>
+                        fullWidth="true" maxWidth="md" style={{'color': '#FF0000'}}>
                     <DialogTitle><Typography variant="h1" component="h1" color="secondary"><b>Edit
                         Profile</b></Typography>
                         <Divider/>
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            <Typography variant="h2" style={{'margin-bottom': '10px',color:'white'}}>
+                            <ChangeUserPassword username={this.props.info[0]["username"]}/>
+                            <Typography variant="h2" style={{'margin-bottom': '10px', color: 'white'}}>
                                 Basic Information
                             </Typography>
                             <FixedSizeList height={300} itemSize={40} itemCount={this.basicInfo.length}
                                            style={{'display': 'inline'}}>
                                 {this.renderRowBasic}
                             </FixedSizeList>
-                            <Typography variant="h2" style={{'margin-bottom': '10px',color:'white'}}>
+                            <Typography variant="h2" style={{'margin-bottom': '10px', color: 'white'}}>
                                 Additional Information
                             </Typography>
                             <FixedSizeList height={300} itemSize={40} itemCount={this.additionalInfo.length}
