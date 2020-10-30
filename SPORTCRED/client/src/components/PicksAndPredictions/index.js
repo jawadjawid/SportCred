@@ -22,48 +22,30 @@ class PicksAndPredictions extends React.Component {
         super(props);
     }
 
-    state = [
-        {
-            "time": "15:30",
-            "teams": {
-                "teamA": {
-                    "name": "Raptors",
-                    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/3/36/Toronto_Raptors_logo.svg/1200px-Toronto_Raptors_logo.svg.png"
-                },
-                "teamB": {
-                    "name": "Heats",
-                    "logo": "https://sportslogohistory.com/wp-content/uploads/2017/12/miami_heat_2000-pres.png"
-                }
-            }
-        },
-        {
-            "time": "15:30",
-            "teams": {
-                "teamA": {
-                    "name": "Warriors",
-                    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Golden_State_Warriors_logo.svg/1200px-Golden_State_Warriors_logo.svg.png"
-                },
-                "teamB": {
-                    "name": "Celtics",
-                    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boston_Celtics.svg/1200px-Boston_Celtics.svg.png"
-                }
-            }
-        }
-    ];
+    state =  {
+        datas:
 
-    // componentDidMount() {
-    //     const {  currentUser } = this.props;
-    //     getUserPicksAndPredictions(currentUser,this);
-    // }
+        {
+            date: "tan"
+        }
+
+};
+
+    componentDidMount() {
+        const {  currentData: currentData } = this.props;
+        getUserPicksAndPredictions(currentData,this);
+       // console.log(this.state)
+    }
 
     render() {
         const {classes} = this.props;
+        const {datas} = this.state;
+        console.log({datas}.datas.date)
 
-        // const backUpData = JSON.parse(JSON.stringify(this.state.userBackground));
-
+        const backUpData = JSON.parse(JSON.stringify(this.state.datas));
         const setProfileState = (info) => {
-            const copy = [...info['userBackground']];
-            this.setState({userBackground:copy}, () => {
+            const copy = [...info['datas']];
+            this.setState({datas:copy}, () => {
                 console.log(info);
                 console.log(this.state);
             });
@@ -82,15 +64,16 @@ class PicksAndPredictions extends React.Component {
                                 <Card style={{padding: "0.8rem"}} className={classes.Card}>
                                     <Typography variant="h1" component="h1" color="quaternary">Upcoming Matches</Typography>
                                 </Card>
-                                <MatchCard teamA={this.state[0].teams.teamA} teamB = {this.state[0].teams.teamB}  setProfileState={setProfileState}/>
+                                <MatchCard teamA={{datas}.datas.date} teamB = {this.state.datas.date} roundNum={{datas}.datas.date} date={this.state.datas.date} setProfileState={setProfileState}/>
                                 <br/>
-                                <MatchCard teamA={this.state[1].teams.teamA} teamB = {this.state[1].teams.teamB} setProfileState={setProfileState}/>
-                                <br/>
-                                <MatchCard teamA={this.state[0].teams.teamA} teamB = {this.state[0].teams.teamB}  setProfileState={setProfileState}/>
-                                <br/>
-                                <MatchCard teamA={this.state[1].teams.teamA} teamB = {this.state[1].teams.teamB}  setProfileState={setProfileState}/>
-                                <br/>
-                                <MatchCard teamA={this.state[0].teams.teamA} teamB = {this.state[0].teams.teamB}  setProfileState={setProfileState}/>
+                                {/*<MatchCard teamA={this.state[1].teams.teamA} teamB = {this.state[1].teams.teamB} roundNum={this.state[1].round} date={this.state[1].date} setProfileState={setProfileState}/>*/}
+                                {/*<br/>*/}
+                                {/*<MatchCard teamA={this.state[2].teams.teamA} teamB = {this.state[2].teams.teamB} roundNum={this.state[2].round} date={this.state[2].date} setProfileState={setProfileState}/>*/}
+                                {/*<br/>*/}
+                                {/*<MatchCard teamA={this.state[3].teams.teamA} teamB = {this.state[3].teams.teamB} roundNum={this.state[3].round} date={this.state[3].date} setProfileState={setProfileState}/>*/}
+                                {/*<br/>*/}
+                                {/*<MatchCard teamA={this.state[4].teams.teamA} teamB = {this.state[4].teams.teamB}  roundNum={this.state[4].round} date={this.state[4].date} setProfileState={setProfileState}/>*/}
+                                {/*<br/>*/}
                             </React.Fragment>
                         </Grid>
                     </Grid>

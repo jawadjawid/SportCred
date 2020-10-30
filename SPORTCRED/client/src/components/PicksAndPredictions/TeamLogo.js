@@ -9,7 +9,9 @@ export default class TeamLogo extends React.Component {
         super(props);
         this.state = {
             teamA: props.teamA,
-            teamB: props.teamB
+            teamB: props.teamB,
+            date: props.date,
+            roundNum: props.roundNum
         }
     }
 
@@ -21,17 +23,17 @@ export default class TeamLogo extends React.Component {
     render() {
         const styles = {
             TeamA: {
-                right: '210px',
+                right: '240px',
                 position: 'relative',
             },
             TeamB: {
                 position: 'relative',
-                left: '190px'
+                left: '240px'
             },
             TeamBLogo: {
                 width: '90px',
                 height: '90px',
-               left: '200px',
+                left: '200px',
                 position: 'relative'
             },
             TeamALogo: {
@@ -47,7 +49,7 @@ export default class TeamLogo extends React.Component {
                 <List >
                     <ListItem  >
                         <Avatar  style={styles["TeamALogo"]} alt={this.state.teamA.name} src={this.state.teamA.logo}/>
-                        <Typography variant="h1" component="h1">Today <br /> 14:45</Typography>
+                        <Typography variant="h1" component="h1">{this.state.roundNum} <br /> {this.state.date}</Typography>
                         <Avatar  style={styles["TeamBLogo"]} alt={this.state.teamB.name} src={this.state.teamB.logo}/>
                     </ListItem>
                     <ListItem style={{ justifyContent:'center' }}>

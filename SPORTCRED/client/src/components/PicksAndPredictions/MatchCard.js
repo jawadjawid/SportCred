@@ -5,12 +5,14 @@ import ListItem from "@material-ui/core/ListItem";
 import TeamLogo from "./TeamLogo";
 
 
-export default class UserBasicInfo extends React.Component{
+export default class MatchCard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             teamA: props.teamA,
-            teamB: props.teamB
+            teamB: props.teamB,
+            date: props.date,
+            roundNum: props.roundNum,
         }
     }
 
@@ -21,12 +23,15 @@ export default class UserBasicInfo extends React.Component{
     }
 
     render(){
+        if (this.state.roundNum != "") {
+            this.state.roundNum = "Round: " + this.state.roundNum;
+        }
         return (
             <React.Fragment>
                 <Card>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
-                            <TeamLogo teamA={this.props.teamA} teamB= {this.state.teamB}/>
+                            <TeamLogo teamA={this.state.teamA} teamB= {this.state.teamB} date={this.state.date} roundNum={this.state.roundNum}/>
                         </ListItem>
                     </List>
                 </Card>
