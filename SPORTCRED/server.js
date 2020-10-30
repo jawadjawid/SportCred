@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 
 const profiles = require('./routes/api/profile');
+const posts = require('./routes/api/post');
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,6 +27,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => console.log(err));
 
 app.use('/api/profile', profiles);
+app.use('/api/post', posts);
 
 const port = 5000;
 app.listen(port, () => console.log(`Server started at port ${port}`));
