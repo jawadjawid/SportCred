@@ -1,36 +1,20 @@
 const express = require('express');
 const { mongo } = require('mongoose');
 const router = express.Router();
-var cors = require('cors');
+//var cors = require('cors');
 
 const Schedule = require('../../models/schedule');
 
-var corsOptions = {
+/*var corsOptions = {
     origin: 'http://localhost:3000'
   }
 router.use(cors(corsOptions));
-
-router.post('/game', (req, res) => {
-    const schedule = new Schedule({
-        teams: req.body.teams,
-        date: req.body.date,
-        time: req.body.time,
-        venue: req.body.venue
-    })
-
-    schedule.save()
-        .then(data => res.json(data))
-        .catch(error => {
-            console.log(error)
-            res.status(500).json({
-                error: error
-            });
-        });
-});
+*/
 
 router.get('/game', (req, res) => {
     Schedule.find({})
-        .select('teams date venue time')
+        .select('date winner teams round')
+        .exec()
         .then(data => {
             console.log(data);
 
@@ -46,6 +30,19 @@ router.get('/game', (req, res) => {
             console.log(err);
             res.status(500).json({error:err});
         });
+});
+
+router.delete('/game/:id', (req, res) => {
+    const id = req.params.id;
+
+    Schedule.remove({_id:id}).exec().then(result => {
+        console.log(result);
+
+        res.status(200).json({
+            message: 'Game deleted'
+        });
+    })
+    .catch(err => {res.status(500).json({error: err})});
 });
 
 module.exports = router;
