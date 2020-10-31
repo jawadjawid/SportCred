@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,6 +8,9 @@ import Avatar from "@material-ui/core/Avatar";
 import logo from "../assets/logo.png";
 import {EmojiEmotions} from "@material-ui/icons";
 import withStyles from "@material-ui/core/styles/withStyles";
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+import {getACSScoreChange, updateACSScoreChange} from "../backendConnector/profile";
 
 const styles = (theme) => ({
         tab: {
@@ -23,11 +26,25 @@ const styles = (theme) => ({
 
 function NavBar(props) {
     const [value, setValue] = React.useState(2);
+    const [displayACSScoreChangeNotif,setDisplayACSScoreChangeNotif] = React.useState(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    const {classes} = props;
+    const {classes,username} = props;
+
+    const handleACSScoreChangeClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setDisplayACSScoreChangeNotif(false);
+        updateACSScoreChange(username);
+    }
+
+    useEffect(() => {
+        getACSScoreChange(username,setDisplayACSScoreChangeNotif);
+    });
 
     return (
         <AppBar position="static" color="default" className={classes.tab} >
@@ -49,6 +66,11 @@ function NavBar(props) {
                 <Tab icon={<EmojiEmotions/>} component={Link} to="/profile" style={{'textDecoration': 'none'}}/>
                 <Tab label="Logout" component={Link} style={{'textDecoration': 'none'}} to="/logout"/>
             </Tabs>
+            <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={displayACSScoreChangeNotif} autoHideDuration={6000} onClose={handleACSScoreChangeClose}>
+                <Alert onClose={handleACSScoreChangeClose} severity="success">
+                    Password changed successfully!
+                </Alert>
+            </Snackbar>
         </AppBar>
 
     );

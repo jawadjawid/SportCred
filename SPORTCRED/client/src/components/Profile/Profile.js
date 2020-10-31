@@ -88,7 +88,7 @@ class Profile extends React.Component {
         }
 
         return (<div className={classes.Background}>
-                    <NavBar/>
+                    <NavBar username={this.props.currentUser}/>
                 <CssBaseline/>
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
