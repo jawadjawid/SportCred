@@ -17,8 +17,20 @@ export default class MatchCard extends React.Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.userIcon !== this.state.imgSrc) {
-            this.setState({imgSrc:nextProps.userIcon});
+        if (nextProps.teamA !== this.state.teamA) {
+            this.setState({teamA:nextProps.teamA});
+        }
+
+        if (nextProps.teamB !== this.state.teamB) {
+            this.setState({teamB:nextProps.teamB});
+        }
+
+        if (nextProps.date !== this.state.date) {
+            this.setState({date:nextProps.date});
+        }
+
+        if (nextProps.roundNum !== this.state.roundNum) {
+            this.setState({roundNum:nextProps.roundNum});
         }
     }
 

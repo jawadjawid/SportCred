@@ -23,32 +23,47 @@ class PicksAndPredictions extends React.Component {
     }
 
     state =  {
-        datas:
-
-        {
-            date: "tan"
-        }
-
+        data:
+            [
+                {
+                    date: "2020-07-30",
+                    winner: "UTA",
+                    teams: {
+                        teamA: {
+                            name: "UTA",
+                            logo: "https://sportslogohistory.com/wp-content/uploads/2017/12/utah_jazz_2016-pres.png"
+                        },
+                        teamB: {
+                            name: " NOP ",
+                            logo: "https://sportslogohistory.com/wp-content/uploads/2017/12/new_orleans_pelicans_2014-pres.png"
+                        }
+                    },
+                    round: "0"
+                }
+            ]
 };
 
     componentDidMount() {
         const {  currentData: currentData } = this.props;
         getUserPicksAndPredictions(currentData,this);
-       // console.log(this.state)
     }
 
     render() {
         const {classes} = this.props;
-        const {datas} = this.state;
-        console.log({datas}.datas.date)
-
-        const backUpData = JSON.parse(JSON.stringify(this.state.datas));
+        const backUpData = JSON.parse(JSON.stringify(this.state.data));
         const setProfileState = (info) => {
-            const copy = [...info['datas']];
-            this.setState({datas:copy}, () => {
+            const copy = [...info['data']];
+            this.setState({data:copy}, () => {
                 console.log(info);
                 console.log(this.state);
             });
+        }
+
+        const items = []
+
+        for (const [index, value] of this.state.data.entries()) {
+            items.push(<MatchCard teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
+            items.push(<br/>)
         }
 
         return (<div className={classes.Background}>
@@ -64,16 +79,7 @@ class PicksAndPredictions extends React.Component {
                                 <Card style={{padding: "0.8rem"}} className={classes.Card}>
                                     <Typography variant="h1" component="h1" color="quaternary">Upcoming Matches</Typography>
                                 </Card>
-                                <MatchCard teamA={{datas}.datas.date} teamB = {this.state.datas.date} roundNum={{datas}.datas.date} date={this.state.datas.date} setProfileState={setProfileState}/>
-                                <br/>
-                                {/*<MatchCard teamA={this.state[1].teams.teamA} teamB = {this.state[1].teams.teamB} roundNum={this.state[1].round} date={this.state[1].date} setProfileState={setProfileState}/>*/}
-                                {/*<br/>*/}
-                                {/*<MatchCard teamA={this.state[2].teams.teamA} teamB = {this.state[2].teams.teamB} roundNum={this.state[2].round} date={this.state[2].date} setProfileState={setProfileState}/>*/}
-                                {/*<br/>*/}
-                                {/*<MatchCard teamA={this.state[3].teams.teamA} teamB = {this.state[3].teams.teamB} roundNum={this.state[3].round} date={this.state[3].date} setProfileState={setProfileState}/>*/}
-                                {/*<br/>*/}
-                                {/*<MatchCard teamA={this.state[4].teams.teamA} teamB = {this.state[4].teams.teamB}  roundNum={this.state[4].round} date={this.state[4].date} setProfileState={setProfileState}/>*/}
-                                {/*<br/>*/}
+                                {items}
                             </React.Fragment>
                         </Grid>
                     </Grid>
