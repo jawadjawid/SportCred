@@ -25,25 +25,14 @@ router.get('/game', (req, res) => {
         });
 });
 
-router.get('/upcomingMatch/today', (req, res) => {
-    for(var i in req.body) {
-        if(req.body.hasOwnProperty(i)) {
-            if(req.body[i] === ""){
-                return res.status(400).json({
-                    message: "The key, \'" + i + "\' has an empty field"
-                });
-            }
-        }
-
-        if(i === "date") {
-            if(!req.body[i].match(/(\d{4})-(\d{2})-(\d{2})/)){
-                return res.status(400).json({
-                    message: "DOB requires YYYY-MM-DD format"
-                });
-            }
-        }
+router.get('/upcomingMatch/today/:date', (req, res) => {
+    let date = req.params.date;
+    if(!date.match(/(\d{4})-(\d{2})-(\d{2})/))
+    {
+        return res.status(400).json({
+            message: "DOB requires DD/MM/YYYY format"
+        });
     }
-    let date = req.body.date;
     
     Schedule.find({date: date})
         .select('date winner teams round')
@@ -65,43 +54,33 @@ router.get('/upcomingMatch/today', (req, res) => {
         });    
 });
 
-router.get('/upcomingMatch/tomorrow', (req, res) => {
-    for(var i in req.body) {
-        if(req.body.hasOwnProperty(i)) {
-            if(req.body[i] === ""){
-                return res.status(400).json({
-                    message: "The key, \'" + i + "\' has an empty field"
-                });
-            }
-        }
-
-        if(i === "date") {
-            if(!req.body[i].match(/(\d{4})-(\d{2})-(\d{2})/)){
-                return res.status(400).json({
-                    message: "DOB requires YYYY-MM-DD format"
-                });
-            }
-        }
+router.get('/upcomingMatch/tomorrow/:date', (req, res) => {
+    const today = req.params.date;
+    if(!today.match(/(\d{4})-(\d{2})-(\d{2})/))
+    {
+        return res.status(400).json({
+            message: "DOB requires DD/MM/YYYY format"
+        });
     }
-    const today = req.body.date;
     let date;
     let dateParts = today.split('-');
     let month = parseInt(dateParts[1], 10);
     let day = parseInt(dateParts[2], 10);
     let year = parseInt(dateParts[0], 10);
 
-    if(month > 12 && day > 31)
+    if(month === 12 && (day + 1) > 31)
         date = [year + 1, '01', '01'].join('-');
-    else if (day > 31 && month === 1 && month === 3 && month === 5 
-        && month === 7 && month === 8 && month === 10 && month === 12)
+    else if ((day + 1) > 31 && (month === 1 || month === 3 || month === 5 
+        || month === 7 || month === 8 || month === 10 || month === 12))
     {
-        if((month + 1) > 9)
+        if((month + 1) < 10)
             month = '0' + (month + 1);
         else
             month = month + 1;
         date = [year, month, '01'].join('-');
+        console.log("end of month 31 days");
     }
-    else if (day > 30 && month === 4 && month === 6 && month === 9 && month === 11)
+    else if ((day + 1) > 30 && (month === 4 || month === 6 || month === 9 || month === 11))
     {
         if((month + 1) < 10)
             month = '0' + (month + 1);
@@ -109,7 +88,7 @@ router.get('/upcomingMatch/tomorrow', (req, res) => {
             month = month + 1;
         date = [year, month, '01'].join('-');
     }
-    else if (day > 28 && (year%4 !== 0) && month === 2)
+    else if ((day + 1) > 28 && (year%4 !== 0) && month === 2)
     {
         if((month + 1) < 10)
             month = '0' + (month + 1);
@@ -117,7 +96,7 @@ router.get('/upcomingMatch/tomorrow', (req, res) => {
             month = month + 1;
         date = [year, month, '01'].join('-');
     }
-    else if (day > 29 && (year%4 === 0) && month === 2)
+    else if ((day + 1) > 29 && (year%4 === 0) && month === 2)
     {
         if((month + 1) < 10)
             month = '0' + (month + 1);
@@ -135,7 +114,7 @@ router.get('/upcomingMatch/tomorrow', (req, res) => {
             month = '0' + month;
         date = [year, month, day].join('-');
     }
-
+    console.log(date);
     Schedule.find({date: date})
         .select('date winner teams round')
         .exec()
