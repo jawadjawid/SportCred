@@ -61,6 +61,10 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'ACSmetrics'
     },
+    ACSScoreChange: {
+        type: Boolean,
+        default: false
+    },
     posts: [{
         type: Schema.Types.ObjectId,
         ref: "Posts"

@@ -4,6 +4,7 @@ import Landing from './components/Landing/Landing'
 import Profile from './components/Profile/Profile';
 import Loading from './Loading';
 import Login from './components/Login/Login';
+import PicksAndPredictions from './components/PicksAndPredictions/index'
 import { logout } from '../src/backendConnector/login';
 export default props => {
 
@@ -14,6 +15,7 @@ export default props => {
                 <AuthRoute exact path='/login' props={props} component={Login}/>
                 <Landingpage exact path='/' props={props} component={Landing}/>
                 <ProfileRoute exact path='/profile' props={props} component={Profile}/>
+                <PicksAndPredictionsRoute exact path='/picks' props={props} component={PicksAndPredictions}/>
                 <Route exact path='/logout' component={() => SignOut(props)}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
@@ -42,6 +44,11 @@ const AuthRoute = ({ component: Component, props, ...rest }) => {
 const ProfileRoute = ({component: Component, props, ...rest}) => {
     return(
     <AuthenticateRoute {...rest} props={props} component={Component} />)
+};
+
+const PicksAndPredictionsRoute = ({component: Component, props, ...rest}) => {
+    return(
+        <AuthenticateRoute {...rest} props={props} component={Component} />)
 };
 
 

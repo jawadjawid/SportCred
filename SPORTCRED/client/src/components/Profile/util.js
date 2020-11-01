@@ -2,7 +2,7 @@ export const validate = (value,editText)=>{
     const currErrorValue = editText.state.error;
     const prompt = editText.props.prompt;
 
-    if(value.localeCompare('')===0){
+    if(value.localeCompare('')===0 && optionalFields().indexOf(prompt) !== -1){
         return invalid(editText,currErrorValue, 'Do not leave field empty',editText.props.validationForSave);
     }
 
@@ -34,9 +34,12 @@ const invalid = (editText,currErrorValue, errorMsg,validationForSave) => {
     return false
 }
 
+const optionalFields = () => {
+    return ["about","favSport","levelPlayed","sportToLearn","favTeam"];
+}
+
 export const mapDBKeyToQuestionnairePrompt = {
     "favSport":"Favourite Sport",
-    "age":"Age",
     "levelPlayed":"Highest Level of Sports Played",
     "sportToLearn":"Odd Sport",
     "favTeam": "Favourite Team",
@@ -45,12 +48,12 @@ export const mapDBKeyToQuestionnairePrompt = {
     "email":"Email",
     "fullName":"Full Name",
     "dateOfBirth":"Date of Birth",
-    "about":"About"
+    "about":"About",
+    "password":"Password"
 }
 
 export const mapQuestionnairePromptToDBKey = {
     "Favourite Sport":"favSport",
-    "Age":"age",
     "Highest Level of Sports Played":"levelPlayed",
     "Odd Sport":"sportToLearn",
 "Favourite Team":"favTeam",

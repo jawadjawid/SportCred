@@ -29,10 +29,10 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/getUserPassword', (req, res) => {
+router.get('/getUserPassword/:username', (req, res) => {
     // gets a user's password from username
 
-    Profile.find({username:req.body.username})
+    Profile.find({username:req.params.username})
         .then(data => {
             if (data.length == 0){
                 res.status(404).json({message:"This username does not exist"})
@@ -325,6 +325,43 @@ router.put('/updateAbout/:username', (req, res, next) => {
     }
 
     Profile.updateOne({ username: req.params.username }, { about: req.body.about })
+        .then(() => {
+            res.status(200).json({
+                message: 'updated successfully'
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
+router.get('/getACSScoreChange/:username', (req, res) => {
+    // gets a user's ACSScoreChange value from username
+
+    Profile.find({username:req.params.username})
+        .then(data => {
+            if (data.length == 0){
+                res.status(404).json({message:"This username does not exist"})
+            }else res.status(200).json({ACSScoreChange: data[0].ACSScoreChange})})
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({error: error});
+        });
+});
+
+router.put('/updateACSScoreChange/:username', (req, res, next) => {
+    console.log("Hitting update ACSScoreChange endpt with id " + req.params.username)
+
+    // If ACSScoreChange key is not in JSON body then return 400 status
+    if ((typeof req.body.ACSScoreChange) === 'undefined') {
+        res.status(400).json({
+            error: error
+        })
+    }
+
+    Profile.updateOne({ username: req.params.username }, { ACSScoreChange: req.body.ACSScoreChange })
         .then(() => {
             res.status(200).json({
                 message: 'updated successfully'
