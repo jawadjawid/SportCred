@@ -71,7 +71,7 @@ const ProfileSchema = new Schema({
     }],
     predictions: [{
         gameId: {
-            type: String
+            type: Schema.Types.ObjectID,
         },
         predictedWinner: {
             type: String
