@@ -1,35 +1,7 @@
-// import React, { useEffect } from 'react'
-import Card from "@material-ui/core/Card";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-// import Typography from "@material-ui/core/Typography";
-// import { Button } from "@material-ui/core";
-// import TextField from '@material-ui/core/TextField';
-// import Grid from '@material-ui/core/Grid';
-// import withStyles from "@material-ui/core/styles/withStyles";
-// import { style } from "./style";
-// import Divider from "@material-ui/core/Divider";
-// import EditUserInfoDetails from "./EditUserInfoDetails";
-
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { style } from './style';
-import { withStyles } from '@material-ui/core';
-import { register } from '../../backendConnector/signup';
-import { Redirect } from 'react-router';
-
+import { Card } from '@material-ui/core';
 
 
 export default class CreatePost extends React.Component {
@@ -38,11 +10,12 @@ export default class CreatePost extends React.Component {
         super(props);
         this.state = {
             username: this.props.username,
-            postBody: "",
+            postBody: "What have you been thinking about lately?",
             postBodyError: false,
             errorMessage: ""
         }
         this.handleChange = this.handleChange.bind(this);
+        this.createPost = this.createPost.bind(this)
     }
 
     componentWillReceiveProps(nextProps) { // this is needed to update a state idk why 
@@ -52,84 +25,49 @@ export default class CreatePost extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
+        console.log(event.target.value);
+        this.setState({ postBody: event.target.value });
+    }
+
+    createPost = async () => {
+        var postBody = {
+            postContent: this.state.postBody
+        }
+        var url = "http://localhost:5000/api/post/createPost/" + this.state.username;
+
+        console.log(postBody);
+        console.log(url);
+
+        fetch(url,{ method: 'POST', body: postBody })
+        .then(result => result.json())
+        .then(console.log)
+        .catch(error => {
+            alert('Something went wrong. Please try again later.');
+            return false;
+        });
     }
 
     render() {
         return (
             <React.Fragment>
-                                    <TextField
-                        //autoComplete="fname"
-                        style={{ width: '400px', background: 'rgb(100,100,100)' }}
-                        name="Post"
-                        variant="outlined"
-                        required
-                        id="postBody"
-                        // error={fullNameError}
-                        label="What have you been thinking about lately?"
-                        value={this.state.postBody}
-                        onChange={this.handleChange}
-                    />
-                    <Button>
-                        Post
-                    </Button>
-                {/* <Card>
-
-                    <List >
-                        <ListItem style={{ justifyContent: 'left' }}>
-
-                        </ListItem >
-                        <ListItem style={{ justifyContent: 'right' }}>
-                            
-                        </ListItem >
-                    </List>
-                </Card> */}
+                <Card > 
+                <TextField
+                    // //autoComplete="fname"
+                    style={{ width: '90%' }}
+                    name="Post"
+                    variant="filled"
+                    multiline
+                    id="postBody"
+                    // // error={fullNameError}
+                    label="What's on your mind?"
+                    // value={this.state.postBody}
+                    onChange={this.handleChange}
+                />
+                <Button  style = {{ padding: "1rem", width: '10%'}} onClick={this.createPost}>
+                    Post
+                </Button>
+                </Card>
             </React.Fragment>
         )
     }
 }
-
-// handleChange(event) {
-//     this.setState({ [event.target.name]: event.target.value });
-
-// }
-
-
-
-// handleSubmit(event) {
-//     console.log("clicked sublmit");
-//     // event.preventDefault();
-//     // register(this)
-//     // console.log(this.state.errorMessage);
-// }
-
-
-
-{/* <form >
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                //autoComplete="fname"
-                                name="Post"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="postBody"
-                                // error={fullNameError}
-                                label="What have you been thinking about lately?"
-                                autoFocus
-                                value={this.state.postBody}
-                                onChange={this.handleChange}
-                            />
-                        </Grid>
-
-                    </Grid>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        style={{float: "right"}}
-                        // className={classes.submit}
-                    >
-                        Post
-          </Button >
-                </form> */}
