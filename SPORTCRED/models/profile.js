@@ -57,10 +57,23 @@ const ProfileSchema = new Schema({
             type: String
         }
     },
-    ACSmetrics: {
-        type: Schema.Types.ObjectId,
-        ref: "ACSmetrics"
-    },
+    ACSHistoryReport: [{
+        ACSStart: {
+            type: Number,
+            default: 0
+        },
+        ACSEnd: {
+            type: Number,
+            default: 0
+        },
+        activity: {
+            type: String
+        },
+        date: {
+            type: String,
+            match: /(\s{3}) (\d{2})/
+        }
+    }],
     ACSScoreChange: {
         type: Boolean,
         default: false
