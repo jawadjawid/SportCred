@@ -18,6 +18,7 @@ import UserBasicInfo from "../Profile/UserBasicInfo";
 import {Avatar, Button} from "@material-ui/core";
 
 class PicksAndPredictions extends React.Component {
+
     constructor(props) {
         super(props);
     }
@@ -64,7 +65,6 @@ class PicksAndPredictions extends React.Component {
         else {
             getUserPicksAndPredictions(this, this.state.fullDateWithNoZeros);
         }
-        // getUserPicksAndPredictions(this, val);
     }
 
     render() {
@@ -84,6 +84,7 @@ class PicksAndPredictions extends React.Component {
             items.push(<MatchCard teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
             items.push(<br/>)
         }
+
 
         return (<div className={classes.Background}>
                 <NavBar/>
@@ -108,5 +109,7 @@ class PicksAndPredictions extends React.Component {
     }
 }
 
+
 export default withRouter(withStyles(style)(PicksAndPredictions))
+
 
