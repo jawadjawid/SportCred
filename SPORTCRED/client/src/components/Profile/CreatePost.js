@@ -34,33 +34,56 @@ import { Redirect } from 'react-router';
 
 export default class CreatePost extends React.Component {
     constructor(props) {
-        
+
         super(props);
         this.state = {
             username: this.props.username,
             postBody: "",
-            postBodyError: false
+            postBodyError: false,
+            errorMessage: ""
         }
-        // this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps) { // this is needed to update a state idk why 
         if (nextProps.username !== this.state.username) {
-            this.setState({username:nextProps.username});
+            this.setState({ username: nextProps.username });
         }
     }
 
-    render() {
+    handleChange(event) {
+        this.setState({ [event.target.name]: event.target.value });
+    }
 
+    render() {
         return (
             <React.Fragment>
-                <Card>
+                                    <TextField
+                        //autoComplete="fname"
+                        style={{ width: '400px', background: 'rgb(100,100,100)' }}
+                        name="Post"
+                        variant="outlined"
+                        required
+                        id="postBody"
+                        // error={fullNameError}
+                        label="What have you been thinking about lately?"
+                        value={this.state.postBody}
+                        onChange={this.handleChange}
+                    />
+                    <Button>
+                        Post
+                    </Button>
+                {/* <Card>
+
                     <List >
-                        <ListItem style={{ justifyContent:'center' }}>
-                            <Typography variant="h1" component="h1" style={{ justifyContent:'center' }}>{this.state.username}</Typography>
+                        <ListItem style={{ justifyContent: 'left' }}>
+
+                        </ListItem >
+                        <ListItem style={{ justifyContent: 'right' }}>
+                            
                         </ListItem >
                     </List>
-                </Card>
+                </Card> */}
             </React.Fragment>
         )
     }
@@ -68,7 +91,7 @@ export default class CreatePost extends React.Component {
 
 // handleChange(event) {
 //     this.setState({ [event.target.name]: event.target.value });
-    
+
 // }
 
 
