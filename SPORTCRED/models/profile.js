@@ -59,7 +59,7 @@ const ProfileSchema = new Schema({
     },
     ACSmetrics: {
         type: Schema.Types.ObjectId,
-        ref: 'ACSmetrics'
+        ref: "ACSmetrics"
     },
     ACSScoreChange: {
         type: Boolean,
@@ -68,7 +68,15 @@ const ProfileSchema = new Schema({
     posts: [{
         type: Schema.Types.ObjectId,
         ref: "Posts"
-    }]  
+    }],
+    predictions: [{
+        gameId: {
+            type: String
+        },
+        predictedWinner: {
+            type: String
+        }
+    }]
 });
 
 ProfileSchema.plugin(uniqueValidator);
