@@ -3,6 +3,12 @@ const { mongo } = require('mongoose');
 const router = express.Router();
 
 const Schedule = require('../../models/schedule');
+const cors = require("cors");
+
+var corsOptions = {
+    origin: 'http://localhost:3000',
+}
+router.use(cors(corsOptions))
 
 router.get('/game', (req, res) => {
     Schedule.find({})

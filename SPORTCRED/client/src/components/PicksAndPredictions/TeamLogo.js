@@ -3,6 +3,7 @@ import {Avatar, Button} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
+import DailyPicksModalButton from "./DailyPicksPredictButton";
 
 export default class TeamLogo extends React.Component {
     constructor(props){
@@ -11,9 +12,24 @@ export default class TeamLogo extends React.Component {
             teamA: props.teamA,
             teamB: props.teamB,
             date: props.date,
-            roundNum: props.roundNum
+            roundNum: props.roundNum,
+
+            userBackground: [
+                {"username":"bobby123"},
+                {"about": "Im dumb"},
+                {"fullName": "Bob Thisismylastnamehaha"},
+                {"dateOfBirth":"02/03/2000"},
+                {"email": "bobbybobbob@ilikeball.com"},
+                {"phone":"sdjjsljdf"},
+                {"favSport": "Basketball"},
+                {"age": "2"},
+                {"favTeam": "Miami Heat"},
+                {"sportToLearn":"cricket"},
+                {"levelPlayed": "college"}
+            ]
         }
     }
+
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.teamA !== this.state.teamA) {
@@ -34,6 +50,15 @@ export default class TeamLogo extends React.Component {
     }
 
     render() {
+
+        const setProfileState = (info) => {
+            const copy = [...info['userBackground']];
+            this.setState({userBackground:copy}, () => {
+                console.log(info);
+                console.log(this.state);
+            });
+        }
+
         const styles = {
             TeamA: {
                 right: '240px',
@@ -67,7 +92,8 @@ export default class TeamLogo extends React.Component {
                     </ListItem>
                     <ListItem style={{ justifyContent:'center' }}>
                         <Typography variant="h1" component="h1" style={styles["TeamA"]}>{this.state.teamA.name}</Typography>
-                        <Button variant="contained" color="secondary" >Predict</Button>
+                        {/*<Button variant="contained" color="secondary" >Predict</Button>*/}
+                        <DailyPicksModalButton background={this.state.userBackground} setProfileState={setProfileState}/>
                         <Typography variant="h1" component="h1" style={styles["TeamB"]}>{this.state.teamB.name}</Typography>
                     </ListItem >
                 </List>
