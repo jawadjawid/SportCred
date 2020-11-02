@@ -3,7 +3,6 @@ const { mongo } = require('mongoose');
 const router = express.Router();
 
 const Predict = require('../../models/profile');
-const Game = require('../../models/schedule');
 
 router.put('/processPrediction', (req, res) => {
     if((typeof req.body.username) === 'undefined')
@@ -27,4 +26,33 @@ router.put('/processPrediction', (req, res) => {
             }
         }
     }
+
+    Predict.find({username: req.body.username})
+        .exec()
+        .then(data => {
+            if(data.length === 0) {
+                res.status(400).json({
+                    message: "user " + req.body.username + " does not exist"
+                });
+            }
+            else
+            {
+                Predict.findOneAndUpdate({username: req.body.username},
+                    {$set: req.body}, {new: true})
+                    .exec()
+                    .then(() => {
+                        res.status(200).json({
+                            message: 'predictions added'
+                        })
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            error: error,
+                            message: "Bad request"
+                        });
+                    });
+            }
+        })
 });
+
+module.exports = router;
