@@ -47,18 +47,9 @@ export default class CreatePost extends React.Component {
 
         
         console.log(JSON.stringify(postBody))
-        var url = "http://localhost:5000/api/profile/createPost/" + this.state.username;
+        var url = "http://localhost:5000/api/profile/createPost/" + this.state.username; // works for this
+        var url2 = "http://localhost:5000/api/post/createPost/" + this.state.username;  // doesnt work for this
 
-        const request = new Request(url, {
-            method: 'post',
-            body: JSON.stringify(postBody),
-            headers: {
-                Accept: 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            }
-        });
-
-        // fetch(url,{ method: 'post', body: JSON.stringify(postBody) })
         fetch(url, {
             method: 'post',
             body: JSON.stringify(postBody),
