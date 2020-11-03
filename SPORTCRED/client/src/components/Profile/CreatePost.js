@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { Card } from '@material-ui/core';
-
+import { post } from '../../backendConnector/post';
 
 export default class CreatePost extends React.Component {
     constructor(props) {
@@ -10,12 +10,13 @@ export default class CreatePost extends React.Component {
         super(props);
         this.state = {
             username: this.props.username,
-            postBody: "What have you been thinking about lately?",
+            postBody: "",
             postBodyError: false,
             errorMessage: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.createPost = this.createPost.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillReceiveProps(nextProps) { // this is needed to update a state idk why 
@@ -29,16 +30,23 @@ export default class CreatePost extends React.Component {
         this.setState({ postBody: event.target.value });
     }
 
-    createPost = async () => {
+    handleSubmit(event) {
+        event.preventDefault();
+        post(this)
+        console.log(this.state.errorMessage);
+      }
+
+    createPost(){
         var postBody = {
             postContent: this.state.postBody
         }
+        if (this.state.postBody === "" ){
+            alert('Something went wrong. Please try again later.');
+            return 0;
+        }
         var url = "http://localhost:5000/api/post/createPost/" + this.state.username;
 
-        console.log(postBody);
-        console.log(url);
-
-        fetch(url,{ method: 'POST', body: postBody })
+        fetch("http://localhost:5000/api/post/getAllPosts",{ method: 'POST' })
         .then(result => result.json())
         .then(console.log)
         .catch(error => {
