@@ -26,6 +26,7 @@ class PicksAndPredictions extends React.Component {
         data:
             [
                 {
+                    _id: "1",
                     date: "2020-08-30",
                     winner: "UTA",
                     teams: {
@@ -98,7 +99,7 @@ class PicksAndPredictions extends React.Component {
         const items = []
 
         for (const [index, value] of this.state.data.entries()) {
-            items.push(<MatchCard teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
+            items.push(<MatchCard id={this.state.data[index]._id} teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
             items.push(<br/>)
         }
 

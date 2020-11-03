@@ -13,6 +13,7 @@ export default class MatchCard extends React.Component{
             teamB: props.teamB,
             date: props.date,
             roundNum: props.roundNum,
+            id: props.id
         }
     }
 
@@ -32,6 +33,10 @@ export default class MatchCard extends React.Component{
         if (nextProps.roundNum !== this.state.roundNum) {
             this.setState({roundNum:nextProps.roundNum});
         }
+
+        if (nextProps.id !== this.state.id) {
+            this.setState({id:nextProps.id});
+        }
     }
 
     render(){
@@ -43,7 +48,7 @@ export default class MatchCard extends React.Component{
                 <Card>
                     <List >
                         <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
-                            <TeamLogo teamA={this.state.teamA} teamB= {this.state.teamB} date={this.state.date} roundNum={this.state.roundNum}/>
+                            <TeamLogo id={this.state.id} teamA={this.state.teamA} teamB= {this.state.teamB} date={this.state.date} roundNum={this.state.roundNum}/>
                         </ListItem>
                     </List>
                 </Card>
