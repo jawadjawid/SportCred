@@ -64,11 +64,7 @@ const ProfileSchema = new Schema({
     ACSScoreChange: {
         type: Boolean,
         default: false
-    },
-    posts: [{
-        type: Schema.Types.ObjectId,
-        ref: "Posts"
-    }]  
+    }
 });
 
 ProfileSchema.plugin(uniqueValidator);
