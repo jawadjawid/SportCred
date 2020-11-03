@@ -4,16 +4,20 @@ const router = express.Router();
 
 const Predict = require('../../models/profile');
 
-router.put('/processPrediction', (req, res) => {
+router.post('/processPrediction', (req, res) => {
     if((typeof req.body.username) === 'undefined')
     {
-        res.status(400).json({error:err});
+        return res.status(400).json({message:"username not a field"});
     }
-    if((typeof req.body.predictions) !== 'object')
+    /*if((typeof req.body.gameId) !== 'undefined')
     {
-        res.status(400).json({error: err,
-        message: "predictions not of type array"});
+        return res.status(400).json({message:"gameId not a field"});
     }
+    if((typeof req.body.predictedWinner) !== 'undefined')
+    {
+        return res.status(400).json({message:"predictedWinner not a field"});
+    }*/
+    /*
     for(let key in req.body.predictions) 
     {
         if(req.body.predictions.hasOwnProperty(key)){
@@ -26,8 +30,8 @@ router.put('/processPrediction', (req, res) => {
             }
         }
     }
-
-    Predict.find({username: req.body.username})
+    */
+    Predict.findOne({username: req.body.username})
         .exec()
         .then(data => {
             if(data.length === 0) {
@@ -37,21 +41,38 @@ router.put('/processPrediction', (req, res) => {
             }
             else
             {
-                Predict.findOneAndUpdate({username: req.body.username},
-                    {$set: req.body}, {new: true})
-                    .exec()
-                    .then(() => {
-                        res.status(200).json({
-                            message: 'predictions added'
-                        })
-                    })
-                    .catch(error => {
-                        res.status(400).json({
-                            error: error,
-                            message: "Bad request"
-                        });
+                Predict.findOne({username: req.body.username})
+                    .exec(function(err, data) {
+                        if(data === null) {
+                            return res.status(400).json({
+                                message:"This user does not exist",
+                            error:err});
+                        }
+                        let gameFound = (data.predictions).some(game => (game.gameId === req.body.gameId));
+                        console.log(gameFound);
+                        if(!gameFound)
+                        {
+                            data.predictions.push({gameId: req.body.gameId, 
+                                predictedWinner: req.body.predictedWinner});
+                        }
+                        else {
+                            return res.status(400).json({message: "gameId exists in the array"});
+                        }
+                        console.log(req.body.gameId + " " + req.body.predictedWinner);
+                        data.save()
+                            .then(() => {
+                                res.status(200).json({
+                                    message: 'predictions added'
+                                })
+                            })
+                            .catch(error => {
+                                res.status(400).json({
+                                    error: error,
+                                    message: "Bad request"
+                                });
+                            })
                     });
-            }
+            }        
         })
 });
 
