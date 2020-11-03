@@ -44,14 +44,44 @@ export default class CreatePost extends React.Component {
             alert('You cannot post with an empty body');
             return 0;
         }
-        var url = "http://localhost:5000/api/post/createPost/" + this.state.username;
 
-        fetch("http://localhost:5000/api/post/getAllPosts",{ method: 'POST' })
-        .then(result => result.json())
-        .then(console.log)
-        .catch(error => {
+        
+        console.log(JSON.stringify(postBody))
+        var url = "http://localhost:5000/api/profile/createPost/" + this.state.username;
+
+        const request = new Request(url, {
+            method: 'post',
+            body: JSON.stringify(postBody),
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // fetch(url,{ method: 'post', body: JSON.stringify(postBody) })
+        fetch(url, {
+            method: 'post',
+            body: JSON.stringify(postBody),
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            if (res.status == 200) {
+                alert("your thing has been posted");
+                // window.location.reload(false);
+                this.setState({ postBody: "" });
+            }
+            else {
+                alert("your thing failed to be posted");
+                console.log(res.json());
+            }
+                
+            // console.log(res.json());
+        })
+        .catch(() => {
             alert('Something went wrong. Please try again later.');
-            return false;
         });
     }
 
@@ -68,7 +98,7 @@ export default class CreatePost extends React.Component {
                     id="postBody"
                     // // error={fullNameError}
                     label="What's on your mind?"
-                    // value={this.state.postBody}
+                    value={this.state.postBody}
                     onChange={this.handleChange}
                 />
                 <Button  style = {{ padding: "1rem", width: '10%'}} onClick={this.createPost}>
