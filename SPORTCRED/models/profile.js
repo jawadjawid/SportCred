@@ -78,10 +78,6 @@ const ProfileSchema = new Schema({
         type: Boolean,
         default: false
     },
-    posts: [{
-        type: Schema.Types.ObjectId,
-        ref: "Posts"
-    }],
     predictions: [{
         gameId: {
             type: Schema.Types.ObjectID,
@@ -90,6 +86,7 @@ const ProfileSchema = new Schema({
             type: String
         }
     }]
+    
 });
 
 ProfileSchema.plugin(uniqueValidator);
