@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { Card } from '@material-ui/core';
-import { post } from '../../backendConnector/post';
+// import { post } from '../../backendConnector/post';
 
 export default class CreatePost extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ export default class CreatePost extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.createPost = this.createPost.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillReceiveProps(nextProps) { // this is needed to update a state idk why 
@@ -30,11 +30,11 @@ export default class CreatePost extends React.Component {
         this.setState({ postBody: event.target.value });
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        post(this)
-        console.log(this.state.errorMessage);
-      }
+    // handleSubmit(event) {
+    //     event.preventDefault();
+    //     post(this)
+    //     console.log(this.state.errorMessage);
+    //   }
 
     createPost(){
         var postBody = {
