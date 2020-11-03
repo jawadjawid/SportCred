@@ -41,7 +41,7 @@ export default class CreatePost extends React.Component {
             postContent: this.state.postBody
         }
         if (this.state.postBody === "" ){
-            alert('Something went wrong. Please try again later.');
+            alert('You cannot post with an empty body');
             return 0;
         }
         var url = "http://localhost:5000/api/post/createPost/" + this.state.username;

@@ -109,7 +109,7 @@ class Profile extends React.Component {
                                 </List>
                             </Card>
                         </React.Fragment> */}
-                        <CreatePost username={this.state.userBackground[0]["username"] } />
+                        <CreatePost username={this.state.userBackground[0]["username"]} />
                     </Grid>
                 </Grid>
                 </div>
