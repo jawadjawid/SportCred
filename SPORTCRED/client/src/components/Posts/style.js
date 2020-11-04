@@ -1,4 +1,8 @@
 export const styles = theme => ({
+    
+    ToggleDiv:{
+        margin: '2% 40%',
+    },
   header: {
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),

@@ -16,7 +16,7 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import NavBar from "../NavBar";
-import PostsTable from '../Posts/PostsTable';
+import UserPostsTable from '../Posts/UserPostsTable';
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -102,7 +102,8 @@ class Profile extends React.Component {
                         <React.Fragment >
                         
                             <Card raised>
-                            <PostsTable  />
+                            <h2 className={classes.PostTitle}>Your Posts</h2>
+                            <UserPostsTable {...this.props} />
                             </Card>
                         </React.Fragment>
                     </Grid>

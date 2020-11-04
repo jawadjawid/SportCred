@@ -9,7 +9,7 @@ import PostRow from './PostRow';
 import { uid } from 'react-uid';
 import TableCell from '@material-ui/core/TableCell';
 import { styles } from './style';
-import { getAllPosts } from '../../backendConnector/posts';
+import { getUserPosts } from '../../backendConnector/posts';
 import Typography from '@material-ui/core/Typography';
 import TablePaginationFooter from './TablePaginationFooter';
 import CardActions from '@material-ui/core/CardActions';
@@ -20,8 +20,8 @@ import Card from '@material-ui/core/Card';
 class PostsTable extends React.Component {
 
   componentDidMount() {
-    const { username, currentUser,alignment } = this.props;
-    getAllPosts(this);
+    const { username, currentUser } = this.props;
+    getUserPosts(currentUser,this);
   }
 
   state = {
@@ -32,13 +32,13 @@ class PostsTable extends React.Component {
 
   handleOnInputChange = (event) => {
     const { username, currentUser } = this.props;
-    getAllPosts(this);
+    getUserPosts(currentUser,this);
   };
 
   render() {
-    const { classes,alignment } = this.props;
+    const { classes } = this.props;
     const { posts, page, rowsPerPage } = this.state;
-    console.log(alignment + 'allignment')
+    
     return (
       <Container>
         <TableContainer  className={classes.PostList}>

@@ -5,6 +5,9 @@ import TableRow from '@material-ui/core/TableRow';
 import { styles } from './style';
 import { withStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import {AgreeDisagree} from '../../backendConnector/posts'
 // import PostDetails from './PostDetails';
 
 
@@ -27,9 +30,21 @@ class PostRow extends React.Component {
       alertOpen: value
     });
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      favourites: [],
+    };
+  };
 
+  
+  handleClick (post, favstate, index) {
+    AgreeDisagree (this.props.currentUser, post,favstate)
+};
   render() {
-    const { post, classes } = this.props;
+      
+  
+    const { post, classes , index } = this.props;
 
     return (
       <React.Fragment>
@@ -43,7 +58,30 @@ class PostRow extends React.Component {
         <TableRow >
         <TableCell className={classes.PostTitle} >{post.postContent}</TableCell>
         </TableRow>
-        
+        <TableRow >
+        <Button
+            color="secondary"
+            className="btn btn-primary"
+            onClick={this.handleClick(post,this.state,index)}
+          >
+             <ThumbUpIcon/> 
+          </Button>
+          <Button
+            color="secondary"
+            className="btn btn-primary"
+            onClick= {this.handleClick(post,this.state,index)}
+          >
+             <ThumbDownIcon/>
+          </Button>
+          <Button
+            color="secondary"
+            className="btn btn-primary"
+            onClick= {this.handleClick(post,this.state,index)}
+          >
+             Comment
+          </Button>
+          </TableRow>
+          
         </Card>
 
         

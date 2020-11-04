@@ -7,18 +7,18 @@ import PostsTable from './PostsTable';
 
 
 class Post extends React.Component {
+   
 
   render() {
+    // state = {alignment, setAlignment = React.useState('all')};
     const { isLoggedIn } = this.props;
 
     return (
       <div>
         <CssBaseline/>
         <NavBar isLoggedIn={isLoggedIn}/>
-        <Header
-          title="All"
-          subtitle="All Posts"
-        /><PostsTable {...this.props} />
+        <Header {...this.props}/>
+        <PostsTable {...this.props} />
       </div>
     );
   }
