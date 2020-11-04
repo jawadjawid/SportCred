@@ -36,7 +36,7 @@ router.get('/upcomingMatch/today/:date', (req, res) => {
     if(!date.match(/(\d{4})-(\d{2})-(\d{2})/))
     {
         return res.status(400).json({
-            message: "DOB requires DD/MM/YYYY format"
+            message: "DOB requires YYYY/MM/DD format"
         });
     }
     
@@ -65,7 +65,7 @@ router.get('/upcomingMatch/tomorrow/:date', (req, res) => {
     if(!today.match(/(\d{4})-(\d{2})-(\d{2})/))
     {
         return res.status(400).json({
-            message: "DOB requires DD/MM/YYYY format"
+            message: "DOB requires YYYY/MM/DD format"
         });
     }
     let date;
