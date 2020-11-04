@@ -7,30 +7,38 @@ export const styles = theme => ({
   button: {
     backgroundColor: 'red'
   },
-  queueList: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
+  PostList: {
+    marginTop: '20%',
+    marginBottom: '20%',
   },
   PostRow: {
     marginBottom: '5px',
     margin: theme.spacing(2),
+    borderStyle: 'double',
     fontSize: '150%',
-    '& th': {
-      fontSize: '0.75em',
-      color: 'darkslategray'
-    },
-    // backgroundColor: theme.palette.action.hover
+    backgroundColor: theme.palette.action.hover
   },
   PostTitle:{
-    fontSize: 20,
+    fontSize: 25,
     
   },
-  Postdata:{
+  Poster:{
     fontSize: 12,
-    color: 'gray',
+    color: '#00000',
     align:'center',
   },
+  Postdata:{
+    textAlign:'center',
+  },
+
+  Postdate:{
+    display:'inline',
+    fontSize: 12,
+    color: '#00000',
+    float: 'right',
+  },
   paper: {
+    display:'inline',
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',

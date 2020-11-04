@@ -41,7 +41,7 @@ class PostsTable extends React.Component {
     console.log(queues)
     return (
       <Container>
-        <TableContainer component={Paper} className={classes.queueList}>
+        <TableContainer component={Paper} className={classes.PostList}>
           <Card>
             <CardActions>
               <TextField
@@ -53,12 +53,12 @@ class PostsTable extends React.Component {
           </Card>
 
           <Table stickyHeader>
-            <TableHead>
+            {/* <TableHead>
               <TableRow scope="row">
                 <TableCell className={classes.tableCellHead}/>
 
               </TableRow>
-            </TableHead>
+            </TableHead> */}
 
             <TableBody>
               {(rowsPerPage > 0

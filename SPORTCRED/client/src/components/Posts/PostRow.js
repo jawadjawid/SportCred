@@ -8,6 +8,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
+import Card from '@material-ui/core/Card';
 // import PostDetails from './PostDetails';
 
 
@@ -36,26 +37,20 @@ class PostRow extends React.Component {
 
     return (
       <React.Fragment>
-        <TableRow className={classes.PostRow}>
+        <Card className={classes.PostRow}>
 
-        <TableRow >
-          <TableCell className={classes.Postdata} >Post by {post.poster} </TableCell>
-          <TableCell className={classes.Postdata} >at {post.postDate}</TableCell>
+        <TableRow className={classes.Postdata}>
+          <TableCell className={classes.Poster} >Posted by {post.poster} </TableCell>
+          <TableCell className={classes.Postdate} >at {post.postDate}</TableCell>
           </TableRow>
 
         <TableRow >
         <TableCell className={classes.PostTitle} >{post.postContent}</TableCell>
         </TableRow>
         
-        </TableRow>
+        </Card>
 
-        <TableRow>
-          <TableCell className={classes.tableCellCollapse} colSpan={6}>
-            <Collapse in={this.state.detailOpen} timeout="auto" unmountOnExit>
-              {/* <PostDetails post={post}/> */}
-            </Collapse>
-          </TableCell>
-        </TableRow>
+        
       </React.Fragment>
     );
   }
