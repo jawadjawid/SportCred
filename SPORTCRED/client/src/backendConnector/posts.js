@@ -1,7 +1,6 @@
 export const getAllPosts = (postComp) => {
     const request = new Request('http://localhost:5000/api/post/getAllPosts', {
-      method: 'post',
-      body: '',
+      method: 'get',
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
