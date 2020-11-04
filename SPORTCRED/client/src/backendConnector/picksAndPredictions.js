@@ -17,14 +17,19 @@ export const getUpcominGames = async (currPage, val) => {
 };
 
 export const processPrediction = async (currPage) => {
-    axios.post('http://localhost:5000/api/prediction/processPrediction', currPage).then((res) => {
+    axios.post('http://localhost:5000/api/prediction/processPrediction', currPage.state).then((res) => {
         if(res.status === 200) {
             return res.data;
         }
     }).then(data => {
+        currPage.setState({
+            successfulPrediction: true,
+        })
         return true;
     }).catch(error => {
-        alert(error)
+        currPage.setState({
+            failedPrediction: true,
+        })
         return false;
     });
 };

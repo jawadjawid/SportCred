@@ -8,6 +8,8 @@ import Logo from "./Logo";
 import UserIconEditable from "../Profile/UserIconEditable";
 import {register} from "../../backendConnector/signup";
 import {processPrediction} from "../../backendConnector/picksAndPredictions";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 export default class TeamLogo extends React.Component {
     constructor(props){
@@ -40,8 +42,26 @@ export default class TeamLogo extends React.Component {
                 {"favTeam": "Miami Heat"},
                 {"sportToLearn":"cricket"},
                 {"levelPlayed": "college"}
-            ]
+            ],
+            successfulPrediction: false,
+            failedPrediction: false,
         }
+    }
+
+    handleSuccessfulPredictionClose= (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({successfulPrediction:false});
+    }
+
+    handleFailedPredictionClose= (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({failedPrediction:false});
     }
 
      selectTeamA= async () => {
@@ -173,6 +193,16 @@ export default class TeamLogo extends React.Component {
 
         return (
             <React.Fragment>
+                <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={this.state.successfulPrediction} autoHideDuration={6000} onClose={this.handleSuccessfulPredictionClose}>
+                    <Alert onClose={this.handleSuccessfulPredictionClose} severity="success">
+                        Predicted successfully!
+                    </Alert>
+                </Snackbar>
+                <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={this.state.failedPrediction} autoHideDuration={6000} onClose={this.handleFailedPredictionClose}>
+                    <Alert onClose={this.handleFailedPredictionClose} severity="error">
+                        Prediction Failed!
+                    </Alert>
+                </Snackbar>
                 <List >
                     <ListItem  >
                         {/*<Avatar  style={styles["TeamALogo"]} alt={this.state.teamA.name} src={this.state.teamA.logo}/>*/}
@@ -189,7 +219,7 @@ export default class TeamLogo extends React.Component {
                         {/*<Button variant="contained" color="secondary" >Predict</Button>*/}
                         {/*<DailyPicksModalButton background={this.state.userBackground} setProfileState={setProfileState}/>*/}
                         {/*<Button  color="secondary"/>*/}
-                        <Button disabled={this.state.predictDisabled} variant="contained" color="secondary" onClick={this.handleSubmit.bind(this, this.state)}> Predict</Button>
+                        <Button disabled={this.state.predictDisabled} variant="contained" color="secondary" onClick={this.handleSubmit.bind(this, this)}> Predict</Button>
                         <Typography variant="h1" component="h1" style={styles["TeamB"]}>{this.state.teamB.name}</Typography>
                     </ListItem >
                 </List>

@@ -15,6 +15,8 @@ import MatchCard from "./MatchCard"
 import DailyPicksModal from "./DailyPicksPredictButton"
 import {getUserProfile} from "../../backendConnector/profile";
 import UserAboutInfo from "../Profile/UserAboutInfo"
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class PicksAndPredictions extends React.Component {
 
@@ -61,7 +63,7 @@ class PicksAndPredictions extends React.Component {
             {"favTeam": "Miami Heat"},
             {"sportToLearn":"cricket"},
             {"levelPlayed": "college"}
-        ]
+        ],
     };
 
     componentDidMount() {
