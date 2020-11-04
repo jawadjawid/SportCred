@@ -15,19 +15,9 @@ class Post extends React.Component {
     const { isLoggedIn } = this.props;
     return (
       <div>
-<<<<<<< HEAD
         <CssBaseline/>
         <NavBar isLoggedIn={isLoggedIn}/>
         <Header {...this.props}/>
-=======
-        <CssBaseline />
-        <NavBar isLoggedIn={isLoggedIn} />
-        <Header
-          title="All"
-          subtitle="All Posts"
-        />
-        <CreatePost username={this.props.currentUser} />
->>>>>>> Maninder-sd/IL-38
         <PostsTable {...this.props} />
       </div>
     );
