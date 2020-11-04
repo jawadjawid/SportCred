@@ -17,12 +17,9 @@ export const getAllPosts = (postComp) => {
         if (json) {
           const formattedJson = json.map((message) => {
             const result = { ...message };
-            // console.log(result)
+
             return result;
           });
-        //   const jsonFiltered = formattedJson.filter(({ username }) => {
-        //     return username.toUpperCase().includes(text.toUpperCase())
-        //   });
         postComp.setState({
             posts: [...formattedJson]
           });
