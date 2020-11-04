@@ -3,7 +3,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import {getUserPicksAndPredictions} from "../../backendConnector/picksAndPredictions";
+import {getUpcominGames} from "../../backendConnector/picksAndPredictions";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
@@ -69,18 +69,18 @@ class PicksAndPredictions extends React.Component {
         getUserProfile(currentUser,this);
 
         if (this.state.currDay.toString().length == 1 && this.state.currMonth.toString().length == 1) {
-            getUserPicksAndPredictions(this, this.state.fullDateWithTwoZeros);
+            getUpcominGames(this, this.state.fullDateWithTwoZeros);
         }
 
         else if (this.state.currDay.toString().length == 1) {
-            getUserPicksAndPredictions(this, this.state.fullDateWithDayZero);
+            getUpcominGames(this, this.state.fullDateWithDayZero);
         }
 
         else if (this.state.currMonth.toString().length == 1){
-            getUserPicksAndPredictions(this, this.state.fullDateWithMonthZero);
+            getUpcominGames(this, this.state.fullDateWithMonthZero);
         }
         else {
-            getUserPicksAndPredictions(this, this.state.fullDateWithNoZeros);
+            getUpcominGames(this, this.state.fullDateWithNoZeros);
         }
     }
 
@@ -99,7 +99,7 @@ class PicksAndPredictions extends React.Component {
         const items = []
 
         for (const [index, value] of this.state.data.entries()) {
-            items.push(<MatchCard id={this.state.data[index]._id} teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
+            items.push(<MatchCard id={this.state.data[index]._id} teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} currentUser={this.props.currentUser} setProfileState={setProfileState}/>)
             items.push(<br/>)
         }
 

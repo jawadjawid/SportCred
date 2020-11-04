@@ -6,6 +6,8 @@ import List from "@material-ui/core/List";
 import DailyPicksModalButton from "./DailyPicksPredictButton";
 import Logo from "./Logo";
 import UserIconEditable from "../Profile/UserIconEditable";
+import {register} from "../../backendConnector/signup";
+import {processPrediction} from "../../backendConnector/picksAndPredictions";
 
 export default class TeamLogo extends React.Component {
     constructor(props){
@@ -20,9 +22,11 @@ export default class TeamLogo extends React.Component {
             hover: false,
             open: false,
             predictDisabled: true,
-            id: props.id,
+            gameId: props.id,
             isAClicked: false,
             isBClicked: false,
+            username: props.currentUser,
+            predictedWinner: props.predictedWinner,
 
             userBackground: [
                 {"username":"bobby123"},
@@ -44,9 +48,10 @@ export default class TeamLogo extends React.Component {
          await this.setState({isBClicked: false});
          await this.setState({isAClicked: (!(this.state.isAClicked))});
         if (!this.state.isAClicked) {
-            this.setState({predictDisabled: true})
+            this.setState({predictDisabled: true});
         } else {
             this.setState({predictDisabled: false});
+            this.setState({predictedWinner: this.state.teamA.name});
         }
     }
 
@@ -54,9 +59,10 @@ export default class TeamLogo extends React.Component {
         await this.setState({isAClicked: false});
         await this.setState({isBClicked: (!(this.state.isBClicked))});
         if (!this.state.isBClicked) {
-            this.setState({predictDisabled: true})
+            this.setState({predictDisabled: true});
         } else {
             this.setState({predictDisabled: false});
+            this.setState({predictedWinner: this.state.teamB.name});
         }
     }
 
@@ -81,10 +87,21 @@ export default class TeamLogo extends React.Component {
             this.setState({teamBSelected:nextProps.teamBSelected});
         }
 
-        if (nextProps.id !== this.state.id) {
-            this.setState({id:nextProps.id});
+        if (nextProps.id !== this.state.gameId) {
+            this.setState({gameId:nextProps.id});
         }
+
+        if (nextProps.currentUser !== this.state.username) {
+            this.setState({username:nextProps.currentUser});
+        }
+
     }
+
+    handleSubmit(data) {
+        // event.preventDefault();
+        processPrediction(data)
+    }
+
 
     render() {
         const setProfileState = (info) => {
@@ -172,7 +189,7 @@ export default class TeamLogo extends React.Component {
                         {/*<Button variant="contained" color="secondary" >Predict</Button>*/}
                         {/*<DailyPicksModalButton background={this.state.userBackground} setProfileState={setProfileState}/>*/}
                         {/*<Button  color="secondary"/>*/}
-                        <Button disabled={this.state.predictDisabled} variant="contained" color="secondary">Predict</Button>
+                        <Button disabled={this.state.predictDisabled} variant="contained" color="secondary" onClick={this.handleSubmit.bind(this, this.state)}> Predict</Button>
                         <Typography variant="h1" component="h1" style={styles["TeamB"]}>{this.state.teamB.name}</Typography>
                     </ListItem >
                 </List>
