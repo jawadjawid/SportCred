@@ -379,7 +379,7 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
     // Check if user with username exists in db
     Profile.find({username: req.params.username })
         .exec()
-        .then(data => {
+        .then(async function(data) {
             if (data.length == 0) {
                 res.status(400).json({
                     message: "user with username, \'"+ req.params.username + "\' does not exist"
@@ -387,17 +387,9 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
             } else {
                 const predictions = data[0].predictions;
                 const predicted_winners = [];
-                for (let i = 0; i < predictions.length; i++) {
-                    predicted_winners.push(predictions[i].predictedWinner)
-                    Schedule.find({_id: predictions[i].gameId})
-                        .exec()
-                        .then(gameData => {
-                            const gameTime = new Date(gameData[0].date);
-                            const todayTime = new Date();
-                            if (gameTime < todayTime) {
-                                checkWinners(gameData[0].winner, predicted_winners)
-                            }
-                        })
+                for (const item of predictions) {
+                    predicted_winners.push(item.predictedWinner)
+                    await findGame(item, predicted_winners)
                 }
                 res.status(200).json({
                     message: 'successfully checked users predictions'
@@ -405,42 +397,56 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
             }
         });
 
-    let operationsCompleted = 0;
-
+    let operationsCompleted = 0
+    async function findGame(item, predicted_winners) {
+        //find the game with the specific id
+        await Schedule.find({_id: item.gameId})
+            .exec()
+            .then(function (gameData){
+                const gameTime = new Date(gameData[0].date);
+                const todayTime = new Date();
+                //if game has happened already, check if the winners match
+                if (gameTime < todayTime) {
+                    checkWinners(gameData[0].winner, predicted_winners)
+                }
+            })
+    }
     function checkWinners(winner, predicted_winners) {
-        // In the score db and store the old acs score append to history report (include startingacs
-        // ending acs bla bla look above) , score for the user
-        // Sets the notification true
         if (winner === predicted_winners[operationsCompleted]) {
-            Profile.find({username: req.params.username})
-                .exec(function(err, data) {
-                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                    const today = new Date();
-                    const month = monthNames[today.getMonth()];
-                    const day = String(today.getDate()).padStart(2, '0');
-                    const year = today.getFullYear();
-                    const finalDate = month  + ' ' + day + ' ' + year
-                    const event = {
-                        ACSStart: data[0].ACSHistoryReport[0].ACSEnd,
-                        ACSEnd: data[0].ACSHistoryReport[0].ACSEnd + 5,
-                        activity: "Correct Prediction!",
-                        date: finalDate
-                    }
-                    var ACSHistoryReport = data[0].ACSHistoryReport;
-                    ACSHistoryReport.unshift(event)
-                    Profile.updateMany({ username: req.params.username }, { ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport} )
-                        .then(() => {
-                            console.log("ACSScoreUpdated")
-                        })
-                        .catch(error => {
-                            res.status(400).json({
-                                error: error
-                            });
-                        });
-                });
+            // append to history report
+            // sets the notification true
+            updateACSHistory(winner)
         }
         ++operationsCompleted;
+    }
+    function updateACSHistory(winner) {
+        Profile.find({username: req.params.username})
+            .exec(function (err, data) {
+                let ACSHistoryReport = data[0].ACSHistoryReport
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const today = new Date();
+                const month = monthNames[today.getMonth()];
+                const day = String(today.getDate()).padStart(2, '0');
+                const year = today.getFullYear();
+                const finalDate = month + ' ' + day + ' ' + year
+                const event = {
+                    ACSStart: ACSHistoryReport[0].ACSEnd,
+                    ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
+                    activity: "Correctly predicted winner " + winner + "!",
+                    date: finalDate
+                }
+                ACSHistoryReport.unshift(event)
+                Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport})
+                    .then(() => {
+                        console.log("ACSScoreUpdated")
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            error: error
+                        });
+                    });
+            });
     }
 });
 
