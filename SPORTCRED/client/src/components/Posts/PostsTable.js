@@ -41,7 +41,7 @@ class PostsTable extends React.Component {
     return (
       <Container>
         <TableContainer  className={classes.PostList}>
-          <Card>
+          {/* <Card>
             <CardActions>
               <TextField
                 variant="outlined"
@@ -49,7 +49,7 @@ class PostsTable extends React.Component {
                 onChange={this.handleOnInputChange}
               />
             </CardActions>
-          </Card>
+          </Card> */}
 
           <Table stickyHeader>
             <TableBody>
