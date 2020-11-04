@@ -9,14 +9,14 @@ router.post('/processPrediction', (req, res) => {
     {
         return res.status(400).json({message:"username not a field"});
     }
-    /*if((typeof req.body.gameId) !== 'undefined')
+    if(req.body.gameId === "")
     {
-        return res.status(400).json({message:"gameId not a field"});
+        return res.status(400).json({message:"gameId field empty"});
     }
-    if((typeof req.body.predictedWinner) !== 'undefined')
+    if(req.body.predictedWinner === "")
     {
-        return res.status(400).json({message:"predictedWinner not a field"});
-    }*/
+        return res.status(400).json({message:"predictedWinner field empty"});
+    }
     /*
     for(let key in req.body.predictions) 
     {
@@ -29,8 +29,8 @@ router.post('/processPrediction', (req, res) => {
                 });
             }
         }
-    }
-    */
+    } */
+
     Predict.findOne({username: req.body.username})
         .exec()
         .then(data => {
@@ -46,23 +46,23 @@ router.post('/processPrediction', (req, res) => {
                         if(data === null) {
                             return res.status(400).json({
                                 message:"This user does not exist",
-                            error:err});
+                                error:err});
                         }
-                        let gameFound = (data.predictions).some(game => (game.gameId === req.body.gameId));
-                        console.log(gameFound);
+                        let gameFound = (data.predictions).some(game => (game.gameId.equals(req.body.gameId)));
+                        let index = (data.predictions).findIndex(game => (game.gameId.equals(req.body.gameId)));
+                        
                         if(!gameFound)
                         {
                             data.predictions.push({gameId: req.body.gameId, 
                                 predictedWinner: req.body.predictedWinner});
                         }
                         else {
-                            return res.status(400).json({message: "gameId exists in the array"});
+                            ((data.predictions)[index].predictedWinner) = req.body.predictedWinner;
                         }
-                        console.log(req.body.gameId + " " + req.body.predictedWinner);
                         data.save()
                             .then(() => {
                                 res.status(200).json({
-                                    message: 'predictions added'
+                                    message: 'predictions added/modified'
                                 })
                             })
                             .catch(error => {
