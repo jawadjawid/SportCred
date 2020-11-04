@@ -2,4 +2,6 @@
 SPORTCRED/node_modules
 SPORTCRED/client/node_modules
 SPORTCRED/.idea
-
+SPORTCRED/client/debug.log
+SPORTCRED/client/src/components/Posts/DataDisplay.js
+SPORTCRED/client/src/components/Posts/PostDetails.js
