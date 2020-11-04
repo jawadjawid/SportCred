@@ -35,7 +35,7 @@ router.post('/createPost/:username', (req, res) => {
     });
 });
 
-router.post('/getAllPosts', (req, res) => {
+router.get('/getAllPosts', (req, res) => {
     Post.find({})
         .sort({'postDate': 'desc'})
         .exec()
@@ -46,7 +46,7 @@ router.post('/getAllPosts', (req, res) => {
         });
 });
 
-router.post('/getPosts/:username', (req, res) => {
+router.get('/getPosts/:username', (req, res) => {
     // Find the profile first and get it's id
     Profile.findOne({username: req.params.username})
     .exec(function(err, profile) {
