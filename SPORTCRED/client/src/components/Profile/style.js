@@ -9,7 +9,6 @@ export const style = {
         'display': 'flex',
         'flex-flow': 'row wrap',
         'margin': '0 auto',
-        'padding': '0 10%'
     },
     GridItemLeft:{
         minWidth:'350px',
