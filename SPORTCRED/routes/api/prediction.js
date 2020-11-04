@@ -5,9 +5,30 @@ const router = express.Router();
 const Predict = require('../../models/profile');
 
 router.post('/processPrediction', (req, res) => {
-    if((typeof req.body.username) === 'undefined')
+    /**
+     * Request Body for api/prediction/processPrediction
+     * {
+     *      "username": "username of user in db",
+     *      "gameId": "Id of game that user chose for prediction",
+     *      "predictedWinner": "Team predicted by user to win the game"
+     * }
+     */
+    
+    if((typeof req.body.username) === "undefined")
     {
-        return res.status(400).json({message:"username not a field"});
+        return res.status(400).json({message: "username not a field"})
+    }
+    if((typeof req.body.predictedWinner) === "undefined")
+    {
+        return res.status(400).json({message: "predictedWinner not a field"})
+    }
+    if((typeof req.body.gameId) === "undefined")
+    {
+        return res.status(400).json({message: "gameId not a field"})
+    }
+    if(req.body.username === "")
+    {
+        return res.status(400).json({message:"username field empty"});
     }
     if(req.body.gameId === "")
     {
@@ -17,19 +38,6 @@ router.post('/processPrediction', (req, res) => {
     {
         return res.status(400).json({message:"predictedWinner field empty"});
     }
-    /*
-    for(let key in req.body.predictions) 
-    {
-        if(req.body.predictions.hasOwnProperty(key)){
-            console.log("key: " + key + ", value: " + req.body.predictions[key]);
-            // Check that a key has a non-empty value
-            if(req.body.predictions[key] === ""){
-                return res.status(400).json({
-                    message: "The key, \'" + key + "\' has an empty field"
-                });
-            }
-        }
-    } */
 
     Predict.findOne({username: req.body.username})
         .exec()
@@ -62,7 +70,7 @@ router.post('/processPrediction', (req, res) => {
                         data.save()
                             .then(() => {
                                 res.status(200).json({
-                                    message: 'predictions added/modified'
+                                    message: 'predictions added or modified'
                                 })
                             })
                             .catch(error => {
