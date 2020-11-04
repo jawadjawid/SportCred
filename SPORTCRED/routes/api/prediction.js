@@ -5,6 +5,15 @@ const router = express.Router();
 const Predict = require('../../models/profile');
 
 router.post('/processPrediction', (req, res) => {
+    /**
+     * Request Body for api/prediction/processPrediction
+     * {
+     *      "username": "username of user in db",
+     *      "gameId": "Id of game that user chose for prediction",
+     *      "predictedWinner": "Team predicted by user to win the game"
+     * }
+     */
+    
     if((typeof req.body.username) === "undefined")
     {
         return res.status(400).json({message: "username not a field"})
