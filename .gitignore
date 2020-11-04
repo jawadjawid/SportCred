@@ -3,3 +3,7 @@ SPORTCRED/node_modules
 SPORTCRED/client/node_modules
 SPORTCRED/.idea
 
+SPORTCRED/client/src/components/Posts/DataDisplay.js
+SPORTCRED/client/src/components/Posts/PostDetails.js
+SPORTCRED/client/debug.log
+.gitignore
