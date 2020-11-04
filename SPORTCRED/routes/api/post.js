@@ -1,9 +1,14 @@
 const express = require('express');
 const post = require('../../models/post');
 const router = express.Router();
-
+var cors = require('cors')
 const Post = require('../../models/post');
 const Profile = require('../../models/profile');
+
+var corsOptions = {
+    origin: 'http://localhost:3000',
+  }
+router.use(cors(corsOptions))
 
 router.post('/createPost/:username', (req, res) => {
 

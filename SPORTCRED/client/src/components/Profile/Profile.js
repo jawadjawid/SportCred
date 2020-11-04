@@ -8,6 +8,7 @@ import UserBasicInfo from "./UserBasicInfo";
 import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
 import UserAboutInfo from "./UserAboutInfo";
+import CreatePost from './CreatePost';
 import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
@@ -99,6 +100,7 @@ class Profile extends React.Component {
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>
+                        <CreatePost username={this.state.userBackground[0]["username"]} />
                         <React.Fragment >
                         
                             <Card raised>
@@ -106,6 +108,7 @@ class Profile extends React.Component {
                             <UserPostsTable {...this.props} />
                             </Card>
                         </React.Fragment>
+                        
                     </Grid>
                 </Grid>
                 </div>
