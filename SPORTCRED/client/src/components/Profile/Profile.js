@@ -16,7 +16,7 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import NavBar from "../NavBar";
-
+import PostsTable from '../Posts/PostsTable';
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -100,12 +100,9 @@ class Profile extends React.Component {
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>
                         <React.Fragment >
+                        
                             <Card raised>
-                                <List >
-                                    <ListItem style={{ justifyContent:'center' }}>
-                                        <Typography variant="h1" component="h1" >Posts will be here</Typography>
-                                    </ListItem >
-                                </List>
+                            <PostsTable  />
                             </Card>
                         </React.Fragment>
                     </Grid>

@@ -20,28 +20,27 @@ import Card from '@material-ui/core/Card';
 class PostsTable extends React.Component {
 
   componentDidMount() {
-    const { username, currentUser, isStore } = this.props;
+    const { username, currentUser } = this.props;
     getAllPosts(this);
   }
 
   state = {
     page: 0,
     rowsPerPage: 5,
-    queues: []
+    posts: []
   };
 
   handleOnInputChange = (event) => {
-    const { username, currentUser, isStore } = this.props;
+    const { username, currentUser } = this.props;
     getAllPosts(this);
   };
 
   render() {
     const { classes } = this.props;
-    const { queues, page, rowsPerPage } = this.state;
-    console.log(queues)
+    const { posts, page, rowsPerPage } = this.state;
     return (
       <Container>
-        <TableContainer component={Paper} className={classes.PostList}>
+        <TableContainer  className={classes.PostList}>
           <Card>
             <CardActions>
               <TextField
@@ -53,17 +52,10 @@ class PostsTable extends React.Component {
           </Card>
 
           <Table stickyHeader>
-            {/* <TableHead>
-              <TableRow scope="row">
-                <TableCell className={classes.tableCellHead}/>
-
-              </TableRow>
-            </TableHead> */}
-
             <TableBody>
               {(rowsPerPage > 0
-                  ? queues.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : queues
+                  ? posts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  : posts
               ).map((booking, index) => (
                 <PostRow
                   key={uid(booking)}
@@ -75,7 +67,7 @@ class PostsTable extends React.Component {
             </TableBody>
 
             <TablePaginationFooter
-              data={queues}
+              data={posts}
               page={page}
               rowsPerPage={rowsPerPage}
               comp={this}
@@ -83,11 +75,11 @@ class PostsTable extends React.Component {
           </Table>
         </TableContainer>
 
-        {(queues.length === 0) && (
+        {(posts.length === 0) && (
           <Container>
             <Paper className={classes.paper}>
               <Typography component="h2" variant="h5" color="primary" gutterBottom>
-                You have no queues currently.
+                No Posts to Show
               </Typography>
             </Paper>
           </Container>

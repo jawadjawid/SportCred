@@ -1,4 +1,4 @@
-export const getAllPosts = (queueComp) => {
+export const getAllPosts = (postComp) => {
     const request = new Request('http://localhost:5000/api/post/getAllPosts', {
       method: 'post',
       body: '',
@@ -24,8 +24,8 @@ export const getAllPosts = (queueComp) => {
         //   const jsonFiltered = formattedJson.filter(({ username }) => {
         //     return username.toUpperCase().includes(text.toUpperCase())
         //   });
-          queueComp.setState({
-            queues: [...formattedJson]
+        postComp.setState({
+            posts: [...formattedJson]
           });
         }
       })

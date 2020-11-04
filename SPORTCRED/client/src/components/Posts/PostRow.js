@@ -4,10 +4,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { styles } from './style';
 import { withStyles } from '@material-ui/core';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import IconButton from '@material-ui/core/IconButton';
-import Collapse from '@material-ui/core/Collapse';
 import Card from '@material-ui/core/Card';
 // import PostDetails from './PostDetails';
 
@@ -33,7 +29,7 @@ class PostRow extends React.Component {
   };
 
   render() {
-    const { post, classes, index } = this.props;
+    const { post, classes } = this.props;
 
     return (
       <React.Fragment>

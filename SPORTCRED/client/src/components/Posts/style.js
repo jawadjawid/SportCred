@@ -8,8 +8,8 @@ export const styles = theme => ({
     backgroundColor: 'red'
   },
   PostList: {
-    marginTop: '20%',
-    marginBottom: '20%',
+    marginTop: '30px',
+    marginBottom: '20px',
   },
   PostRow: {
     marginBottom: '5px',
@@ -39,7 +39,7 @@ export const styles = theme => ({
   },
   paper: {
     display:'inline',
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',

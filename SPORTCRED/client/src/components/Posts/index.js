@@ -9,17 +9,16 @@ import PostsTable from './PostsTable';
 class Post extends React.Component {
 
   render() {
-    const { userType, isLoggedIn } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <div>
         <CssBaseline/>
-        <NavBar userType={userType} isLoggedIn={isLoggedIn}/>
+        <NavBar isLoggedIn={isLoggedIn}/>
         <Header
           title="All"
           subtitle="All Posts"
-        />
-        <PostsTable {...this.props} />
+        /><PostsTable {...this.props} />
       </div>
     );
   }
