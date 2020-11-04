@@ -11,8 +11,6 @@ class Post extends React.Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    // console.log("inside post index " + this.props.username)
-    console.log("inside post index " + this.props.currentUser)
     return (
       <div>
         <CssBaseline />

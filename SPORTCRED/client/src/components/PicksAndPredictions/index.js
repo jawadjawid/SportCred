@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 
-import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
+import {getUserPicksAndPredictions, setUserPicksAndPredictions} from "../../backendConnector/picksAndPredictions";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
@@ -12,76 +12,79 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import NavBar from "../NavBar";
+import UserAboutInfo from "../Profile/UserAboutInfo";
+import MatchCard from "./MatchCard"
+import UserBasicInfo from "../Profile/UserBasicInfo";
+import {Avatar, Button} from "@material-ui/core";
 
-class Profile extends React.Component {
+class PicksAndPredictions extends React.Component {
+
     constructor(props) {
         super(props);
     }
 
-    state = {
-        userIcon:"",
-        about:"",
-        phone:"",
-        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
-            {"fullName": "John Doe", "username": "hi142"},
-            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
-            {"fullName": "Albert Liu", "username": "alberto"},
-            {"fullName": "Mohammad Sajjad", "username": "mohao"},
-            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
-            {"fullName": "John Doe", "username": "hi142"},
-            {"fullName": "Pussy Cat", "username": "meow"},
-            {"fullName": "Albert Liu", "username": "alberto"},
-            {"fullName": "Mohammad Sajjad", "username": "mohao"}
-        ],
-        acsScore:"",
-        acsHistoryReport:[{
-            "acsStart":"35",
-            "acsEnd":"41",
-            "activity":"Trivia with user5223 with final score of 142:42",
-            "date":"Oct 12"
-        },{
-            "acsStart":"31",
-            "acsEnd":"35",
-            "activity":"Debate won w post #4324",
-            "date":"Oct 7"
-        },{
-            "acsStart":"33",
-            "acsEnd":"31",
-            "activity":"Trivia w user3252 with final score of 100:24",
-            "date":"Oct 3"
-        }],
-        userBackground: [
-            {"username":"bobby123"},
-            {"about": "Im dumb"},
-            {"fullName": "Bob Thisismylastnamehaha"},
-            {"dateOfBirth":"02/03/2000"},
-            {"email": "bobbybobbob@ilikeball.com"},
-            {"phone":"sdjjsljdf"},
-            {"favSport": "Basketball"},
-            {"age": "2"},
-            {"favTeam": "Miami Heat"},
-            {"sportToLearn":"cricket"},
-            {"levelPlayed": "college"}
-        ]
+    state =  {
+        data:
+            [
+                {
+                    date: "2020-08-30",
+                    winner: "UTA",
+                    teams: {
+                        teamA: {
+                            name: "UTA",
+                            logo: "https://sportslogohistory.com/wp-content/uploads/2017/12/utah_jazz_2016-pres.png"
+                        },
+                        teamB: {
+                            name: " NOP ",
+                            logo: "https://sportslogohistory.com/wp-content/uploads/2017/12/new_orleans_pelicans_2014-pres.png"
+                        }
+                    },
+                    round: "0"
+                }
+            ],
+        currDay: new Date().getDate(),
+        currMonth: new Date().getMonth() + 1,
+        fullDateWithTwoZeros: new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1).toString() + '-' + '0' + (new Date().getDate()).toString(),
+        fullDateWithDayZero:  new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString() + '-' + '0' + (new Date().getDate()).toString(),
+        fullDateWithMonthZero:  new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1).toString() + '-' + (new Date().getDate()).toString(),
+        fullDateWithNoZeros:  new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString() + '-' + (new Date().getDate()).toString(),
     };
 
     componentDidMount() {
-        const {  currentUser } = this.props;
-        getUserProfile(currentUser,this);
+        if (this.state.currDay.toString().length == 1 && this.state.currMonth.toString().length == 1) {
+            getUserPicksAndPredictions(this, this.state.fullDateWithTwoZeros);
+        }
+
+        else if (this.state.currDay.toString().length == 1) {
+            getUserPicksAndPredictions(this, this.state.fullDateWithDayZero);
+        }
+
+        else if (this.state.currMonth.toString().length == 1){
+            getUserPicksAndPredictions(this, this.state.fullDateWithMonthZero);
+        }
+        else {
+            getUserPicksAndPredictions(this, this.state.fullDateWithNoZeros);
+        }
     }
 
     render() {
         const {classes} = this.props;
-
-        const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
-
+        const backUpData = JSON.parse(JSON.stringify(this.state.data));
         const setProfileState = (info) => {
-            const copy = [...info['userBackground']];
-            this.setState({userBackground:copy}, () => {
+            const copy = [...info['data']];
+            this.setState({data:copy}, () => {
                 console.log(info);
                 console.log(this.state);
             });
         }
+
+        const items = []
+
+        for (const [index, value] of this.state.data.entries()) {
+            items.push(<MatchCard teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
+            items.push(<br/>)
+        }
+
 
         return (<div className={classes.Background}>
                 <NavBar/>
@@ -89,17 +92,14 @@ class Profile extends React.Component {
                 <div>
                     <Grid container spacing={3} className={classes.GridContainer}>
                         <Grid item xs={3} className={classes.GridItemLeft}>
-
                         </Grid>
                         <Grid item xs={9} className={classes.GridItemRight}>
                             <React.Fragment >
-                                <Card raised>
-                                    <List >
-                                        <ListItem style={{ justifyContent:'center' }}>
-                                            <Typography variant="h1" component="h1" >Posts will be here</Typography>
-                                        </ListItem >
-                                    </List>
+                                {/*<UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>*/}
+                                <Card style={{padding: "0.8rem"}} className={classes.Card}>
+                                    <Typography variant="h1" component="h1" color="quaternary">Upcoming Matches</Typography>
                                 </Card>
+                                {items}
                             </React.Fragment>
                         </Grid>
                     </Grid>
@@ -109,5 +109,7 @@ class Profile extends React.Component {
     }
 }
 
-export default withRouter(withStyles(style)(Profile))
+
+export default withRouter(withStyles(style)(PicksAndPredictions))
+
 

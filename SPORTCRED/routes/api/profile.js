@@ -3,6 +3,7 @@ const { mongo } = require('mongoose');
 const router = express.Router();
 var cors = require('cors')
 const Profile = require('../../models/profile');
+const Schedule = require('../../models/schedule');
 
 var corsOptions = {
     origin: 'http://localhost:3000',
@@ -113,7 +114,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
 
     Profile.find({ username: givenUser })
         .select('username fullName dateOfBirth email phone userIcon ' +
-            'questionnaire ACSmetrics about posts')
+            'questionnaire ACSHistoryReport about posts')
         .exec()
         .then(userData => {
             console.log(userData);
@@ -378,6 +379,80 @@ router.put('/updateACSScoreChange/:username', (req, res, next) => {
         });
 });
 
+router.put('/processPredictionResult/:username', (req, res, next) => {
+    // Check if user with username exists in db
+    Profile.find({username: req.params.username })
+        .exec()
+        .then(async function(data) {
+            if (data.length == 0) {
+                res.status(400).json({
+                    message: "user with username, \'"+ req.params.username + "\' does not exist"
+                });
+            } else {
+                const predictions = data[0].predictions;
+                const predicted_winners = [];
+                for (const item of predictions) {
+                    predicted_winners.push(item.predictedWinner)
+                    await findGame(item, predicted_winners)
+                }
+                res.status(200).json({
+                    message: 'successfully checked users predictions'
+                });
+            }
+        });
+
+    let operationsCompleted = 0
+    async function findGame(item, predicted_winners) {
+        //find the game with the specific id
+        await Schedule.find({_id: item.gameId})
+            .exec()
+            .then(function (gameData){
+                const gameTime = new Date(gameData[0].date);
+                const todayTime = new Date();
+                //if game has happened already, check if the winners match
+                if (gameTime < todayTime) {
+                    checkWinners(gameData[0].winner, predicted_winners)
+                }
+            })
+    }
+    function checkWinners(winner, predicted_winners) {
+        if (winner === predicted_winners[operationsCompleted]) {
+            // append to history report
+            // sets the notification true
+            updateACSHistory(winner)
+        }
+        ++operationsCompleted;
+    }
+    function updateACSHistory(winner) {
+        Profile.find({username: req.params.username})
+            .exec(function (err, data) {
+                let ACSHistoryReport = data[0].ACSHistoryReport
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const today = new Date();
+                const month = monthNames[today.getMonth()];
+                const day = String(today.getDate()).padStart(2, '0');
+                const year = today.getFullYear();
+                const finalDate = month + ' ' + day + ' ' + year
+                const event = {
+                    ACSStart: ACSHistoryReport[0].ACSEnd,
+                    ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
+                    activity: "Correctly predicted winner " + winner + "!",
+                    date: finalDate
+                }
+                ACSHistoryReport.unshift(event)
+                Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport})
+                    .then(() => {
+                        console.log("ACSScoreUpdated")
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            error: error
+                        });
+                    });
+            });
+    }
+});
 
 // A route to check if a user is logged in on the session cookie
 router.get('/user/check-session', (req, res) => {

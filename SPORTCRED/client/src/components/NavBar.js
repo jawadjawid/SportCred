@@ -8,7 +8,7 @@ import Avatar from "@material-ui/core/Avatar";
 import logo from "../assets/logo.png";
 import {EmojiEmotions} from "@material-ui/icons";
 import withStyles from "@material-ui/core/styles/withStyles";
-
+import posts from "./Posts"
 const styles = (theme) => ({
         tab: {
             ':hover':
@@ -40,8 +40,8 @@ function NavBar(props) {
             >
                 <img src={logo} alt="haha" width="200px" height="150px"
                      style={{'margin-bottom': '-4rem', 'margin-top': '-2.5rem'}}/>
-                <Tab label="Posts" component={Link} style={{'textDecoration': 'none'}} to="/login"/>
-                <Tab label="Picks & Predictions" component={Link}  style={{'textDecoration': 'none'}} className={classes.tab} to="/picks"/>
+                <Tab label="Posts" component={Link} style={{'textDecoration': 'none'}} to="/posts"/>
+                <Tab label="Picks & Predictions" component={Link}  style={{'textDecoration': 'none'}}  to="/picks"/>
                 <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
                 <Tab label="Debate & Analysis" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
                 <div style={{flex:'1'}}>
