@@ -66,7 +66,7 @@ export default class CreatePost extends React.Component {
                     snackbaropen:true,
                     alertseverity: "success"})
                 
-                window.location.reload(false);
+                // window.location.reload(false);
             }
             else {
                 // alert("your thing failed to be posted");
