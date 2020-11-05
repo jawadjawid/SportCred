@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const session = require('express-session');
+// const MongoDBStore = require("connect-mongodb-session")(session);
 
 const profiles = require('./routes/api/profile');
 const posts = require('./routes/api/post');
@@ -11,9 +12,10 @@ const predicts = require('./routes/api/prediction');
 const app = express();
 app.use(bodyParser.json());
 
-var routesArray = ['/login','/','/profile']
+// var routesArray = ['/login','/','/profile']
 // Create a session cookie
-app.use(routesArray,session({
+// app.use(routesArray,session({
+app.use(session({
     secret: 'pisession',
     resave: false,
     saveUninitialized: false,

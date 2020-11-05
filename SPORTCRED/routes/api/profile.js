@@ -7,40 +7,41 @@ const Schedule = require('../../models/schedule');
 
 var corsOptions = {
     origin: 'http://localhost:3000',
-  }
+}
 router.use(cors(corsOptions))
 
 router.post('/login', (req, res) => {
     // checks if account exists with username and password
     var user = req.body.username;
     var pass = req.body.password;
-    console.log(user+ "  " + pass);
-    Profile.find({username:user,password:pass})
-    .exec()
-    .then( accounts =>{
-        if (accounts.length == 0 ) {
-            res.status(422).json({
-                message: "Your Username or Password is incorrect"
-            });
-        }else if (accounts.length == 1 ) {
-            res.status(200).json({
-                message: "login successfull"
-            });
-        }
-    });
+    console.log(user + "  " + pass);
+    Profile.find({ username: user, password: pass })
+        .exec()
+        .then(accounts => {
+            if (accounts.length == 0) {
+                res.status(422).json({
+                    message: "Your Username or Password is incorrect"
+                });
+            } else if (accounts.length == 1) {
+                res.status(200).json({
+                    message: "login successfull"
+                });
+            }
+        });
 });
 
 router.get('/getUserPassword/:username', (req, res) => {
     // gets a user's password from username
 
-    Profile.find({username:req.params.username})
+    Profile.find({ username: req.params.username })
         .then(data => {
-            if (data.length == 0){
-                res.status(404).json({message:"This username does not exist"})
-            }else res.status(200).json({password: data[0].password})})
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ password: data[0].password })
+        })
         .catch(error => {
             console.log(error)
-            res.status(500).json({error: error});
+            res.status(500).json({ error: error });
         });
 });
 
@@ -49,29 +50,30 @@ router.get('/:username', (req, res) => {
     // Note: Posts and ACS fields only show objectIds 
     // (can't be accessed by front end using this request)
 
-    Profile.find({username:req.params.username})
+    Profile.find({ username: req.params.username })
         .then(data => {
-            if (data.length == 0){
-                res.status(404).json({message:"This username does not exist"})
-           }else res.status(200).json(data)})
-           .catch(error => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json(data)
+        })
+        .catch(error => {
             console.log(error)
-            res.status(500).json({error: error});
-         });
+            res.status(500).json({ error: error });
+        });
 });
 
 
 router.get('/all', (req, res) => {
     Profile.find()
-        .sort({date: -1})
+        .sort({ date: -1 })
         .then(data => res.json(data));
 });
 
-router.post('/signup', (req, res) => { 
+router.post('/signup', (req, res) => {
     const profile = new Profile({
         username: req.body.username,
         password: req.body.password,
-		fullName: req.body.fullName,
+        fullName: req.body.fullName,
         dateOfBirth: req.body.dateOfBirth,
         phone: req.body.phone,
         email: req.body.email,
@@ -90,64 +92,65 @@ router.post('/signup', (req, res) => {
 });
 
 router.delete('/:username', (req, res, next) => {
-    Profile.deleteOne({ username: req.params.username})
-    .then(data => {
-        if(data.n == 0 ){
-            console.log("no user deleted");
-            res.status(404).json(data);
-        }else{
-            console.log(" user was successfully deleted");
-            res.status(200).json(data);
-        }
-      })
-    .catch((error) => {
-        res.status(400).json({
-          error: error
+    Profile.deleteOne({ username: req.params.username })
+        .then(data => {
+            if (data.n == 0) {
+                console.log("no user deleted");
+                res.status(404).json(data);
+            } else {
+                console.log(" user was successfully deleted");
+                res.status(200).json(data);
+            }
+        })
+        .catch((error) => {
+            res.status(400).json({
+                error: error
+            });
         });
-      });
 });
 
 router.get('/getUserProfile/:username', (req, res, next) => {
     const givenUser = req.params.username;
 
-    Profile.find({username: givenUser})
+    Profile.find({ username: givenUser })
         .select('username fullName dateOfBirth email phone userIcon ' +
             'questionnaire ACSHistoryReport about posts')
         .exec()
         .then(userData => {
             console.log(userData);
 
-            if(userData) {
+            if (userData) {
                 res.status(200).json(userData);
             } else {
                 res.status(404).json({
-                    message: 'username not in database'});
+                    message: 'username not in database'
+                });
             }
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({error: err});
+            res.status(500).json({ error: err });
         });
 });
 
 router.put('/setUserProfile/:username', (req, res, next) => {
 
     // Handles req.body validation
-    for(var key in req.body) {
-        if(req.body.hasOwnProperty(key)){
+    for (var key in req.body) {
+        if (req.body.hasOwnProperty(key)) {
             console.log("key: " + key + ", value: " + req.body[key])
-            const nonRequired = ['about','userIcon'];
+            const nonRequired = ['about', 'userIcon'];
             // Check that a key has a non-empty value
-            if(req.body[key] == "" && nonRequired.indexOf(key) === -1){
+            if (req.body[key] == "" && nonRequired.indexOf(key) === -1) {
                 return res.status(400).json({
                     message: "The key, \'" + key + "\' has an empty field"
                 });
             }
-            
+
             // Check for @ symbol in email request
-            if(key == "email"){
+            if (key == "email") {
                 console.log("email validation")
-                if(!req.body[key].match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)){
+                if (!req.body[key].match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)) {
                     return res.status(400).json({
                         message: "Email requires @ symbol"
                     });
@@ -155,17 +158,17 @@ router.put('/setUserProfile/:username', (req, res, next) => {
             }
 
             // Check for properly formatted YYYY/MM/DD format in DOB request
-            if(key == "dateOfBirth") {
+            if (key == "dateOfBirth") {
                 console.log("DOB validation")
-                if(!req.body[key].match(/(\d{4})-(\d{2})-(\d{2})/)){
+                if (!req.body[key].match(/(\d{4})-(\d{2})-(\d{2})/)) {
                     return res.status(400).json({
                         message: "DOB requires DD/MM/YYYY format"
                     });
                 }
             }
-            if(key == "phone") {
+            if (key == "phone") {
                 console.log("phone validation")
-                if(!req.body[key].match(/^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/)){
+                if (!req.body[key].match(/^([0-9]{3}[0−9]3\s*|[0-9]{3}\-)[0-9]{3}-[0-9]{4}$/)) {
                     return res.status(400).json({
                         message: "phone required to be 10 digits long"
                     });
@@ -175,27 +178,27 @@ router.put('/setUserProfile/:username', (req, res, next) => {
     }
 
     // Check if user with username exists in db
-    Profile.find({username: req.params.username })
+    Profile.find({ username: req.params.username })
         .exec()
         .then(data => {
             if (data.length == 0) {
                 res.status(400).json({
-                    message: "user with username, \'"+ req.params.username + "\' does not exist"
+                    message: "user with username, \'" + req.params.username + "\' does not exist"
                 });
             } else {
                 // If user exists then run the query to update its profile info
                 Profile.findOneAndUpdate({ username: req.params.username }, { $set: req.body }, { new: true })
-                .exec()
-                .then(() => {
-                    res.status(200).json({
-                        message: 'updated'
+                    .exec()
+                    .then(() => {
+                        res.status(200).json({
+                            message: 'updated'
+                        })
                     })
-                })
-                .catch(error => {
-                    res.status(400).json({
-                        message: "Bad request"
+                    .catch(error => {
+                        res.status(400).json({
+                            message: "Bad request"
+                        });
                     });
-                });
             }
         });
 });
@@ -341,14 +344,15 @@ router.put('/updateAbout/:username', (req, res, next) => {
 router.get('/getACSScoreChange/:username', (req, res) => {
     // gets a user's ACSScoreChange value from username
 
-    Profile.find({username:req.params.username})
+    Profile.find({ username: req.params.username })
         .then(data => {
-            if (data.length == 0){
-                res.status(404).json({message:"This username does not exist"})
-            }else res.status(200).json({ACSScoreChange: data[0].ACSScoreChange})})
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ ACSScoreChange: data[0].ACSScoreChange })
+        })
         .catch(error => {
             console.log(error)
-            res.status(500).json({error: error});
+            res.status(500).json({ error: error });
         });
 });
 
@@ -456,23 +460,23 @@ router.get('/user/check-session', (req, res) => {
     console.log(req.session)
     console.log('inside check' + isLoggedIn)
     if (isLoggedIn) {
-        
-      res.send({ currentUser: username});
+
+        res.send({ currentUser: username });
     } else {
-      res.status(401).send();
+        res.status(401).send();
     }
-  });
-  
+});
+
 module.exports = router;
 
 
 // A route to logout a user
 router.get('/logout', (req, res) => {
     req.session.destroy((error) => {
-      if (error) {
-        res.status(500).send(error);
-      } else {
-        res.redirect('/');
-      }
+        if (error) {
+            res.status(500).send(error);
+        } else {
+            res.redirect('/');
+        }
     });
-  });
+});

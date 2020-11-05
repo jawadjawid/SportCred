@@ -8,6 +8,7 @@ import UserBasicInfo from "./UserBasicInfo";
 import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
 import UserAboutInfo from "./UserAboutInfo";
+import CreatePost from './CreatePost';
 import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
@@ -16,7 +17,7 @@ import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import NavBar from "../NavBar";
-
+import PostsTable from '../Posts/PostsTable';
 class Profile extends React.Component {
     constructor(props) {
         super(props);
@@ -99,15 +100,14 @@ class Profile extends React.Component {
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>
+                        <CreatePost username={this.state.userBackground[0]["username"]} />
                         <React.Fragment >
+                        
                             <Card raised>
-                                <List >
-                                    <ListItem style={{ justifyContent:'center' }}>
-                                        <Typography variant="h1" component="h1" >Posts will be here</Typography>
-                                    </ListItem >
-                                </List>
+                            <PostsTable  />
                             </Card>
                         </React.Fragment>
+                        
                     </Grid>
                 </Grid>
                 </div>
