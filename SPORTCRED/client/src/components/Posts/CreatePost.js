@@ -2,6 +2,9 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { Card } from '@material-ui/core';
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+
 
 export default class CreatePost extends React.Component {
     constructor(props) {
@@ -10,8 +13,9 @@ export default class CreatePost extends React.Component {
         this.state = {
             username: this.props.username,
             postBody: "",
-            postBodyError: false,
-            errorMessage: ""
+            snackbarmsg: "",
+            snackbaropen: false,
+            alertseverity: "success"
         }
         this.handleChange = this.handleChange.bind(this);
         this.createPost = this.createPost.bind(this)
@@ -33,15 +37,18 @@ export default class CreatePost extends React.Component {
             postContent: this.state.postBody
         }
         if (this.state.postBody === "" ){
-            alert('You cannot post with an empty body');
+            // alert('You cannot post with an empty body');
+            this.setState({
+                snackbarmsg: "You cannot post with an empty body",
+                snackbaropen:true,
+                alertseverity: "info"})
             return 0;
         }
 
         
-        
-        var url = "http://localhost:5000/api/post/createPost/" + this.state.username;  // doesnt work for this
         console.log(JSON.stringify(postBody))
-        console.log(url)
+        var url = "http://localhost:5000/api/post/createPost/" + this.state.username;
+
         fetch(url, {
             method: 'post',
             body: JSON.stringify(postBody),
@@ -52,20 +59,41 @@ export default class CreatePost extends React.Component {
         })
         .then(res => {
             if (res.status == 200) {
-                alert("your thing has been posted");
-                // window.location.reload(false);
-                this.setState({ postBody: "" });
+                // alert("your thing has been posted");
+                this.setState({
+                    postBody: "" , 
+                    snackbarmsg: "Successfully posted", 
+                    snackbaropen:true,
+                    alertseverity: "success"})
+                
+                window.location.reload(false);
             }
             else {
-                alert("your thing failed to be posted");
+                // alert("your thing failed to be posted");
+                this.setState({
+                    snackbarmsg: "Failed to posted", 
+                    snackbaropen:true,
+                    alertseverity: "error"})
                 console.log(res.json());
             }
                 
             // console.log(res.json());
         })
         .catch(() => {
-            alert('Something went wrong. Please try again later.');
+            // alert('Something went wrong. Please try again later.');
+            this.setState({
+                snackbarmsg: "Something went wrong. Please try again later", 
+                snackbaropen:true,
+                alertseverity: "error"})
         });
+    }
+
+    handleBarClose= (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({snackbaropen:false});
     }
 
     render() {
@@ -88,6 +116,12 @@ export default class CreatePost extends React.Component {
                     Post
                 </Button>
                 </Card>
+
+                <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={this.state.snackbaropen} autoHideDuration={3000} >
+                    <Alert onClose={this.handleBarClose} severity={this.state.alertseverity}>
+                        {this.state.snackbarmsg}
+                    </Alert>
+                </Snackbar>
             </React.Fragment>
         )
     }
