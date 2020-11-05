@@ -102,26 +102,16 @@ router.post('/addComment/:username', (req, res) => {
                 return res.status(400).json({message:"Commenter does not exist"})
             }
             else {
-                // Find the profile document of the poster
-                Profile.findOne({username: req.body.poster})
-                    .exec(function(err, posterProfile) {
-                        if(posterProfile == null) {
-                            return res.status(400).json({message:"This poster does not exist"})
+                Post.findOne({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
+                    .exec(function(err, post) {
+                        if(post == null) {
+                            return res.status(400).json({message:"This post does not exist"})
                         }
-                        // If the poster exists then query for the post by poster id, content and date
+                        // If we successfully query the post, then push the comment to the comments array
                         else {
-                            Post.findOne({poster: posterProfile._id, postContent: req.body.postContent, postDate: req.body.postDate})
-                                .exec(function(err, post) {
-                                    if(post == null) {
-                                        return res.status(400).json({message:"This post does not exist"})
-                                    }
-                                    // If we successfully query the post, then push the comment to the comments array
-                                    else {
-                                        post.comments.push({commentContent: req.body.commentContent, commenter: req.params.username});
-                                        post.save();
-                                        res.status(200).json({message:"comment added"});
-                                    }
-                                });
+                            post.comments.push({commentContent: req.body.commentContent, commenter: req.params.username});
+                            post.save();
+                            res.status(200).json({message:"comment added"});
                         }
                     });
             }
@@ -136,83 +126,73 @@ router.post('/updateAgreeOrDisagree/:username', (req, res) => {
         "postDate": "2020-11-01T05:36:36.743+00:00",
         "agree": true
     } */
-
-    // Find the profile document of the poster
-    Profile.findOne({username: req.body.poster})
-        .exec(function(err, posterProfile) {
-            if(posterProfile == null) {
-                return res.status(400).json({message:"This poster does not exist"})
+    
+    Post.findOne({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
+        .exec(function(err, post) {
+            if(post == null) {
+                return res.status(400).json({message:"This post does not exist"})
             }
-            // If the poster exists then query for the post by poster id, content and date
+            // If we successfully query the post, now utilise agree/disagree array
             else {
-                Post.findOne({poster: posterProfile._id, postContent: req.body.postContent, postDate: req.body.postDate})
-                    .exec(function(err, post) {
-                        if(post == null) {
-                            return res.status(400).json({message:"This post does not exist"})
-                        }
-                        // If we successfully query the post, now utilise agree/disagree array
-                        else {
-                            // The user hasn't agreed or disagreed yet, and wants to agree
-                            if (((typeof req.body.agree) !== 'undefined') && (req.body.agree == true) && !(post.agree.includes(req.params.username)) && !(post.disagree.includes(req.params.username))) {
-                                post.agree.push(req.params.username);
-                                post.save();
-                                res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
-                            }
+                // The user hasn't agreed or disagreed yet, and wants to agree
+                if (((typeof req.body.agree) !== 'undefined') && (req.body.agree == true) && !(post.agree.includes(req.params.username)) && !(post.disagree.includes(req.params.username))) {
+                    post.agree.push(req.params.username);
+                    post.save();
+                    res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
+                }
 
-                            // The user hasn't agreed or disagreed yet, and wants to disagree
-                            else if (((typeof req.body.disagree) !== 'undefined') && (req.body.disagree == true) && !(post.disagree.includes(req.params.username)) && !(post.agree.includes(req.params.username))) {
-                                post.disagree.push(req.params.username);
-                                post.save();
-                                res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
-                            }
+                // The user hasn't agreed or disagreed yet, and wants to disagree
+                else if (((typeof req.body.disagree) !== 'undefined') && (req.body.disagree == true) && !(post.disagree.includes(req.params.username)) && !(post.agree.includes(req.params.username))) {
+                    post.disagree.push(req.params.username);
+                    post.save();
+                    res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
+                }
 
-                            // The user no longer wants to agree
-                            else if (((typeof req.body.agree) !== 'undefined') && (req.body.agree == true) && (post.agree.includes(req.params.username))) {
-                                const index = post.agree.indexOf(req.params.username);
-                                if (index > -1) {
-                                    post.agree.splice(index, 1);
-                                    post.save();
-                                    res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
-                                }
-                            }
+                // The user no longer wants to agree
+                else if (((typeof req.body.agree) !== 'undefined') && (req.body.agree == true) && (post.agree.includes(req.params.username))) {
+                    const index = post.agree.indexOf(req.params.username);
+                    if (index > -1) {
+                        post.agree.splice(index, 1);
+                        post.save();
+                        res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
+                    }
+                }
 
-                            // The user no longer wants to disagree
-                            else if (((typeof req.body.disagree) !== 'undefined') && (req.body.disagree == true) && (post.disagree.includes(req.params.username))) {
-                                const index = post.disagree.indexOf(req.params.username);
-                                if (index > -1) {
-                                    post.disagree.splice(index, 1);
-                                    post.save();
-                                    res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
-                                }
-                            }
+                // The user no longer wants to disagree
+                else if (((typeof req.body.disagree) !== 'undefined') && (req.body.disagree == true) && (post.disagree.includes(req.params.username))) {
+                    const index = post.disagree.indexOf(req.params.username);
+                    if (index > -1) {
+                        post.disagree.splice(index, 1);
+                        post.save();
+                        res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
+                    }
+                }
 
-                            // The user is a disagreer, and wants to agree now
-                            else if (((typeof req.body.agree) !== 'undefined') && (req.body.agree == true) && (post.disagree.includes(req.params.username))) {
-                                const index = post.disagree.indexOf(req.params.username);
-                                if (index > -1) {
-                                    post.disagree.splice(index, 1);
-                                    post.agree.push(req.params.username);
-                                    post.save();
-                                    res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
-                                }
-                            }
+                // The user is a disagreer, and wants to agree now
+                else if (((typeof req.body.agree) !== 'undefined') && (req.body.agree == true) && (post.disagree.includes(req.params.username))) {
+                    const index = post.disagree.indexOf(req.params.username);
+                    if (index > -1) {
+                        post.disagree.splice(index, 1);
+                        post.agree.push(req.params.username);
+                        post.save();
+                        res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
+                    }
+                }
 
-                            // The user is an agreer, and wants to disagree now
-                            else if (((typeof req.body.disagree) !== 'undefined') && (req.body.disagree == true) && (post.agree.includes(req.params.username))) {
-                                const index = post.agree.indexOf(req.params.username);
-                                if (index > -1) {
-                                    post.agree.splice(index, 1);
-                                    post.disagree.push(req.params.username);
-                                    post.save();
-                                    res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
-                                }
-                            }
+                // The user is an agreer, and wants to disagree now
+                else if (((typeof req.body.disagree) !== 'undefined') && (req.body.disagree == true) && (post.agree.includes(req.params.username))) {
+                    const index = post.agree.indexOf(req.params.username);
+                    if (index > -1) {
+                        post.agree.splice(index, 1);
+                        post.disagree.push(req.params.username);
+                        post.save();
+                        res.status(200).json({agreeCount: post.agree.length, disagreeCount: post.disagree.length});
+                    }
+                }
 
-                            else {
-                                res.status(400).json({message: "Bad request. Missing agree or disagree in json request"})
-                            }
-                        }
-                    });
+                else {
+                    res.status(400).json({message: "Bad request. Missing agree or disagree in json request"})
+                }
             }
         });
 });
