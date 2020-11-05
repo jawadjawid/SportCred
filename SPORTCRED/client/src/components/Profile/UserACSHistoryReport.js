@@ -18,13 +18,13 @@ const UserACSHistoryReport = (props) => {
 
     const renderRow = (rowInfo) => {
         const {report} = props;
-        const style = {'margin-left':'0.5rem',color: parseInt(report[rowInfo.index]["acsStart"]) < parseInt(report[rowInfo.index]["acsEnd"]) ? '#14A76C':'#eb3434'};
+        const style = {'margin-left':'0.5rem',color: parseInt(report[rowInfo.index]["ACSStart"]) < parseInt(report[rowInfo.index]["ACSEnd"]) ? '#14A76C':'#eb3434'};
         return (
             <React.Fragment>
                 <Typography variant="h4" style={{'display':'inline-block'}} >{report[rowInfo.index]["activity"]} {'\u2022'} </Typography>
                 <Typography variant="h5" style={{'display':'inline-block','margin-left':'0.5rem',color:'grey'}}> {report[rowInfo.index]["date"]}</Typography>
-                <Typography variant="h3" style={{"margin-top":'0.3rem', 'display':'inline-block', 'float':'right'}}> {report[rowInfo.index]["acsStart"]}
-                     <ArrowForwardIosIcon style={style}/> {report[rowInfo.index]["acsEnd"]}</Typography>
+                <Typography variant="h3" style={{"margin-top":'0.3rem', 'display':'inline-block', 'float':'right'}}> {report[rowInfo.index]["ACSStart"]}
+                     <ArrowForwardIosIcon style={style}/> {report[rowInfo.index]["ACSEnd"]}</Typography>
                 <Divider style={{'margin-bottom':'1rem','margin-top':'0.2rem'}}/>
             </React.Fragment>
         );

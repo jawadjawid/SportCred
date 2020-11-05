@@ -21,23 +21,25 @@ export const getUserProfile = async (username, currPage) => {
                         {"fullName": "Albert Liu", "username": "alberto"},
                         {"fullName": "Mohammad Sajjad", "username": "mohao"}
                     ],
-                    acsScore:"35",
+                    acsScore:"38",
+                    // acsHistoryReport:data.ACSHistoryReport,
                     acsHistoryReport:[{
-                        "acsStart":"35",
-                        "acsEnd":"41",
-                        "activity":"Trivia with user5223 with final score of 142:42",
-                        "date":"Oct 12"
+                        "ACSStart":"43",
+                        "ACSEnd":"38",
+                        "activity":"Incorrectly predicted winner ORL",
+                        "date":"Nov 5"
                     },{
-                        "acsStart":"31",
-                        "acsEnd":"35",
-                        "activity":"Debate won w post #4324",
-                        "date":"Oct 7"
+                        "ACSStart":"38",
+                        "ACSEnd":"43",
+                        "activity":"Correctly predicted winner ORL",
+                        "date":"Nov 5"
                     },{
-                        "acsStart":"33",
-                        "acsEnd":"31",
+                        "ACSStart":"33",
+                        "ACSEnd":"38",
                         "activity":"Trivia w user3252 with final score of 100:24",
-                        "date":"Oct 3"
+                        "date":"Oct 15"
                     }],
+
                     userBackground: createUserBackground(data)
                 });
         return true;
@@ -134,31 +136,42 @@ export const getUserPassword = async (username, currPage) => {
 }
 
 export const getACSScoreChange = async (username, setACSScoreChange) => {
-    axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
-        if(res.status === 200) {
-            return res.data;
-        }
-    }).then(data => {
-        setACSScoreChange(data.ACSScoreChange);
-        return true;
-    }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
-        return false;
-    });
+    // await axios.put('http://localhost:5000/api/profile/processPredictionResult/' + username).then((res) => {
+    //     if(res.status === 200) {
+    //         return res.data;
+    //     }
+    // }).then(data => {
+    //     return true;
+    // }).catch(error => {
+    //     alert('Something went wrong. Please Try again Later.')
+    //     return false;
+    // });
+    // await axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
+    //     if(res.status === 200) {
+    //         return res.data;
+    //     }
+    // }).then(data => {
+    //     setACSScoreChange(data.ACSScoreChange);
+    //     return true;
+    // }).catch(error => {
+    //     alert('Something went wrong. Please Try again Later.')
+    //     return false;
+    // });
+    setACSScoreChange(false);
 }
 
 export const updateACSScoreChange = async (username) => {
-    const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
-        .then(res => {
-            if(res.status === 200) return res.data;
-        }).then(data => {
-            return true;
-        }).catch(error => {
-            alert('Something went wrong. Please try again later.');
-            return false;
-        });
-
-    return promise;
+    // const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
+    //     .then(res => {
+    //         if(res.status === 200) return res.data;
+    //     }).then(data => {
+    //         return true;
+    //     }).catch(error => {
+    //         alert('Something went wrong. Please try again later.');
+    //         return false;
+    //     });
+    //
+    // return promise;
 }
 
 
