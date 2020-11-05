@@ -57,7 +57,6 @@ class PostRow extends React.Component {
          "postDate": post.postDate,
          "agree": favstate
     }
-    console.log(JSON.stringify(post) + 'test post');
     AgreeDisagree (this.props.currentUser, post,favstate)
 };
   render() {

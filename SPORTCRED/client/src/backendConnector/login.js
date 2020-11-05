@@ -48,7 +48,8 @@ export const login = (loginComp, app) => {
         return res.json();
       })
       .then(json => {
-        if (json.message !== 'login successfull') {
+          console.log(json)
+        if (json.message !== undefined) {
           loginComp.setState({
             displayError: true,
             errorMessage: json.message

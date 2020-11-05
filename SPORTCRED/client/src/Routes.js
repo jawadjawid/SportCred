@@ -29,7 +29,7 @@ export default props => {
 
 const AuthRoute = ({ component: Component, props, ...rest }) => {
     const { isLoggedIn } = props;
-  
+   console.log(isLoggedIn + 'inside auth route')
     return (
       <Route
         {...rest}

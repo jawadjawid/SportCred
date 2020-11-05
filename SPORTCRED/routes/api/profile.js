@@ -23,9 +23,13 @@ router.post('/login', (req, res) => {
                     message: "Your Username or Password is incorrect"
                 });
             } else if (accounts.length == 1) {
+                req.session.isLoggedIn = true;
+                req.session.username = user;
+                res.send({ currentUser: user });
                 res.status(200).json({
                     message: "login successfull"
                 });
+
             }
         });
 });
@@ -457,7 +461,7 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
 // A route to check if a user is logged in on the session cookie
 router.get('/user/check-session', (req, res) => {
     const { username, isLoggedIn } = req.session;
-    console.log(req.session)
+    console.log(req.session + 'checking session')
     console.log('inside check' + isLoggedIn)
     if (isLoggedIn) {
 
