@@ -404,9 +404,15 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
             .exec()
             .then(function (gameData){
                 const gameTime = new Date(gameData[0].date);
+
                 const todayTime = new Date();
+                console.log("game" + gameTime);
+                console.log("today" + item.gameId);
+                console.log("today" + gameData[0].date
+                );
+
                 //if game has happened already, check if the winners match
-                if (gameTime < todayTime) {
+                if (gameData[0].date <= "2020-11-06") {
                     checkWinners(gameData[0].winner, predicted_winners)
                 }
             })
@@ -421,23 +427,34 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
     }
     function updateACSHistory(winner) {
         Profile.find({username: req.params.username})
-            .exec(function (err, data) {
+            .exec(async function (err, data) {
                 let ACSHistoryReport = data[0].ACSHistoryReport
-                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const monthNames = ["01", "02", "03", "04", "05", "06",
+                    "07", "08", "09", "10", "11", "12"];
                 const today = new Date();
                 const month = monthNames[today.getMonth()];
                 const day = String(today.getDate()).padStart(2, '0');
                 const year = today.getFullYear();
-                const finalDate = month + ' ' + day + ' ' + year
-                const event = {
-                    ACSStart: ACSHistoryReport[0].ACSEnd,
-                    ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
-                    activity: "Correctly predicted winner " + winner + "!",
-                    date: finalDate
+                const finalDate = year+ '-' + month + '-' + day
+                let event;
+                if (ACSHistoryReport[0] === undefined) {
+                    event = {
+                        ACSStart: 0,
+                        ACSEnd: 5,
+                        activity: "Correctly predicted winner " + winner + "!",
+                        date: finalDate
+                    }
+                }
+                else {
+                    event = {
+                        ACSStart: ACSHistoryReport[0].ACSEnd,
+                        ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
+                        activity: "Correctly predicted winner " + winner + "!",
+                        date: finalDate
+                    }
                 }
                 ACSHistoryReport.unshift(event)
-                Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport})
+                 await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport})
                     .then(() => {
                         console.log("ACSScoreUpdated")
                     })

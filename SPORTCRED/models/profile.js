@@ -67,11 +67,12 @@ const ProfileSchema = new Schema({
             default: 0
         },
         activity: {
-            type: String
+            type: String,
+            default: ""
         },
         date: {
             type: String,
-            match: /(\s{3}) (\d{2})/
+            match: /(\s{3}) (\d{2})/,
         }
     }],
     ACSScoreChange: {

@@ -33,13 +33,12 @@ function NavBar(props) {
     };
     const {classes,username} = props;
 
-    const handleACSScoreChangeClose = (event, reason) => {
+    const  handleACSScoreChangeClose = async (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
+        await updateACSScoreChange(username);
         setDisplayACSScoreChangeNotif(false);
-        updateACSScoreChange(username);
     }
 
     useEffect(() => {
@@ -68,7 +67,7 @@ function NavBar(props) {
             </Tabs>
             <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={displayACSScoreChangeNotif} autoHideDuration={6000} onClose={handleACSScoreChangeClose}>
                 <Alert onClose={handleACSScoreChangeClose} severity="success">
-                    Password changed successfully!
+                    Your ACS has changed!
                 </Alert>
             </Snackbar>
         </AppBar>
