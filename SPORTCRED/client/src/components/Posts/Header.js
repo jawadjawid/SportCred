@@ -11,9 +11,9 @@ function Header(props) {
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+  
 
     const {classes} = props;
-
     return (
         
         <div className = {classes.ToggleDiv}>

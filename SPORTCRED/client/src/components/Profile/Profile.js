@@ -77,7 +77,6 @@ class Profile extends React.Component {
 
     render() {
         const {classes} = this.props;
-
         const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
 
         const setProfileState = (info) => {

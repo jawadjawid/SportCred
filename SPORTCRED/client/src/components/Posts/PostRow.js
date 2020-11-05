@@ -14,9 +14,15 @@ import {AgreeDisagree} from '../../backendConnector/posts'
 
 class PostRow extends React.Component {
 
+    // componentDidMount() {
+    // const { currentUser } = this.props;
+    // }
   state = {
     detailOpen: false,
-    alertOpen: false
+    alertOpen: false,
+    agree_count : 0,
+    disagree_count : 0,
+    comment_count : 0,
   };
 
   setDetailOpen = (value) => {
@@ -39,6 +45,19 @@ class PostRow extends React.Component {
 
   
   handleClick (post, favstate, index) {
+    //   {
+    //     "postContent": "post by user1",
+    //     "poster": "user1",
+    //     "postDate": "2020-11-01T05:36:36.743+00:00",
+    //     "agree": true
+    // }
+    post = {
+        "postContent": post.postContent,
+         "poster": post.poster,
+         "postDate": post.postDate,
+         "agree": favstate
+    }
+    console.log(JSON.stringify(post) + 'test post');
     AgreeDisagree (this.props.currentUser, post,favstate)
 };
   render() {
@@ -62,24 +81,25 @@ class PostRow extends React.Component {
         <Button
             color="secondary"
             className="btn btn-primary"
-            onClick={this.handleClick(post,this.state,index)}
+            onClick={this.handleClick(post,'true',index)}
           >
-             <ThumbUpIcon/> 
+             {this.state.agree_count} <ThumbUpIcon/> 
           </Button>
           <Button
             color="secondary"
             className="btn btn-primary"
-            onClick= {this.handleClick(post,this.state,index)}
+            onClick= {this.handleClick.bind(this,post,'false',index)}
           >
-             <ThumbDownIcon/>
+             {this.state.agree_count} <ThumbDownIcon/>
           </Button>
           <Button
             color="secondary"
             className="btn btn-primary"
-            onClick= {this.handleClick(post,this.state,index)}
+            onClick= {this.handleClick.bind(this,this.state,index)}
           >
              Comment
           </Button>
+            <a> {this.state.comment_count}</a>
           </TableRow>
           
         </Card>

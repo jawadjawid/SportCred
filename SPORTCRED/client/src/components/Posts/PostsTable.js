@@ -18,7 +18,10 @@ import Card from '@material-ui/core/Card';
 
 
 class PostsTable extends React.Component {
-
+    constructor(props) {
+        super(props);
+      }
+    
   componentDidMount() {
     const { username, currentUser,alignment } = this.props;
     getAllPosts(this);
@@ -62,6 +65,7 @@ class PostsTable extends React.Component {
                   key={uid(booking)}
                   post={booking}
                   index={index}
+                  {...this.props}
                 />
               ))}
 

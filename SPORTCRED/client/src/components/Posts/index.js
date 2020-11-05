@@ -8,11 +8,26 @@ import CreatePost from './CreatePost';
 
 
 class Post extends React.Component {
-   
 
+
+    constructor(props){
+        super(props);
+        this.state = {
+            currentUser: this.props.currentUser
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+       
+        if (nextProps.currentUser !== this.state.currentUser) {
+            this.setState({currentUser:nextProps.currentUser});
+        }
+    }
+    
   render() {
-    // state = {alignment, setAlignment = React.useState('all')};
+    
     const { isLoggedIn } = this.props;
+    
     return (
       <div>
         <CssBaseline/>
