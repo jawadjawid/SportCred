@@ -3,6 +3,12 @@ const { mongo } = require('mongoose');
 const router = express.Router();
 
 const Schedule = require('../../models/schedule');
+const cors = require("cors");
+
+var corsOptions = {
+    origin: 'http://localhost:3000',
+}
+router.use(cors(corsOptions))
 
 router.get('/game', (req, res) => {
     Schedule.find({})
@@ -30,7 +36,7 @@ router.get('/upcomingMatch/today/:date', (req, res) => {
     if(!date.match(/(\d{4})-(\d{2})-(\d{2})/))
     {
         return res.status(400).json({
-            message: "DOB requires DD/MM/YYYY format"
+            message: "DOB requires YYYY/MM/DD format"
         });
     }
     
@@ -59,7 +65,7 @@ router.get('/upcomingMatch/tomorrow/:date', (req, res) => {
     if(!today.match(/(\d{4})-(\d{2})-(\d{2})/))
     {
         return res.status(400).json({
-            message: "DOB requires DD/MM/YYYY format"
+            message: "DOB requires YYYY/MM/DD format"
         });
     }
     let date;
