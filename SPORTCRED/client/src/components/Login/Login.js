@@ -13,6 +13,9 @@ import {withStyles,Checkbox, FormControlLabel} from '@material-ui/core';
 import { login } from '../../backendConnector/login';
 
 import { withRouter } from 'react-router-dom';
+import Link from "@material-ui/core/Link";
+import ForgotPassword from "./ForgotPassword";
+import UserACSHistoryReport from "../Profile/UserACSHistoryReport";
 
 class Login extends React.Component{
 
@@ -26,7 +29,8 @@ class Login extends React.Component{
       password: (password) ? password : '',
       displayError: false,
       errorMessage: '',
-      checked: !!(checked)
+      checked: !!(checked),
+      forgotPassword:false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -39,18 +43,20 @@ class Login extends React.Component{
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.checked) {
+    if(!this.state.forgotPassword){
+      if (this.state.checked) {
         localStorage.setItem('checked', this.state.checked);
         localStorage.setItem('username', this.state.username);
         localStorage.setItem('password', this.state.password);
-        } 
-        else {
+      }
+      else {
         localStorage.removeItem('username');
         localStorage.removeItem('password');
         localStorage.removeItem('checked');
       }
 
-    login(this, this.props.app);
+      login(this, this.props.app);
+    }
   }
 
   render(){
@@ -123,6 +129,10 @@ class Login extends React.Component{
             }
             label="Remember me"
           />
+          <Link component="button" onClick={()=> this.setState({forgotPassword:true})}>
+            Forgot Password
+          </Link>
+          <ForgotPassword open={this.state.forgotPassword} close={() => {this.setState({forgotPassword:false})}} />
           <Button
             type="submit"
             fullWidth
