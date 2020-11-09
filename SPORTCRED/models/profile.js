@@ -79,6 +79,10 @@ const ProfileSchema = new Schema({
         type: Boolean,
         default: false
     },
+    lastDebateCompleted: {
+        type: Date,
+        default: Date.now
+    },
     predictions: [{
         gameId: {
             type: Schema.Types.ObjectID,

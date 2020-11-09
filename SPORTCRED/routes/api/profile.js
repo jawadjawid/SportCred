@@ -379,6 +379,43 @@ router.put('/updateACSScoreChange/:username', (req, res, next) => {
         });
 });
 
+router.get('/getLastDebateCompleted/:username', (req, res) => {
+    // gets a user's lastDebateCompleted value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ lastDebateCompleted: data[0].lastDebateCompleted })
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
+router.put('/updateLastDebateCompleted/:username', (req, res, next) => {
+    console.log("Hitting update lastDebateCompleted endpt with id " + req.params.username)
+
+    // If lastDebateCompleted key is not in JSON body then return 400 status
+    if ((typeof req.body.lastDebateCompleted) === 'undefined') {
+        res.status(400).json({
+            error: error
+        })
+    }
+
+    Profile.updateOne({ username: req.params.username }, { lastDebateCompleted: req.body.lastDebateCompleted })
+        .then(() => {
+            res.status(200).json({
+                message: 'updated successfully'
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
 router.put('/processPredictionResult/:username', (req, res, next) => {
     // Check if user with username exists in db
     Profile.find({username: req.params.username })
