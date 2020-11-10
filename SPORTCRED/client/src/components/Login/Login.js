@@ -129,8 +129,8 @@ class Login extends React.Component{
             }
             label="Remember me"
           />
-          <Link component="button" onClick={()=> this.setState({forgotPassword:true})}>
-            Forgot Password
+          <Link style={{float:"right","margin-top":"10px"}} component="button" color="secondary" onClick={()=> this.setState({forgotPassword:true})}>
+            Forgot Password?
           </Link>
           <ForgotPassword open={this.state.forgotPassword} close={() => {this.setState({forgotPassword:false})}} />
           <Button

@@ -1,62 +1,79 @@
 import axios from 'axios';
 // A function to send a POST request with the new user info
-export const getUserProfile = async (username, currPage) => {
+export const getUserProfile = async (username, currPage,forgotPassword) => {
 
-    axios.get('http://localhost:5000/api/profile/getUserProfile/'+ username).then((res) => {
+   return axios.get('http://localhost:5000/api/profile/getUserProfile/'+ username).then((res) => {
             if(res.status === 200) {
                 return res.data[0];
-            }
-        }).then(data => {
-            currPage.setState(
-                {
-                    userIcon:data.userIcon,
-                    friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
-                        {"fullName": "John Doe", "username": "hi142"},
-                        {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
-                        {"fullName": "Albert Liu", "username": "alberto"},
-                        {"fullName": "Mohammad Sajjad", "username": "mohao"},
-                        {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
-                        {"fullName": "John Doe", "username": "hi142"},
-                        {"fullName": "Pussy Cat", "username": "meow"},
-                        {"fullName": "Albert Liu", "username": "alberto"},
-                        {"fullName": "Mohammad Sajjad", "username": "mohao"}
-                    ],
-                    acsScore:"38",
-                    // acsHistoryReport:data.ACSHistoryReport,
-                    acsHistoryReport:[{
-                        "ACSStart":"43",
-                        "ACSEnd":"38",
-                        "activity":"Incorrectly predicted winner ORL",
-                        "date":"Nov 5"
-                    },{
-                        "ACSStart":"38",
-                        "ACSEnd":"43",
-                        "activity":"Correctly predicted winner ORL",
-                        "date":"Nov 5"
-                    },{
-                        "ACSStart":"33",
-                        "ACSEnd":"38",
-                        "activity":"Trivia w user3252 with final score of 100:24",
-                        "date":"Oct 15"
-                    }],
+            }}).then(data => {
+            if(currPage === null){
+                // wait for this to finish
+                forgotPassword({
+                        dateOfBirth:data.dateOfBirth,
+                        email:data.email
+                    });
+                    return true;
+            }else{
+                const createUserBackground = (data) => {
+                    const basicInfo = [{"username":data.username},{"about":data.about},{"fullName":data.fullName},{"dateOfBirth":data.dateOfBirth},{"email":data.email},{"phone":data.phone}];
+                    const additionalInfo = [ {"favSport": data.questionnaire["favSport"]},
+                        {"favTeam": data.questionnaire["favTeam"]},
+                        {"sportToLearn":data.questionnaire["sportToLearn"]},
+                        {"levelPlayed": data.questionnaire["levelPlayed"]}];
+                    return basicInfo.concat(additionalInfo);
+                }
 
-                    userBackground: createUserBackground(data)
-                });
+                currPage.setState(
+                    {
+                        userIcon:data.userIcon,
+                        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
+                            {"fullName": "John Doe", "username": "hi142"},
+                            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
+                            {"fullName": "Albert Liu", "username": "alberto"},
+                            {"fullName": "Mohammad Sajjad", "username": "mohao"},
+                            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
+                            {"fullName": "John Doe", "username": "hi142"},
+                            {"fullName": "Pussy Cat", "username": "meow"},
+                            {"fullName": "Albert Liu", "username": "alberto"},
+                            {"fullName": "Mohammad Sajjad", "username": "mohao"}
+                        ],
+                        acsScore:"38",
+                        // acsHistoryReport:data.ACSHistoryReport,
+                        acsHistoryReport:[{
+                            "ACSStart":"43",
+                            "ACSEnd":"38",
+                            "activity":"Incorrectly predicted winner ORL",
+                            "date":"Nov 5"
+                        },{
+                            "ACSStart":"38",
+                            "ACSEnd":"43",
+                            "activity":"Correctly predicted winner ORL",
+                            "date":"Nov 5"
+                        },{
+                            "ACSStart":"33",
+                            "ACSEnd":"38",
+                            "activity":"Trivia w user3252 with final score of 100:24",
+                            "date":"Oct 15"
+                        }],
+
+                        userBackground: createUserBackground(data)
+                    });
+            }
         return true;
     }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
+        if(currPage === null) {
+            forgotPassword({
+                dateOfBirth: "",
+                email: ""
+            });
+        } else {
+            alert('Something went wrong. Please Try again Later.');
+        }
         return false;
     });
-
-    const createUserBackground = (data) => {
-        const basicInfo = [{"username":data.username},{"about":data.about},{"fullName":data.fullName},{"dateOfBirth":data.dateOfBirth},{"email":data.email},{"phone":data.phone}];
-        const additionalInfo = [ {"favSport": data.questionnaire["favSport"]},
-            {"favTeam": data.questionnaire["favTeam"]},
-            {"sportToLearn":data.questionnaire["sportToLearn"]},
-            {"levelPlayed": data.questionnaire["levelPlayed"]}];
-        return basicInfo.concat(additionalInfo);
-    }
 };
+
+
 
 const createQuestionnaireToSendToDB = (profile) => {
      let questionnaire ={};
