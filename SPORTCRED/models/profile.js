@@ -71,8 +71,8 @@ const ProfileSchema = new Schema({
             default: ""
         },
         date: {
-            type: String,
-            match: /(\s{3}) (\d{2})/,
+            type: Date,
+            default: Date.now,
         }
     }],
     ACSScoreChange: {
@@ -90,8 +90,11 @@ const ProfileSchema = new Schema({
         predictedWinner: {
             type: String
         }
-    }]
-    
+    }],
+    lastDebatePrompt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 ProfileSchema.plugin(uniqueValidator);
