@@ -114,7 +114,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
 
     Profile.find({ username: givenUser })
         .select('username fullName dateOfBirth email phone userIcon ' +
-            'questionnaire ACSHistoryReport about posts')
+            'questionnaire ACSScore ACSHistoryReport about posts')
         .exec()
         .then(userData => {
             console.log(userData);
@@ -341,6 +341,49 @@ router.put('/updateAbout/:username', (req, res, next) => {
         });
 });
 
+router.get('/getACSScore/:username', (req, res) => {
+    // gets a user's ACSScore value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ ACSScore: data[0].ACSScore })
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
+router.get('/getACSTier/:username', (req, res) => {
+    // gets a user's ACSScore value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else {
+                let ACSTier = ""
+                if (data[0].ACSScore >= 100 && data[0].ACSScore < 300) {
+                    ACSTier = "Fanalyst"
+                }
+                else if (data[0].ACSScore >= 300 && data[0].ACSScore < 600) {
+                    ACSTier = "Analyst"
+                }
+                else if (data[0].ACSScore >= 600 && data[0].ACSScore < 900) {
+                    ACSTier = "Pro Analyst"
+                }
+                else if (data[0].ACSScore >= 900 && data[0].ACSScore < 1100) {
+                    ACSTier = "Expert Analyst"
+                }
+                res.status(200).json({ ACSTier: ACSTier })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
 router.get('/getACSScoreChange/:username', (req, res) => {
     // gets a user's ACSScoreChange value from username
 
@@ -488,6 +531,7 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
             .exec()
             .then(async function(data) {
                 let ACSHistoryReport = data[0].ACSHistoryReport
+                let ACSScore = data[0].ACSScore
                 const finalDate = new Date();
                 let event;
                 // if acshistoryreport is empty, then we need to initialize new values,
@@ -500,6 +544,7 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
                             activity: "Correctly predicted winner " + predicted_winner + "!",
                             date: finalDate
                         }
+                        ACSScore = ACSScore + 5
                     }
                     else {
                         event = {
@@ -508,6 +553,7 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
                             activity: "Incorrectly predicted winner " + predicted_winner + "!",
                             date: finalDate
                         }
+                        ACSScore = ACSScore - 5
                     }
 
                 }
@@ -519,6 +565,7 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
                             activity: "Correctly predicted winner " + predicted_winner + "!",
                             date: finalDate
                         }
+                        ACSScore = ACSScore + 5
                     }
                     else {
                         event = {
@@ -527,11 +574,12 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
                             activity: "Incorrectly predicted winner " + predicted_winner + "!",
                             date: finalDate
                         }
+                        ACSScore = ACSScore - 5
                     }
                 }
                 console.log("4. Inside updating")
                 ACSHistoryReport.unshift(event)
-                await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport})
+                await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport, ACSScore: ACSScore})
                     .then(() => {
                         console.log("ACSScoreUpdated")
                     })
