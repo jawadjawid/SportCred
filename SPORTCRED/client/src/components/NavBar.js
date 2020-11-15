@@ -60,7 +60,7 @@ function NavBar(props) {
                 <Tab label="Posts" component={Link} style={{'textDecoration': 'none'}} to="/posts"/>
                 <Tab label="Picks & Predictions" component={Link}  style={{'textDecoration': 'none'}}  to="/picks"/>
                 <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
-                <Tab label="Debate & Analysis" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
+                <Tab label="Debate & Analysis" component={Link} style={{'textDecoration': 'none'}} to="/debate"/>
                 <div style={{flex:'1'}}>
                 </div>
                 <Tab icon={<EmojiEmotions/>} component={Link} to="/profile" style={{'textDecoration': 'none'}}/>
