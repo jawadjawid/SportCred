@@ -62,6 +62,8 @@ const PostsRoute = ({component: Component, props, ...rest}) => {
 
 
 const SignOut = (props) => {
+    localStorage.setItem("isLoggedIn", false);
+    localStorage.setItem("currentUser", '');
     logout(props.app);
     return <Redirect to={{ pathname: '/' }}/>;
   };
