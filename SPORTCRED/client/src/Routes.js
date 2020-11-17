@@ -62,6 +62,8 @@ const PostsRoute = ({component: Component, props, ...rest}) => {
 
 
 const SignOut = (props) => {
+    localStorage.setItem("isLoggedIn", false);
+    localStorage.removeItem("currentUser");
     logout(props.app);
     return <Redirect to={{ pathname: '/' }}/>;
   };
@@ -84,19 +86,22 @@ const NoMatch = () => {
 
 
 const AuthenticateRoute = ({ component: Component, props, ...rest }) => {
-    const { isLoggedIn, isReadingCookie } = props;
+    // const { isLoggedIn, isReadingCookie } = props;
+    let isLoggedIn = window.localStorage.getItem("isLoggedIn");
     return (
       <Route
         {...rest}
         render={({ history }) => {
-          if (!isLoggedIn && !isReadingCookie) {
-            console.log('isloggedin' + isLoggedIn)
-            console.log('isReading cookie' + isReadingCookie)
+        //   if (!isLoggedIn && !isReadingCookie) {
+        if (!isLoggedIn) {    
+        console.log('isloggedin' + isLoggedIn)
+            // console.log('isReading cookie' + isReadingCookie)
             return <Redirect to={{ pathname: '/' }}/>;
-          } else if (isReadingCookie) {
-             return <Loading/>;
-            
-          }
+          } 
+          
+        //   else if (window.localStorage.getItem("currentUser")=== '') {
+        //      return <Loading/>;
+        //   }
           return <Component {...props} history={history}/>
         }}
       />

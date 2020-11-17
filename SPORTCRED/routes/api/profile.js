@@ -24,11 +24,12 @@ router.post('/login', (req, res) => {
                 });
             } else if (accounts.length == 1) {
                 req.session.isLoggedIn = true;
-                req.session.username = user;
+                req.session.currentUser = user;
                 res.send({ currentUser: user });
                 res.status(200).json({
                     message: "login successfull"
                 });
+                console.log({ currentUser: user });
 
             }
         });
@@ -610,16 +611,16 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
 });
 
 // A route to check if a user is logged in on the session cookie
-router.get('/user/check-session', (req, res) => {
-    const { username, isLoggedIn } = req.session;
-    console.log(req.session + 'checking session')
-    console.log('inside check' + isLoggedIn)
-    if (isLoggedIn) {
+router.get('/user/check-session', ({ session:{ username} }, res) => {
+    // const { username, isLoggedIn } = req.session;
+    // console.log(req.session + 'checking session')
+    // console.log('inside check' + isLoggedIn)
+    // if (isLoggedIn) {
 
-        res.send({ currentUser: username });
-    } else {
-        res.status(401).send();
-    }
+        res.send({ username });
+    // } else {
+        // res.status(401).send();
+    // }
 });
 
 module.exports = router;
@@ -631,6 +632,7 @@ router.get('/logout', (req, res) => {
         if (error) {
             res.status(500).send(error);
         } else {
+            res.clearCookie('secret_session');
             res.redirect('/');
         }
     });

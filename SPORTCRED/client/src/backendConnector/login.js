@@ -55,6 +55,8 @@ export const login = (loginComp, app) => {
             errorMessage: json.message
           });
         } else {
+            localStorage.setItem("isLoggedIn", true);
+                localStorage.setItem("currentUser", loginComp.state.username);
             console.log('loginsucess')
             console.log(json.message)
           app.setState({

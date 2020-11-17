@@ -72,7 +72,7 @@ class Profile extends React.Component {
 
     componentDidMount() {
         const {  currentUser } = this.props;
-        getUserProfile(currentUser,this);
+        getUserProfile(localStorage.getItem("currentUser"),this);
     }
 
     render() {
