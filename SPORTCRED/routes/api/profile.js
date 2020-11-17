@@ -632,6 +632,8 @@ router.get('/logout', (req, res) => {
         if (error) {
             res.status(500).send(error);
         } else {
+            localStorage.setItem("isLoggedIn", false);
+            localStorage.setItem("currentUser", '');
             res.clearCookie('secret_session');
             res.redirect('/');
         }
