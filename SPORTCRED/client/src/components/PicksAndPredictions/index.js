@@ -68,7 +68,7 @@ class PicksAndPredictions extends React.Component {
 
     componentDidMount() {
         const {  currentUser } = this.props;
-        getUserProfile(currentUser,this);
+        getUserProfile(localStorage.getItem("currentUser"),this);
 
         if (this.state.currDay.toString().length == 1 && this.state.currMonth.toString().length == 1) {
             getUpcominGames(this, this.state.fullDateWithTwoZeros);

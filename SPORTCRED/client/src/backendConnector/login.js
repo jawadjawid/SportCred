@@ -62,6 +62,8 @@ export const login = (loginComp, app) => {
             isLoggedIn: true,
             isReadingCookie: false
           });
+          localStorage.setItem("isLoggedIn", true);
+                localStorage.setItem("currentUser", app.state.currentUser);
           console.log(app);
           console.log(app.state.currentUser);
         }

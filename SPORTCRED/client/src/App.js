@@ -77,7 +77,7 @@ class App extends React.Component {
           if (!['/login'].includes(window.location.pathname)) {
           readCookie(this);
          }
-      
+         localStorage.setItem("isLoggedIn", false);
     }
     
       state = {
