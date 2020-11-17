@@ -5,7 +5,7 @@ import Routes from './Routes';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { readCookie } from './backendConnector/login';
-
+import IdleTimer from 'react-idle-timer';
 const theme = createMuiTheme({
     overrides:{
         ".MuiDialog":{
@@ -78,17 +78,57 @@ class App extends React.Component {
           readCookie(this);
          }
          localStorage.setItem("isLoggedIn", false);
+         
     }
     
-      state = {
+    constructor(props) {
+        super(props);
+      this.state = {
+        timeout:1000 * 5 * 1,
+        showModal: false,
+        userLoggedIn: false,
+        isTimedOut: false,
+        
         currentUser: null,
         isLoggedIn: false,
-        isReadingCookie: true
+        isReadingCookie: true,
+        
       };
-
+      this.idleTimer = null
+      this.onAction = this._onAction.bind(this)
+      this.onActive = this._onActive.bind(this)
+      this.onIdle = this._onIdle.bind(this)
+    }
+    _onAction(e) {
+        console.log('user did something', e)
+        this.setState({isTimedOut: false})
+      }
+     
+      _onActive(e) {
+        console.log('user is active', e)
+        this.setState({isTimedOut: false})
+      }
+     
+      _onIdle(e) {
+        console.log('user is idle', e)
+        const isTimedOut = this.state.isTimedOut
+        if (isTimedOut) {
+            window.location.href = '/logout'
+        } else {
+            window.location.href = '/logout'
+        }
+    }
     render() {
         return (
             <div>
+                 <IdleTimer
+            ref={ref => { this.idleTimer = ref }}
+            element={document}
+            onActive={this.onActive}
+            onIdle={this.onIdle}
+            onAction={this.onAction}
+            debounce={250}
+            timeout={this.state.timeout} />
             <ThemeProvider theme={theme}>
                 <Routes {...this.state} app={this}/>
                 </ThemeProvider>

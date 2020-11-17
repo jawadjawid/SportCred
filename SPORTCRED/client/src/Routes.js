@@ -63,7 +63,7 @@ const PostsRoute = ({component: Component, props, ...rest}) => {
 
 const SignOut = (props) => {
     localStorage.setItem("isLoggedIn", false);
-    localStorage.setItem("currentUser", '');
+    localStorage.removeItem("currentUser");
     logout(props.app);
     return <Redirect to={{ pathname: '/' }}/>;
   };
@@ -99,9 +99,8 @@ const AuthenticateRoute = ({ component: Component, props, ...rest }) => {
             return <Redirect to={{ pathname: '/' }}/>;
           } 
           
-        //   else if (isReadingCookie) {
+        //   else if (window.localStorage.getItem("currentUser")=== '') {
         //      return <Loading/>;
-            
         //   }
           return <Component {...props} history={history}/>
         }}
