@@ -51,7 +51,7 @@ router.get('/getUserPassword/:username', (req, res) => {
 
 router.get('/:username', (req, res) => {
     // gets a user's profile from username
-    // Note: Posts and ACS fields only show objectIds 
+    // Note: Posts and ACS fields only show objectIds
     // (can't be accessed by front end using this request)
 
     Profile.find({ username: req.params.username })
@@ -118,7 +118,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
 
     Profile.find({ username: givenUser })
         .select('username fullName dateOfBirth email phone userIcon ' +
-            'questionnaire ACSHistoryReport about posts')
+            'questionnaire ACSScore ACSHistoryReport about posts')
         .exec()
         .then(userData => {
             console.log(userData);
@@ -345,6 +345,49 @@ router.put('/updateAbout/:username', (req, res, next) => {
         });
 });
 
+router.get('/getACSScore/:username', (req, res) => {
+    // gets a user's ACSScore value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ ACSScore: data[0].ACSScore })
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
+router.get('/getACSTier/:username', (req, res) => {
+    // gets a user's ACSScore value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else {
+                let ACSTier = ""
+                if (data[0].ACSScore >= 100 && data[0].ACSScore < 300) {
+                    ACSTier = "Fanalyst"
+                }
+                else if (data[0].ACSScore >= 300 && data[0].ACSScore < 600) {
+                    ACSTier = "Analyst"
+                }
+                else if (data[0].ACSScore >= 600 && data[0].ACSScore < 900) {
+                    ACSTier = "Pro Analyst"
+                }
+                else if (data[0].ACSScore >= 900 && data[0].ACSScore < 1100) {
+                    ACSTier = "Expert Analyst"
+                }
+                res.status(200).json({ ACSTier: ACSTier })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
 router.get('/getACSScoreChange/:username', (req, res) => {
     // gets a user's ACSScoreChange value from username
 
@@ -383,9 +426,84 @@ router.put('/updateACSScoreChange/:username', (req, res, next) => {
         });
 });
 
-router.put('/processPredictionResult/:username', (req, res, next) => {
+router.get('/getLastDebateCompleted/:username', (req, res) => {
+    // gets a user's lastDebateCompleted value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ lastDebateCompleted: data[0].lastDebateCompleted })
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
+router.put('/updateLastDebateCompleted/:username', (req, res, next) => {
+    console.log("Hitting update lastDebateCompleted endpt with id " + req.params.username)
+
+    // If lastDebateCompleted key is not in JSON body then return 400 status
+    if ((typeof req.body.lastDebateCompleted) === 'undefined') {
+        res.status(400).json({
+            error: error
+        })
+    }
+
+    Profile.updateOne({ username: req.params.username }, { lastDebateCompleted: req.body.lastDebateCompleted })
+        .then(() => {
+            res.status(200).json({
+                message: 'updated successfully'
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
+router.get('/getLastDebatePrompt/:username', (req, res) => {
+    // gets a user's lastDebatePrompt value from username
+    Profile.find({ username: req.params.username })
+        .then(data => {
+            if (data.length == 0) {
+                res.status(404).json({ message: "This username does not exist" })
+            } else res.status(200).json({ lastDebatePrompt: data[0].lastDebatePrompt })
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: error });
+        });
+});
+
+router.put('/updateLastDebatePrompt/:username', (req, res, next) => {
+    console.log("Hitting update lastDebatePrompt endpt with id " + req.params.username)
+
+    // If ACSScoreChange key is not in JSON body then return 400 status
+    if ((typeof req.body.lastDebatePrompt) === 'undefined') {
+        res.status(400).json({
+            error: error
+        })
+    }
+
+    Profile.updateOne({ username: req.params.username }, { lastDebatePrompt: req.body.lastDebatePrompt })
+        .then(() => {
+            res.status(200).json({
+                message: 'updated successfully'
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
+router.put('/processPredictionResult/:username', async (req, res, next) => {
     // Check if user with username exists in db
-    Profile.find({username: req.params.username })
+    let predictions_left = []
+    await Profile.find({username: req.params.username })
         .exec()
         .then(async function(data) {
             if (data.length == 0) {
@@ -394,58 +512,78 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
                 });
             } else {
                 const predictions = data[0].predictions;
-                const predicted_winners = [];
                 for (const item of predictions) {
-                    predicted_winners.push(item.predictedWinner)
-                    await findGame(item, predicted_winners)
+                    console.log("1. Inside Loop")
+                    await Schedule.find({_id: item.gameId})
+                        .exec()
+                        .then(async function(gameData) {
+                            const gameTime = new Date(gameData[0].date);
+                            const todayTime = new Date();
+                            console.log("2. Inside gamefind")
+                            if (gameTime < todayTime) {
+                                await updateACSHistory(gameData[0].winner, item.predictedWinner)
+                            } else {
+                                predictions_left.push(item)
+                            }
+                        })
                 }
-                res.status(200).json({
-                    message: 'successfully checked users predictions'
-                });
             }
         });
-
-    let operationsCompleted = 0
-    async function findGame(item, predicted_winners) {
-        //find the game with the specific id
-        await Schedule.find({_id: item.gameId})
+    async function updateACSHistory(winner, predicted_winner) {
+        console.log("3. Inside update with predicted winner: " + predicted_winner)
+        await Profile.find({username: req.params.username })
             .exec()
-            .then(function (gameData){
-                const gameTime = new Date(gameData[0].date);
-                const todayTime = new Date();
-                //if game has happened already, check if the winners match
-                if (gameTime < todayTime) {
-                    checkWinners(gameData[0].winner, predicted_winners)
-                }
-            })
-    }
-    function checkWinners(winner, predicted_winners) {
-        if (winner === predicted_winners[operationsCompleted]) {
-            // append to history report
-            // sets the notification true
-            updateACSHistory(winner)
-        }
-        ++operationsCompleted;
-    }
-    function updateACSHistory(winner) {
-        Profile.find({username: req.params.username})
-            .exec(function (err, data) {
+            .then(async function(data) {
                 let ACSHistoryReport = data[0].ACSHistoryReport
-                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const today = new Date();
-                const month = monthNames[today.getMonth()];
-                const day = String(today.getDate()).padStart(2, '0');
-                const year = today.getFullYear();
-                const finalDate = month + ' ' + day + ' ' + year
-                const event = {
-                    ACSStart: ACSHistoryReport[0].ACSEnd,
-                    ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
-                    activity: "Correctly predicted winner " + winner + "!",
-                    date: finalDate
+                let ACSScore = data[0].ACSScore
+                const finalDate = new Date();
+                let event;
+                // if acshistoryreport is empty, then we need to initialize new values,
+                // else we can add to existing values
+                if (ACSHistoryReport[0] === undefined) {
+                    if (winner === predicted_winner) {
+                        event = {
+                            ACSStart: 0,
+                            ACSEnd: 5,
+                            activity: "Correctly predicted winner " + predicted_winner + "!",
+                            date: finalDate
+                        }
+                        ACSScore = ACSScore + 5
+                    }
+                    else {
+                        event = {
+                            ACSStart: 0,
+                            ACSEnd: -5,
+                            activity: "Incorrectly predicted winner " + predicted_winner + "!",
+                            date: finalDate
+                        }
+                        ACSScore = ACSScore - 5
+                    }
+
                 }
+                else {
+                    if (winner === predicted_winner) {
+                        event = {
+                            ACSStart: ACSHistoryReport[0].ACSEnd,
+                            ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
+                            activity: "Correctly predicted winner " + predicted_winner + "!",
+                            date: finalDate
+                        }
+                        ACSScore = ACSScore + 5
+                    }
+                    else {
+                        event = {
+                            ACSStart: ACSHistoryReport[0].ACSEnd,
+                            ACSEnd: ACSHistoryReport[0].ACSEnd - 5,
+                            activity: "Incorrectly predicted winner " + predicted_winner + "!",
+                            date: finalDate
+                        }
+                        ACSScore = ACSScore - 5
+                    }
+                }
+                console.log("4. Inside updating")
                 ACSHistoryReport.unshift(event)
-                Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport})
+                await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport, ACSScore: ACSScore})
                     .then(() => {
                         console.log("ACSScoreUpdated")
                     })
@@ -456,6 +594,19 @@ router.put('/processPredictionResult/:username', (req, res, next) => {
                     });
             });
     }
+    console.log("done processing predictions!")
+    //update user's predictions removing the ones that have been accounted for
+    await Profile.updateOne({ username: req.params.username }, { predictions: predictions_left })
+        .then(() => {
+            res.status(200).json({
+                message: 'successfully checked and updated users predictions'
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
 });
 
 // A route to check if a user is logged in on the session cookie

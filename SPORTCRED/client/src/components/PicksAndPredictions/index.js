@@ -1,21 +1,22 @@
 import React from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 
-import {getUserPicksAndPredictions, setUserPicksAndPredictions} from "../../backendConnector/picksAndPredictions";
+import {getUpcominGames} from "../../backendConnector/picksAndPredictions";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
 import Card from "@material-ui/core/Card";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+
 import NavBar from "../NavBar";
-import UserAboutInfo from "../Profile/UserAboutInfo";
 import MatchCard from "./MatchCard"
-import UserBasicInfo from "../Profile/UserBasicInfo";
-import {Avatar, Button} from "@material-ui/core";
+
+import DailyPicksModal from "./DailyPicksPredictButton"
+import {getUserProfile} from "../../backendConnector/profile";
+import UserAboutInfo from "../Profile/UserAboutInfo"
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class PicksAndPredictions extends React.Component {
 
@@ -27,6 +28,7 @@ class PicksAndPredictions extends React.Component {
         data:
             [
                 {
+                    _id: "1",
                     date: "2020-08-30",
                     winner: "UTA",
                     teams: {
@@ -48,31 +50,49 @@ class PicksAndPredictions extends React.Component {
         fullDateWithDayZero:  new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString() + '-' + '0' + (new Date().getDate()).toString(),
         fullDateWithMonthZero:  new Date().getFullYear() + '-' + '0' + (new Date().getMonth() + 1).toString() + '-' + (new Date().getDate()).toString(),
         fullDateWithNoZeros:  new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString() + '-' + (new Date().getDate()).toString(),
+
+        userBackground: [
+            {"username":"bobby123"},
+            {"about": "Im dumb"},
+            {"fullName": "Bob Thisismylastnamehaha"},
+            {"dateOfBirth":"02/03/2000"},
+            {"email": "bobbybobbob@ilikeball.com"},
+            {"phone":"sdjjsljdf"},
+            {"favSport": "Basketball"},
+            {"age": "2"},
+            {"favTeam": "Miami Heat"},
+            {"sportToLearn":"cricket"},
+            {"levelPlayed": "college"}
+        ],
     };
 
     componentDidMount() {
+        const {  currentUser } = this.props;
+        getUserProfile(currentUser,this);
+
         if (this.state.currDay.toString().length == 1 && this.state.currMonth.toString().length == 1) {
-            getUserPicksAndPredictions(this, this.state.fullDateWithTwoZeros);
+            getUpcominGames(this, this.state.fullDateWithTwoZeros);
         }
 
         else if (this.state.currDay.toString().length == 1) {
-            getUserPicksAndPredictions(this, this.state.fullDateWithDayZero);
+            getUpcominGames(this, this.state.fullDateWithDayZero);
         }
 
         else if (this.state.currMonth.toString().length == 1){
-            getUserPicksAndPredictions(this, this.state.fullDateWithMonthZero);
+            getUpcominGames(this, this.state.fullDateWithMonthZero);
         }
         else {
-            getUserPicksAndPredictions(this, this.state.fullDateWithNoZeros);
+            getUpcominGames(this, this.state.fullDateWithNoZeros);
         }
     }
 
     render() {
         const {classes} = this.props;
         const backUpData = JSON.parse(JSON.stringify(this.state.data));
+
         const setProfileState = (info) => {
-            const copy = [...info['data']];
-            this.setState({data:copy}, () => {
+            const copy = [...info['userBackground']];
+            this.setState({userBackground:copy}, () => {
                 console.log(info);
                 console.log(this.state);
             });
@@ -81,13 +101,12 @@ class PicksAndPredictions extends React.Component {
         const items = []
 
         for (const [index, value] of this.state.data.entries()) {
-            items.push(<MatchCard teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} setProfileState={setProfileState}/>)
+            items.push(<MatchCard id={this.state.data[index]._id} teamA={this.state.data[index].teams.teamA} teamB = {this.state.data[index].teams.teamB} roundNum={this.state.data[index].round} date={this.state.data[index].date} currentUser={this.props.currentUser} setProfileState={setProfileState}/>)
             items.push(<br/>)
         }
 
-
         return (<div className={classes.Background}>
-                <NavBar/>
+                <NavBar username={this.props.currentUser}/>
                 <CssBaseline/>
                 <div>
                     <Grid container spacing={3} className={classes.GridContainer}>
@@ -95,7 +114,9 @@ class PicksAndPredictions extends React.Component {
                         </Grid>
                         <Grid item xs={9} className={classes.GridItemRight}>
                             <React.Fragment >
-                                {/*<UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>*/}
+                                {/*<DailyPicksModal background={this.state.userBackground} setProfileState={setProfileState}/>*/}
+                                {/*<UserAboutInfo background={this.state.userBackground} setProfileState={setProfileState}/>*/}
+                                {/*<DailyPicksModal/>*/}
                                 <Card style={{padding: "0.8rem"}} className={classes.Card}>
                                     <Typography variant="h1" component="h1" color="quaternary">Upcoming Matches</Typography>
                                 </Card>

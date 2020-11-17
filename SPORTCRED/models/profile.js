@@ -57,6 +57,10 @@ const ProfileSchema = new Schema({
             type: String
         }
     },
+    ACSScore: {
+        type: Number,
+        default: 100
+    },
     ACSHistoryReport: [{
         ACSStart: {
             type: Number,
@@ -67,16 +71,21 @@ const ProfileSchema = new Schema({
             default: 0
         },
         activity: {
-            type: String
+            type: String,
+            default: ""
         },
         date: {
-            type: String,
-            match: /(\s{3}) (\d{2})/
+            type: Date,
+            default: Date.now,
         }
     }],
     ACSScoreChange: {
         type: Boolean,
         default: false
+    },
+    lastDebateCompleted: {
+        type: Date,
+        default: Date.now
     },
     predictions: [{
         gameId: {
@@ -85,8 +94,11 @@ const ProfileSchema = new Schema({
         predictedWinner: {
             type: String
         }
-    }]
-    
+    }],
+    lastDebatePrompt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 ProfileSchema.plugin(uniqueValidator);

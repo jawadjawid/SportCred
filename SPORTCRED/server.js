@@ -7,6 +7,8 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const profiles = require('./routes/api/profile');
 const posts = require('./routes/api/post');
 const games = require('./routes/api/schedule');
+const predicts = require('./routes/api/prediction');
+const debates = require('./routes/api/debate')
 
 const app = express();
 app.use(bodyParser.json());
@@ -45,6 +47,8 @@ app.use(session({
 app.use('/api/profile', profiles);
 app.use('/api/post', posts);
 app.use('/api/schedule', games);
+app.use('/api/prediction', predicts);
+app.use('/api/debate', debates)
 
 const port = 5000;
 app.listen(port, () => console.log(`Server started at port ${port}`));
