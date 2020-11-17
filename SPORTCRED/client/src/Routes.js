@@ -18,12 +18,8 @@ export default props => {
                 <Landingpage exact path='/' props={props} component={Landing}/>
                 <ProfileRoute exact path='/profile' props={props} component={Profile}/>
                 <PicksAndPredictionsRoute exact path='/picks' props={props} component={PicksAndPredictions}/>
-<<<<<<< HEAD
-                <PostsRoute exact path='/posts' props={props}component={Posts}/>
-=======
                 <Posts exact path='/posts' {...props} component={Posts}/>
                 <Debate exact path='/debate' {...props} component={Debate}/>
->>>>>>> master
                 <Route exact path='/logout' component={() => SignOut(props)}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
