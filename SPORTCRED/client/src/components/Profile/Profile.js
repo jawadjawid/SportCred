@@ -9,7 +9,7 @@ import UserACSScore from "./UserACSScore";
 import FriendLineUp from "./FriendLineUp";
 import UserAboutInfo from "./UserAboutInfo";
 import CreatePost from './CreatePost';
-import {getUserProfile, setUserProfile} from "../../backendConnector/profile";
+import {getUserProfile, setUserProfile, getUserACSTier} from "../../backendConnector/profile";
 import {withStyles} from "@material-ui/styles";
 import {style} from "./style";
 import {withRouter} from "react-router-dom";
@@ -67,11 +67,13 @@ class Profile extends React.Component {
             {"favTeam": "Miami Heat"},
             {"sportToLearn":"cricket"},
             {"levelPlayed": "college"}
-        ]
+        ],
+        tier: ""
     };
 
     componentDidMount() {
         const {  currentUser } = this.props;
+        getUserACSTier(currentUser,this);
         getUserProfile(localStorage.getItem("currentUser"),this);
     }
 
@@ -94,7 +96,7 @@ class Profile extends React.Component {
                 <Grid container spacing={3} className={classes.GridContainer}>
                     <Grid item xs={3} className={classes.GridItemLeft}>
                         <UserBasicInfo fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
-                        <UserACSScore score={this.state.acsScore} report={this.state.acsHistoryReport}/>
+                        <UserACSScore score={this.state.acsScore} tier={this.state.tier} report={this.state.acsHistoryReport}/>
                         <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>

@@ -177,6 +177,22 @@ export const getACSScoreChange = async (username, setACSScoreChange) => {
     setACSScoreChange(false);
 }
 
+export const getUserACSTier = async (val, currPage) => {
+    axios.get('http://localhost:5000/api/profile/getACSTier/' + val).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).then(data => {
+        currPage.setState({
+            tier: data.ACSTier,
+        })
+        return true;
+    }).catch(error => {
+        alert(error)
+        return false;
+    });
+};
+
 export const updateACSScoreChange = async (username) => {
     // const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
     //     .then(res => {

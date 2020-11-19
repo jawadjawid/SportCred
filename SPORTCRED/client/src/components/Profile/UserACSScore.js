@@ -5,6 +5,9 @@ import {Button} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 
 import UserACSHistoryReport from "./UserACSHistoryReport";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import Divider from "@material-ui/core/Divider";
+import {FormatListNumbered, Score} from "@material-ui/icons";
 
 
 const UserACSScore = (props) => {
@@ -37,7 +40,9 @@ const UserACSScore = (props) => {
                 </Button>
                     <UserACSHistoryReport open={open} close={handleClose} report={props.report} />
                 </Typography>
-                <Typography variant="h1" component="h1" style={{textAlign: 'center'}}>{props.score}</Typography>
+                <Typography><Score style={{'margin-right':'5px'}}/> {props.score}</Typography>
+                <Divider style={{"margin-top":"2px", "margin-bottom":"10px", "margin-right":"40px"}} />
+                <Typography><FormatListNumbered style={{'margin-right':'5px'}}/> {props.tier}</Typography>
             </Card>
         </React.Fragment>);
 }
