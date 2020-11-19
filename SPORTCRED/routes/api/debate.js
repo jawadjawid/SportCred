@@ -336,4 +336,51 @@ router.get('/getScoreFromPost', (req, res) => {
         });
 });
 
+router.get('/getDebateScore', async (req, res) => {
+    await DebatePost.find()
+        .exec()
+        .then(async (data) => {
+            let user = "";
+            let lastDebate = Date.now();
+            let userScoreArray = [];
+            for(const item of data)
+            {
+                let id = item.poster
+                await Profile.find({_id: id})
+                    .exec()
+                    .then(async (profileData) => {
+                        user = profileData[0].username;
+                        lastDebate = new Date(profileData[0].lastDebateCompleted);
+                    });
+                let currentDate = new Date();
+                let tomorrow = new Date(lastDebate);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                if(currentDate > tomorrow) 
+                {
+                    let scoreScale = item.agreeance;
+                    let totalAgreeDisagreeScore = 0;
+                    scoreScale.forEach((item1) => {
+                        totalAgreeDisagreeScore += item1.score;
+                    })
+                    userScoreArray.push({"username": user, "debateScore": totalAgreeDisagreeScore});  
+                }
+            }
+            console.log(userScoreArray);
+            if(userScoreArray.length === 0)
+            {
+                return res.status(200).json(userScoreArray);
+            }
+            else
+            {
+                return res.status(200).json(userScoreArray);
+            }
+            
+        })
+        .catch((error) => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+});
+
 module.exports = router;
