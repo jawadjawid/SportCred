@@ -1,6 +1,5 @@
 # Goals
-Complete user stories for this sprint so that we have an application that allows users to be able to debate with others, change their password if they forgot it, logout automatically
-if they're idle, and be able to see their ACS Tier on their profile page.
+Complete user stories for this sprint so that we have an application that allows users to be able to debate with others, change their password if they forgot it, logout automatically if they're idle, and be able to see their ACS Tier on their profile page.
 
 # Stories
 IL-6: As Harry, I want a “Forgot your password?” option, so that I may click it in case I forgot my password.
@@ -28,6 +27,10 @@ Priority/Point estimate:  Low/1
 IL-48: As Amanda, I want to know my tier based on my ACS Score  
 Acceptance test : I want to see my ACS Tier on my profile page  
 Priority/Point estimate:  Medium/5  
+
+(Added Story) IL-65. As Jacob, I want to see a background video with multiple sports (not just basketball) so I know the app is multipurpose.  
+Acceptance Test: On the landing page, the background video should be multi-sports, not just basketball.  
+Priority/Point estimate: Low/1  
 
 # Participants
 Muhammad Osman Amjad  
@@ -62,3 +65,6 @@ IL-11: As Amanda, I want to logout of SportCred if I remain idle for 10 minutes,
 
 IL-48: As Amanda, I want to know my tier based on my ACS Score.  
   * Show user's ACSTier on their profile
+
+IL-65. As Jacob, I want to see a background video with multiple sports (not just basketball) so I know the app is multipurpose.  
+  * Find, combine, and change videos so that it shows multiple sports in background
