@@ -43,3 +43,7 @@ Priority/Point estimate: Medium/1
 11. As Amanda, I want to logout of SportCred if I remain idle for 10 minutes, so that my data remains safe.  
 Acceptance test : I want be redirected to the login screen after idling for 10 min  
 Priority/Point estimate:  Low/1
+
+(Added Story) 12. As Jacob, I want to see a background video with multiple sports (not just basketball) so I know the app is multipurpose.
+Acceptance Test: On the landing page, the background video should be multi-sports, not just basketball
+Priority/Point estimate: Low/1
