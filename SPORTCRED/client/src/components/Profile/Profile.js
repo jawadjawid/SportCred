@@ -72,13 +72,14 @@ class Profile extends React.Component {
     };
 
     componentDidMount() {
-        const {  currentUser } = this.props;
-        getUserACSTier(currentUser,this);
+        getUserACSTier(localStorage.getItem("currentUser"),this);
         getUserProfile(localStorage.getItem("currentUser"),this);
     }
 
     render() {
         const {classes} = this.props;
+        const currentUser = localStorage.getItem("currentUser");
+
         const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
 
         const setProfileState = (info) => {
@@ -90,7 +91,7 @@ class Profile extends React.Component {
         }
 
         return (<div className={classes.Background}>
-                    <NavBar username={this.props.currentUser}/>
+                    <NavBar username={currentUser}/>
                 <CssBaseline/>
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
