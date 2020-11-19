@@ -8,7 +8,7 @@ const profiles = require('./routes/api/profile');
 const posts = require('./routes/api/post');
 const games = require('./routes/api/schedule');
 const predicts = require('./routes/api/prediction');
-const debates = require('./routes/api/debate')
+const debates = require('./routes/api/debate');
 
 const app = express();
 app.use(bodyParser.json());

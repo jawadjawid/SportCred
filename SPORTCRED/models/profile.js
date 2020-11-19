@@ -59,7 +59,7 @@ const ProfileSchema = new Schema({
     },
     ACSScore: {
         type: Number,
-        default: 100
+        default: 200
     },
     ACSHistoryReport: [{
         ACSStart: {

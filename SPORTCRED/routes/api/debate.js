@@ -1,17 +1,152 @@
 const express = require('express');
 const { mongo } = require('mongoose');
 const router = express.Router();
-var cors = require('cors')
+var cors = require('cors');
+
 const DebatePost = require('../../models/debatePost');
 const Debate = require('../../models/debate');
 const Profile = require('../../models/profile');
 const post = require('../../models/post');
-const { aggregate } = require('../../models/debatePost');
+const { aggregate, count } = require('../../models/debatePost');
+const DebateQuestions = require('../../models/debateQuestions');
+const TodayQuestions = require('../../models/todayQuestions');
 
 var corsOptions = {
     origin: 'http://localhost:3000',
 }
 router.use(cors(corsOptions))
+
+router.get('/debateQuestionByTier/:username', async (req, res) => {
+    console.log(req.params.username);
+    await Profile.find({username: req.params.username})
+    .exec()
+    .then(async function(data) 
+    {
+        if(data == null) {
+            return res.status(400).json({message:"This user does not exist"});
+        }
+        
+        await TodayQuestions.find()
+            .exec()
+            .then(async function(tq)
+            {
+                console.log(tq);
+                const oldDate = new Date(tq[0].lastUpdatedDate);
+                const todayDate = new Date();
+                const tomorrow = new Date(oldDate);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                console.log(oldDate);
+                console.log(tomorrow);
+                console.log(todayDate);
+                if(tomorrow < todayDate) 
+                {
+                    await DebateQuestions.find()
+                        .exec()
+                        .then(async function(data)
+                        {
+                            let fanalyst = [];
+                            let analyst = [];
+                            let proanalyst = [];
+                            let expertanalyst = [];
+                            console.log("inside update")
+                            for(i = 0; i < data.length; i++)
+                            {
+                                if(data[i].tier === "Fanalsyst")
+                                {
+                                    fanalyst.push(data[i])
+                                }
+                                else if(data[i].tier === "Analyst")
+                                {
+                                    analyst.push(data[i])
+                                    }
+                                else if(data[i].tier === "Pro analyst")
+                                {
+                                    proanalyst.push(data[i])
+                                }
+                                else if(data[i].tier === "Expert analyst")
+                                {
+                                    expertanalyst.push(data[i])
+                                }
+                            }
+                            console.log(typeof fanalyst[1].question);
+                            let randomInt1 = Math.floor(Math.random() * (fanalyst.length - 0) + 0);
+                            let randomInt2 = Math.floor(Math.random() * (analyst.length - 0) + 0);
+                            let randomInt3 = Math.floor(Math.random() * (proanalyst.length - 0) + 0);
+                            let randomInt4 = Math.floor(Math.random() * (expertanalyst.length - 0) + 0);
+
+                            await TodayQuestions.find()
+                                .exec()
+                                .then(async function(data) {
+                                    let id = data[0]._id;
+                                    await TodayQuestions.updateMany({_id: id}, 
+                                        {fanalyst: fanalyst[randomInt1].question, analyst: analyst[randomInt2].question, 
+                                        proanalyst: proanalyst[randomInt3].question, expertanalyst: expertanalyst[randomInt4].question, 
+                                        lastUpdatedDate: todayDate})
+                                        .then(async function (data1) 
+                                        {
+                                            console.log("Update Successful change date");
+                                            console.log(data1);
+                                            //return res.status(200).json(data);
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
+                                            return res.status(400).json(err);
+                                        });
+                                })
+                        })
+                }
+        
+                let score = data[0].ACSScore;
+                console.log(score);
+                if(100 <= score && score < 300) 
+                {
+                    await TodayQuestions.find()
+                    .exec()
+                    .then(async (data1) => {
+                        console.log(data1);
+                        return res.status(200).json({
+                            question: data1[0].fanalyst, 
+                            username: req.params.username
+                        });
+                    })
+                }
+                else if(300 <= score && score < 600) {
+                    await TodayQuestions.find()
+                        .exec()
+                        .then(async (data1) => {
+                            console.log(data1);
+                            return res.status(200).json({
+                                question: data1[0].analyst, 
+                                username: req.params.username
+                            });
+                        })
+                }
+                else if(600 <= score && score < 900) {
+                    await TodayQuestions.find()
+                        .exec()
+                        .then(async (data1) => {
+                        return res.status(200).json({
+                            question: data1[0].proanalyst, 
+                            username: req.params.username
+                        });
+                    })
+                }
+                else if(900 <= score && score < 1100) {
+                    await TodayQuestions.find()
+                        .exec()
+                        .then(async (data1) => {
+                        return res.status(200).json({
+                            question: data1[0].expertanalyst, 
+                            username: req.params.username
+                        });
+                    })
+                }
+            })
+    })
+    .catch((err) => {
+        res.status(400).json(err);
+    });
+});
 
 router.post('/createDebate', (req, res) => {
     if ((typeof req.body.date) === 'undefined') {
