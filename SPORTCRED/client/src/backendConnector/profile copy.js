@@ -162,97 +162,80 @@ export const getDebateResult = async (username, setDebateResultChange,setDebateD
     //     alert('Something went wrong in getDebateResult.')
     //     setDebateResultChange(false);
     // });
-    await axios.get('http://localhost:5000/api/debate/getDebateScore' ).then((res) => {
+    await axios.get('http://localhost:5000/api/profile/getDebateResult/').then((res) => {
         if(res.status === 200) {
             return res;
         }
     }).then(res => {
-        if(res.data != {}){
+        if(res.json() != {}){
         setDebateResultChange(true);
-        setDebateData(res.data);
-        localStorage.setItem("DebateNotif", true);
+        setDebateData(res.json());
     }
         else{
-            // alert('inside else');
             setDebateResultChange(false);
         }
     }).catch(error => {
-        // alert(error);
-        // console.log('Something went wrong in getACSTier.')
+        console.log('Something went wrong in getACSTier.')
         setDebateResultChange(false);
     });
 
-    // const test = [
-    //     {
-    //         "username": "new",
-    //         "debateScore": 110
-    //     },
-    //     {
-    //         "username": "Jimmy",
-    //         "debateScore": 100
-    //     }
-    // ];
-    // setDebateResultChange(true);
-    // setDebateData(JSON.stringify(test));
-    // setDebateData('Relationship saga unfolds and Life gets even more intense for the doctors and interns of Seattle Grace Hospital.')
-    
-    
+    // setDebateData([ {
+    //     text:"You lot bro!"
+    // }])
+    setDebateData('Relationship saga unfolds and Life gets even more intense for the doctors and interns of Seattle Grace Hospital.')
+    setDebateData([{"debateScore": "11", "username": "hello123"},
+    {"debateScore": "12", "username": "hi142"},
+    {"debateScore": "13", "username": "meow",},
+    {"debateScore": "14", "username": "alberto"},
+    {"debateScore": "15", "username": "mohao"},
+    {"debateScore": "16", "username": "hello123"},
+    {"debateScore": "17", "username": "hi142"},
+    {"debateScore": "18", "username": "meow"},
+    {"debateScore": "19", "username": "alberto"},
+    {"debateScore": "20", "username": "mohao"}
+])
+    setDebateResultChange(true);
     // return "test"
     
 }
 
 export const getACSScoreChange = async (username, setACSScoreChange) => {
-    await axios.put('http://localhost:5000/api/profile/processPredictionResult/' + username).then((res) => {
-        if(res.status === 200) {
-            return res.data;
-        }
-    }).then(data => {
-        return true;
-    }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
-        return false;
-    });
-    await axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
-        if(res.status === 200) {
-            return res.data;
-        }
-    }).then(data => {
-        setACSScoreChange(data.ACSScoreChange);
-        return true;
-    }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
-        return false;
-    });
+    // await axios.put('http://localhost:5000/api/profile/processPredictionResult/' + username).then((res) => {
+    //     if(res.status === 200) {
+    //         return res.data;
+    //     }
+    // }).then(data => {
+    //     return true;
+    // }).catch(error => {
+    //     alert('Something went wrong. Please Try again Later.')
+    //     return false;
+    // });
+    // await axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
+    //     if(res.status === 200) {
+    //         return res.data;
+    //     }
+    // }).then(data => {
+    //     setACSScoreChange(data.ACSScoreChange);
+    //     return true;
+    // }).catch(error => {
+    //     alert('Something went wrong. Please Try again Later.')
+    //     return false;
+    // });
+     setACSScoreChange(false);
 }
 
-export const getUserACSTier = async (val, currPage) => {
-    axios.get('http://localhost:5000/api/profile/getACSTier/' + val).then((res) => {
-        if(res.status === 200) {
-            return res.data;
-        }
-    }).then(data => {
-        currPage.setState({
-            tier: data.ACSTier,
-        })
-        return true;
-    }).catch(error => {
-        alert(error)
-        return false;
-    });
-};
-
 export const updateACSScoreChange = async (username) => {
-    const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
-        .then(res => {
-            if(res.status === 200) return res.data;
-        }).then(data => {
-            return true;
-        }).catch(error => {
-            alert('Something went wrong. Please try again later.');
-            return false;
-        });
-
-    return promise;
+    // const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
+    //     .then(res => {
+    //         if(res.status === 200) return res.data;
+    //     }).then(data => {
+    //         return true;
+    //     }).catch(error => {
+    //         alert('Something went wrong. Please try again later.');
+    //         return false;
+    //     });
+    //
+    // return promise;
 }
 
 

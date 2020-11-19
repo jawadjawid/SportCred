@@ -84,7 +84,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
       this.state = {
-        timeout:1000 * 15 * 1,
+        timeout:1000 * 1500 * 1,
         showModal: false,
         userLoggedIn: false,
         isTimedOut: false,
@@ -100,17 +100,17 @@ class App extends React.Component {
       this.onIdle = this._onIdle.bind(this)
     }
     _onAction(e) {
-        console.log('user did something', e)
+        // console.log('user did something', e)
         this.setState({isTimedOut: false})
       }
      
       _onActive(e) {
-        console.log('user is active', e)
+        // console.log('user is active', e)
         this.setState({isTimedOut: false})
       }
      
       _onIdle(e) {
-        console.log('user is idle', e)
+        // console.log('user is idle', e)
         const isTimedOut = this.state.isTimedOut
         if (isTimedOut) {
             window.location.href = '/logout'

@@ -64,6 +64,7 @@ const PostsRoute = ({component: Component, props, ...rest}) => {
 const SignOut = (props) => {
     localStorage.setItem("isLoggedIn", false);
     localStorage.removeItem("currentUser");
+    localStorage.removeItem('DebateNotif');
     logout(props.app);
     return <Redirect to={{ pathname: '/' }}/>;
   };

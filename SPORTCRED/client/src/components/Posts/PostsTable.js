@@ -41,7 +41,6 @@ class PostsTable extends React.Component {
   render() {
     const { classes,alignment } = this.props;
     const { posts, page, rowsPerPage } = this.state;
-    console.log(alignment + 'allignment')
     return (
       <Container>
         <TableContainer  className={classes.PostList}>

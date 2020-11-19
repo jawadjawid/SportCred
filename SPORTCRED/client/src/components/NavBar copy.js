@@ -12,7 +12,6 @@ import posts from "./Posts"
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import {getACSScoreChange,getDebateResult, updateACSScoreChange} from "../backendConnector/profile";
-import { JsonToTable } from "react-json-to-table";
 
 const styles = (theme) => ({
         tab: {
@@ -30,7 +29,7 @@ function NavBar(props) {
     const [value, setValue] = React.useState(2);
     const [displayACSScoreChangeNotif,setDisplayACSScoreChangeNotif] = React.useState(false);
     const [displayDebateChangeNotif,setDisplayDebateResultNotif] = React.useState(false);
-    const [DebateData,setDebateData] = React.useState('');
+    const [DebateData,setDebateData] = React.useState('test');
     // const [DebateData,setDebateData] = React.useState([]);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -49,19 +48,16 @@ function NavBar(props) {
         if (reason === 'clickaway') {
             return;
         }
-        //  await  getDebateResult(CurrentUser,setDisplayDebateResultNotif,setDebateData);
+         await  getDebateResult(CurrentUser,setDisplayDebateResultNotif,setDebateData);
         setDisplayDebateResultNotif(false);
     }
 
     useEffect(() => {
         getACSScoreChange(CurrentUser,setDisplayACSScoreChangeNotif);
-        if(localStorage.getItem('DebateNotif')=== null){
         getDebateResult(CurrentUser,setDisplayDebateResultNotif,setDebateData);
-        }
     },[CurrentUser]);
-//     console.log('Debatedata below')
-// console.log(DebateData);
-
+    console.log('Debatedata below')
+console.log(DebateData);
     return (
         <AppBar position="static" color="default" className={classes.tab} >
             <Tabs
@@ -89,9 +85,7 @@ function NavBar(props) {
             </Snackbar>
             <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={displayDebateChangeNotif} autoHideDuration={6000} onClose={handleDebateResultClose}>
                 <Alert onClose={handleDebateResultClose} severity="success">
-                {/* { DebateData  } */}
-                <h3>Your Debate Score</h3>
-                <JsonToTable json={DebateData} />
+                { DebateData  }
                 </Alert>
             </Snackbar>
         </AppBar>
