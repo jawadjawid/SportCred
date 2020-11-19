@@ -84,6 +84,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
       this.state = {
+
         timeout:1000 * 1500 * 1,
         showModal: false,
         userLoggedIn: false,

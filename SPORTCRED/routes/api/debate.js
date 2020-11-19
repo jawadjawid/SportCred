@@ -185,6 +185,7 @@ router.post('/createPostByTier/:username', (req, res) => {
                 return res.status(400).json({message:"This user does not exist"})
             }
             const post = new DebatePost({
+                username: req.params.username,
                 postContent: req.body.postContent,
                 poster: data._id
             })
@@ -254,11 +255,13 @@ router.get('/getAllPostsByTier/:username', (req, res) => {
                             postIds = debate.expertAnalyst
                         }
                         let posts = []
+                        let postsIn = 0
                         for (let i = 0; i < postIds.length; i++) {
-                            DebatePost.findOne({_id: postIds[i]})
+                            DebatePost.findOne({_id: postIds[postIds.length -1 - i]}) // change made by maninder, makes latest first
                                 .exec(function(error2, post) {
                                     posts.push(post)
-                                    if (i === postIds.length - 1)  {
+                                    postsIn += 1
+                                    if (postsIn === postIds.length)  {
                                         res.status(200).json(posts)
                                     }
                                 })

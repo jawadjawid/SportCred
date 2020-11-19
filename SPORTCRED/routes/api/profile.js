@@ -10,6 +10,32 @@ var corsOptions = {
 }
 router.use(cors(corsOptions))
 
+router.get('/getUserProfileById/:id', (req, res, next) => {
+    const userId = req.params.id;
+
+    Profile.findById({ _id: userId })
+        .select('username fullName dateOfBirth email phone userIcon ' +
+            'questionnaire ACSScore ACSHistoryReport about posts')
+        .exec()
+        .then(userData => {
+            console.log(userData);
+
+            if (userData) {
+                res.status(200).json(userData);
+            } else {
+                res.status(404).json({
+                    message: 'username not in database'
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+});
+
+
+
 router.post('/login', (req, res) => {
     // checks if account exists with username and password
     var user = req.body.username;
