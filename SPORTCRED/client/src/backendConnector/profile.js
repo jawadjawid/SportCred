@@ -153,28 +153,27 @@ export const getUserPassword = async (username, currPage) => {
 }
 
 export const getACSScoreChange = async (username, setACSScoreChange) => {
-    // await axios.put('http://localhost:5000/api/profile/processPredictionResult/' + username).then((res) => {
-    //     if(res.status === 200) {
-    //         return res.data;
-    //     }
-    // }).then(data => {
-    //     return true;
-    // }).catch(error => {
-    //     alert('Something went wrong. Please Try again Later.')
-    //     return false;
-    // });
-    // await axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
-    //     if(res.status === 200) {
-    //         return res.data;
-    //     }
-    // }).then(data => {
-    //     setACSScoreChange(data.ACSScoreChange);
-    //     return true;
-    // }).catch(error => {
-    //     alert('Something went wrong. Please Try again Later.')
-    //     return false;
-    // });
-    setACSScoreChange(false);
+    await axios.put('http://localhost:5000/api/profile/processPredictionResult/' + username).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).then(data => {
+        return true;
+    }).catch(error => {
+        alert('Something went wrong. Please Try again Later.')
+        return false;
+    });
+    await axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
+        if(res.status === 200) {
+            return res.data;
+        }
+    }).then(data => {
+        setACSScoreChange(data.ACSScoreChange);
+        return true;
+    }).catch(error => {
+        alert('Something went wrong. Please Try again Later.')
+        return false;
+    });
 }
 
 export const getUserACSTier = async (val, currPage) => {
@@ -194,17 +193,17 @@ export const getUserACSTier = async (val, currPage) => {
 };
 
 export const updateACSScoreChange = async (username) => {
-    // const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
-    //     .then(res => {
-    //         if(res.status === 200) return res.data;
-    //     }).then(data => {
-    //         return true;
-    //     }).catch(error => {
-    //         alert('Something went wrong. Please try again later.');
-    //         return false;
-    //     });
-    //
-    // return promise;
+    const promise = axios.put('http://localhost:5000/api/profile/updateACSScoreChange/' + username, {ACSScoreChange:false})
+        .then(res => {
+            if(res.status === 200) return res.data;
+        }).then(data => {
+            return true;
+        }).catch(error => {
+            alert('Something went wrong. Please try again later.');
+            return false;
+        });
+
+    return promise;
 }
 
 

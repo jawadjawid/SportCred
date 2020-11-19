@@ -109,7 +109,7 @@ const ForgotPassword = (props) => {
                 </b>
                 </Grid>
                 <Grid item xs={6}>
-                    <Input onBlur={(event)=>{
+                    <Input type="date" onBlur={(event)=>{
                         setEnteredUserInfo(
                             {
                                 username:enteredUserInfo.username,
@@ -124,7 +124,7 @@ const ForgotPassword = (props) => {
                 </b>
                 </Grid>
                 <Grid item xs={6}>
-                    <Input type="password" onBlur={(event)=>{
+                    <Input type="password"  onBlur={(event)=>{
                         setEnteredUserInfo(
                             {
                                 username:enteredUserInfo.username,

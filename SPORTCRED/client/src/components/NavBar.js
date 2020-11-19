@@ -12,6 +12,7 @@ import posts from "./Posts"
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import {getACSScoreChange, updateACSScoreChange} from "../backendConnector/profile";
+import {getLastDebatePrompt, updateLastDebatePrompt} from "../backendConnector/debate";
 
 const styles = (theme) => ({
         tab: {
@@ -28,6 +29,7 @@ const styles = (theme) => ({
 function NavBar(props) {
     const [value, setValue] = React.useState(2);
     const [displayACSScoreChangeNotif,setDisplayACSScoreChangeNotif] = React.useState(false);
+    const [displayDailyDebatePromptNotif,setDisplayDailyDebatePromptNotif] = React.useState(false);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -42,9 +44,18 @@ function NavBar(props) {
         setDisplayACSScoreChangeNotif(false);
     }
 
+    const  handleDailyDebatePromptChangeClose = async (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        await updateLastDebatePrompt(username);
+        setDisplayDailyDebatePromptNotif(false);
+    }
+
     useEffect(() => {
         getACSScoreChange(username,setDisplayACSScoreChangeNotif);
-    });
+        getLastDebatePrompt(username,setDisplayDailyDebatePromptNotif);
+    },[username]);
 
     return (
         <AppBar position="static" color="default" className={classes.tab} >
@@ -69,6 +80,11 @@ function NavBar(props) {
             <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={displayACSScoreChangeNotif} autoHideDuration={6000} onClose={handleACSScoreChangeClose}>
                 <Alert onClose={handleACSScoreChangeClose} severity="success">
                     Your ACS has changed!
+                </Alert>
+            </Snackbar>
+            <Snackbar anchorOrigin={{vertical:'top',horizontal:'center'}} open={displayDailyDebatePromptNotif} autoHideDuration={6000} onClose={handleDailyDebatePromptChangeClose}>
+                <Alert onClose={handleDailyDebatePromptChangeClose} severity="success">
+                    New debate prompt!
                 </Alert>
             </Snackbar>
         </AppBar>
