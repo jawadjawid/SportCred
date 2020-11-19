@@ -60,6 +60,7 @@ export default class Debate extends React.Component {
     // console.log(this.state.posts)
   }
   
+
   getQuestion(){
     var url = "http://localhost:5000/api/debate/debateQuestionByTier/" + this.props.currentUser;
     console.log("inside getPOsts")
