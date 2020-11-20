@@ -27,7 +27,7 @@ Priority/Point estimate:  High/3
    Priority/Point estimate:  Medium/2   
  
 4. As George, I want to be able to search for other people from the search page, so that I can see their profiles.  
-   Acceptance Test: I am able to to go to the search page and search for a user by their username.
+   Acceptance Test: I am able to to go to the search page and search for a user by their username.  
    Priority/Point estimate: Medium/2  
 
 5. As George, I want to be able to follow other people and see them in my radar list, so that their posts are prioritized on my feed. 
