@@ -26,7 +26,11 @@ Priority/Point estimate:  High/3
    Acceptance test : I am put in a group and can see other people’s responses. I also see a sliding scale to vote how much I agree with their post  
    Priority/Point estimate:  Medium/2   
  
-4. As George, I want to be able to follow other people and see them in my radar list, so that I can visit their profile and see their posts. 
+4. As George, I want to be able to search for other people from the search page, so that I can see their profiles.  
+   Acceptance Test: I am able to to go to the search page and search for a user by their username.
+   Priority/Point estimate: Medium/2  
+
+5. As George, I want to be able to follow other people and see them in my radar list, so that their posts are prioritized on my feed. 
    Acceptance Test: I am able to follow someone, and their posts should show up under the "Friends Posts" part of Posts page.
    Priority/Point estimate: Medium/2  
 
