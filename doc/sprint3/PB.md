@@ -31,6 +31,6 @@ Priority/Point estimate:  High/3
    Priority/Point estimate: Medium/2  
 
 5. As George, I want to be able to follow other people and see them in my radar list, so that their posts are prioritized on my feed. 
-   Acceptance Test: I am able to follow someone, and their posts should show up under the "Friends Posts" part of Posts page.
+   Acceptance Test: I am able to follow someone, and their posts should show up under the "Friends Posts" part of Posts page.  
    Priority/Point estimate: Medium/2  
 
