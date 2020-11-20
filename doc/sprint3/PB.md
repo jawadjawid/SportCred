@@ -24,4 +24,4 @@ Priority/Point estimate:  High/3
     
 3. As Harry, I want to a sliding agreeance scale on other debate posts, so I can provide my input on the debate.    
    Acceptance test : I am put in a group and can see other people’s responses. I also see a sliding scale to vote how much I agree with their post  
-   Priority/Point estimate:  Medium-Medium/5   
+   Priority/Point estimate:  Medium/2   
