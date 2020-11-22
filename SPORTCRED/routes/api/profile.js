@@ -560,6 +560,36 @@ router.put('/updateLastDebatePrompt/:username', (req, res, next) => {
         });
 });
 
+router.put('/updateACSScoreDebate/:username', (req, res, next) => {
+    Profile.find({username: req.params.username })
+        .exec()
+        .then(async function(data) {
+            let ACSHistoryReport = data[0].ACSHistoryReport
+            let ACSScore = data[0].ACSScore
+            const finalDate = new Date();
+            let event;
+            event = {
+                    ACSStart: ACSScore,
+                    ACSEnd: ACSScore + 5,
+                    activity: "Gained " + 5 + " points by winning debate",
+                    date: finalDate
+            }
+            ACSScore = ACSScore + 5
+            ACSHistoryReport.unshift(event)
+            await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport, ACSScore: ACSScore})
+                .then(() => {
+                    res.status(200).json({
+                        message: "ACSScoreUpdated"
+                    })
+                })
+                .catch(error => {
+                    res.status(400).json({
+                        error: error
+                    });
+                });
+        });
+});
+
 router.put('/updateACSScoreTrivia/:username', (req, res, next) => {
     //expected request body: {"change": -2} or {"change": 2}
     // If change key is not in JSON body then return 400 status
