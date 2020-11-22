@@ -8,6 +8,8 @@ import PicksAndPredictions from './components/PicksAndPredictions/index'
 import { logout } from '../src/backendConnector/login';
 import Posts from './components/Posts'
 import Debate from './components/Debate/Debate'
+import SearchPage from './components/SearchPage'
+
 export default props => {
 
     return (
@@ -21,6 +23,7 @@ export default props => {
                 <Posts exact path='/posts' {...props} component={Posts}/>
                 <Debate exact path='/debate' {...props} component={Debate}/>
                 <Route exact path='/logout' component={() => SignOut(props)}/>
+                <SearchRoute exact path='/search' props={props} component={SearchPage}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
         </BrowserRouter>
@@ -51,6 +54,11 @@ const ProfileRoute = ({component: Component, props, ...rest}) => {
 };
 
 const PicksAndPredictionsRoute = ({component: Component, props, ...rest}) => {
+    return(
+        <AuthenticateRoute {...rest} props={props} component={Component} />)
+};
+
+const SearchRoute = ({component: Component, props, ...rest}) => {
     return(
         <AuthenticateRoute {...rest} props={props} component={Component} />)
 };
