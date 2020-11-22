@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from "material-ui-search-bar";
 import {searchAPI} from "../backendConnector/search";
 import {Redirect} from "react-router";
+import {processPrediction} from "../backendConnector/picksAndPredictions";
 
 export default class Search extends React.Component{
     constructor(props){
@@ -19,11 +20,14 @@ export default class Search extends React.Component{
         }
     }
 
-    render(){
-        const search = (info) => {
-            searchAPI(this);
-            this.setState({ username: "" })
+    async search(page) {
+        if (this.state != null){
+            await searchAPI(page);
+            // this.setState({ username: "" })
         }
+    }
+
+    render(){
 
         return (
             <React.Fragment>
@@ -31,7 +35,9 @@ export default class Search extends React.Component{
                 <SearchBar
                     value={this.state.username}
                     onChange={(newValue) => this.setState({ username: newValue })}
-                    onRequestSearch={() => search(this.state.username)}
+                    // onRequestSearch={() => this.search.bind(this, this)}
+                    onRequestSearch={() => this.search(this)}
+
                 />
             </React.Fragment>
         )
