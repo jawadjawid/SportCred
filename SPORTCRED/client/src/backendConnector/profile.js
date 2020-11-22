@@ -67,7 +67,6 @@ export const getUserProfile = async (username, currPage,forgotPassword) => {
                 email: ""
             });
         } else {
-            alert('Something went wrong. Please Try again Later.');
         }
         return false;
     });
@@ -131,7 +130,6 @@ export const setUserProfile = async (data,username,source) => {
         }).then(data => {
             return true;
     }).catch(error => {
-        alert('Something went wrong. Please try again later.');
         return false;
     });
 
@@ -147,7 +145,6 @@ export const getUserPassword = async (username, currPage) => {
         currPage.setState({currUserPass:data.password});
         return true;
     }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
         return false;
     });
 }
@@ -209,7 +206,6 @@ export const getACSScoreChange = async (username, setACSScoreChange) => {
     }).then(data => {
         return true;
     }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
         return false;
     });
     await axios.get('http://localhost:5000/api/profile/getACSScoreChange/'+ username).then((res) => {
@@ -220,7 +216,6 @@ export const getACSScoreChange = async (username, setACSScoreChange) => {
         setACSScoreChange(data.ACSScoreChange);
         return true;
     }).catch(error => {
-        alert('Something went wrong. Please Try again Later.')
         return false;
     });
 }
@@ -236,7 +231,6 @@ export const getUserACSTier = async (val, currPage) => {
         })
         return true;
     }).catch(error => {
-        alert(error)
         return false;
     });
 };
@@ -248,7 +242,6 @@ export const updateACSScoreChange = async (username) => {
         }).then(data => {
             return true;
         }).catch(error => {
-            alert('Something went wrong. Please try again later.');
             return false;
         });
 

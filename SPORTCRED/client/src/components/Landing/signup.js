@@ -70,11 +70,7 @@ class Signup extends React.Component{
       questionnaire: Object.assign({}, this.state.questionnaire, {[event.target.name]: event.target.value})
     });  }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    register(this)
-    console.log(this.state.errorMessage);
-  }
+  redirect
 
   setRedirect = () => {
     this.setState({
