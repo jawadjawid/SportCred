@@ -34,6 +34,39 @@ router.get('/getUserProfileById/:id', (req, res, next) => {
         });
 });
 
+router.get('/searchAndGetUserProfiles', (req, res, next) => {
+    // expected body like so: {"username": "jimmy"}
+
+    // If username is not in JSON body then return 400 status
+    if ((typeof req.body.username) === 'undefined') {
+        res.status(400).json({
+            error: "username not provided"
+        })
+    }
+
+    Profile.find()
+        .select('username fullName userIcon ACSScore about')
+        .exec()
+        .then(function(userData) {
+            let result = []
+            let users = 0
+            for (let i = 0; i < userData.length; i++) {
+                let str = userData[i].username
+                if (str.toLowerCase().includes(req.body.username.toLowerCase())) {
+                    result.push(userData[i])
+                }
+                if (users === userData.length - 1) {
+                    res.status(200).json(result)
+                }
+                users += 1
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err });
+        });
+});
+
 
 
 router.post('/login', (req, res) => {
@@ -92,6 +125,8 @@ router.get('/:username', (req, res) => {
             res.status(500).json({ error: error });
         });
 });
+
+
 
 
 router.get('/all', (req, res) => {
