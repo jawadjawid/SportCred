@@ -9,6 +9,7 @@ const posts = require('./routes/api/post');
 const games = require('./routes/api/schedule');
 const predicts = require('./routes/api/prediction');
 const debates = require('./routes/api/debate');
+const trivia = require('./routes/api/trivia');
 
 const app = express();
 app.use(bodyParser.json());
@@ -49,6 +50,7 @@ app.use('/api/post', posts);
 app.use('/api/schedule', games);
 app.use('/api/prediction', predicts);
 app.use('/api/debate', debates)
+app.use('/api/trivia', trivia);
 
 const port = 5000;
 app.listen(port, () => console.log(`Server started at port ${port}`));
