@@ -87,6 +87,10 @@ const ProfileSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    lastDebatePrompt: {
+        type: Date,
+        default: Date.now
+    },
     predictions: [{
         gameId: {
             type: Schema.Types.ObjectID,
@@ -95,10 +99,14 @@ const ProfileSchema = new Schema({
             type: String
         }
     }],
-    lastDebatePrompt: {
-        type: Date,
-        default: Date.now
-    }
+    radarList: [{
+        username: {
+            type: String
+        },
+        userIcon: {
+            type: String
+        }
+    }]
 });
 
 ProfileSchema.plugin(uniqueValidator);

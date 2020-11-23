@@ -178,7 +178,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
 
     Profile.find({ username: givenUser })
         .select('username fullName dateOfBirth email phone userIcon ' +
-            'questionnaire ACSScore ACSHistoryReport about posts')
+            'questionnaire ACSScore ACSHistoryReport about posts radarList')
         .exec()
         .then(userData => {
             console.log(userData);
