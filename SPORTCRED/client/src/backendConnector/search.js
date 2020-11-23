@@ -2,7 +2,6 @@ import axios from 'axios';
 // A function to send a get request with search  info
 export const searchAPI = async (currPage) => {
     axios.get('http://localhost:5000/api/profile/searchAndGetUserProfiles/' + currPage.state.username).then((res) => {
-        console.log(currPage.state);
         if(res.status === 200) {
             return res.data;
         }

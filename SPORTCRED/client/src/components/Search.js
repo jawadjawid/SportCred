@@ -14,16 +14,17 @@ export default class Search extends React.Component{
         }
     }
 
-    renderRedirect = () => {
+     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/search' />
+            // return <Redirect to='/search' />
+            // console.log(this.state.results);
+            return <Redirect to={{ pathname: "/search", state: { results: this.state.results } }} />
         }
     }
 
     async search(page) {
         if (this.state != null){
             await searchAPI(page);
-            // this.setState({ username: "" })
         }
     }
 
