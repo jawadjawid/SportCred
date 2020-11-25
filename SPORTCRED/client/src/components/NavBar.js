@@ -27,13 +27,13 @@ const styles = (theme) => ({
     });
 
 function NavBar(props) {
-    const [value, setValue] = React.useState(2);
     const [displayACSScoreChangeNotif,setDisplayACSScoreChangeNotif] = React.useState(false);
     const [displayDebateChangeNotif,setDisplayDebateResultNotif] = React.useState(false);
     const [DebateData,setDebateData] = React.useState('');
     // const [DebateData,setDebateData] = React.useState([]);
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        console.log("tab change encountered" + newValue)
+        localStorage.setItem("tabSelected",newValue)
     };
     const {classes,username} = props;
     const CurrentUser = localStorage.getItem("currentUser");
@@ -61,13 +61,15 @@ function NavBar(props) {
     },[CurrentUser]);
 //     console.log('Debatedata below')
 // console.log(DebateData);
+    const tabSelected = parseInt(localStorage.getItem("tabSelected"));
+    console.log("value right here " + tabSelected);
 
     return (
         <AppBar position="static" color="default" className={classes.tab} >
             <Tabs
-                value={value}
+                value={tabSelected}
                 onChange={handleChange}
-                textColor="primary"
+                textColor="secondary"
                 indicatorColor="secondary"
                 fullWidth style={{'padding': '5px 0'}}
             >
