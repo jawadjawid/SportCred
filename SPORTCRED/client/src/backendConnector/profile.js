@@ -37,25 +37,9 @@ export const getUserProfile = async (username, currPage,forgotPassword) => {
                             {"fullName": "Albert Liu", "username": "alberto"},
                             {"fullName": "Mohammad Sajjad", "username": "mohao"}
                         ],
-                        acsScore:"38",
+                        acsScore:data.ACSScore,
                         // acsHistoryReport:data.ACSHistoryReport,
-                        acsHistoryReport:[{
-                            "ACSStart":"43",
-                            "ACSEnd":"38",
-                            "activity":"Incorrectly predicted winner ORL",
-                            "date":"Nov 5"
-                        },{
-                            "ACSStart":"38",
-                            "ACSEnd":"43",
-                            "activity":"Correctly predicted winner ORL",
-                            "date":"Nov 5"
-                        },{
-                            "ACSStart":"33",
-                            "ACSEnd":"38",
-                            "activity":"Trivia w user3252 with final score of 100:24",
-                            "date":"Oct 15"
-                        }],
-
+                        acsHistoryReport:data.ACSHistoryReport,
                         userBackground: createUserBackground(data)
                     });
             }
