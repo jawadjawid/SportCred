@@ -1,6 +1,6 @@
 Team Name: ilir action team
 
-Total mark: 78/85
+Total mark: 81/85
 
 Planning Meetings (RPM.md, sprint1.md) (Max 5 marks)
 -RPM.md (Release Planning Meeting)
@@ -151,7 +151,7 @@ System Design - (PDF or MD file or another suitable format) (Max 10 marks)
   [1 mark: The majority of class names do not match the collaborator names or the responsibilities of the majority of the classes are not stated or are unclear]
   [0 marks: No CRC provided or the provided document does not match the CRC model]
   
-1/4 (collaborators and methods are mixed together, making it unclear which is what)
+4/4
 
 - Software Architecture Diagram 
   [5 marks: The Architecture Diagram is present, it is formatted using proper graphic symbols, it follows a known Architecture diagram, and at least one well known design pattern.
