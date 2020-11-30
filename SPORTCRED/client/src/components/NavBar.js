@@ -75,7 +75,7 @@ function NavBar(props) {
                      style={{'margin-bottom': '-4rem', 'margin-top': '-2.5rem'}}/>
                 <Tab label="Posts" component={Link} style={{'textDecoration': 'none'}} to="/posts"/>
                 <Tab label="Picks & Predictions" component={Link}  style={{'textDecoration': 'none'}}  to="/picks"/>
-                <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
+                <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/trivia"/>
                 <Tab label="Debate & Analysis" component={Link} style={{'textDecoration': 'none'}} to="/debate"/>
                 <div style={{flex:'1'}}>
                 </div>

@@ -39,9 +39,10 @@ router.get('/getTriviaQuestions', (req, res) => {
     var questionsPicked = [];
     TriviaQuestions.find()
         .then(function(data) {
-            // Loop adds to an array a different random number from a range of 1-52 ten times
+            // Loop adds to an array a different random number from a range of 0-51 ten times
+            // Math.random() * (max - min + 1) + min
             while(questionsPicked.length != 10) {
-                var questionNum = Math.floor((Math.random() * 52) + 1)
+                var questionNum = Math.floor(Math.random() * 52)
                 if(!questionsPicked.includes(questionNum)) {
                     questionsPicked.push(questionNum)
                 }

@@ -8,6 +8,7 @@ import PicksAndPredictions from './components/PicksAndPredictions/index'
 import { logout } from '../src/backendConnector/login';
 import Posts from './components/Posts'
 import Debate from './components/Debate/Debate'
+import Trivia from './components/Trivia/Trivia'
 export default props => {
 
     return (
@@ -20,6 +21,7 @@ export default props => {
                 <PicksAndPredictionsRoute exact path='/picks' props={props} component={PicksAndPredictions}/>
                 <Posts exact path='/posts' {...props} component={Posts}/>
                 <Debate exact path='/debate' {...props} component={Debate}/>
+                <Trivia exact path='/trivia' {...props} component={Trivia}/>
                 <Route exact path='/logout' component={() => SignOut(props)}/>
                 <Route path='*' component={NoMatch}/>
             </Switch>
