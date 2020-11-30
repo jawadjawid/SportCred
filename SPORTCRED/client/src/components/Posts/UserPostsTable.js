@@ -21,7 +21,7 @@ class PostsTable extends React.Component {
 
   componentDidMount() {
     const { username, currentUser } = this.props;
-    getUserPosts(currentUser,this);
+    getUserPosts(localStorage.getItem("currentUser"),this);
   }
 
   state = {
@@ -32,7 +32,7 @@ class PostsTable extends React.Component {
 
   handleOnInputChange = (event) => {
     const { username, currentUser } = this.props;
-    getUserPosts(currentUser,this);
+    getUserPosts(localStorage.getItem("currentUser"),this);
   };
 
   render() {

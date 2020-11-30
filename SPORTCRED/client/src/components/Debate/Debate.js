@@ -35,35 +35,75 @@ export default class Debate extends React.Component {
     this.state = {
       posts: JSON.parse('[{}]'),//mockJSON
       question: "No question",
-      canCreate: true
+      canCreate: true,
+      JSXposts:Object
     }
 
 
-
-
-    var url = "http://localhost:5000/api/debate/getAllPostsByTier/" + this.props.currentUser;
-    console.log("inside getPOsts")
-    fetch(url, {
-      method: 'get',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(posts => {
-        console.log(posts)
-        this.setState({ posts: posts })
-      })
-      this.getQuestion()
-    console.log("inside constuctor")
+ 
+    // console.log("inside constuctor")
     // console.log(this.state.posts)
   }
-  
 
-  getQuestion(){
-    var url = "http://localhost:5000/api/debate/debateQuestionByTier/" + this.props.currentUser;
-    console.log("inside getPOsts")
+
+  componentWillMount() {
+    this.getQuestion()
+       // create a new debate
+       var url = "http://localhost:5000/api/debate/createDebate/";
+       fetch(url, {
+         method: 'post',
+         headers: {
+           Accept: 'application/json, text/plain, */*',
+           'Content-Type': 'application/json'
+         }
+       }).then(res => res.json())
+         .then(res => {
+           // console.log(posts)
+           console.log(res.message)
+         })
+   
+   
+       var url = "http://localhost:5000/api/debate/getAllPostsByTier/" + localStorage.getItem("currentUser");
+       fetch(url, {
+         method: 'get',
+         headers: {
+           Accept: 'application/json, text/plain, */*',
+           'Content-Type': 'application/json'
+         }
+       })
+         .then(res => res.json())
+         .then(posts => {
+           // console.log(posts)
+           this.setState({ posts: posts })
+
+       // Makes JSX
+       var  JSXposts = posts.map((element, i) => {
+        // console.log(element)
+        if (element !== null) {
+          // console.log("post user: "+element.username +" user "+ this.user)
+          if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
+            this.setState({ canCreate: false });
+            // console.log("element user "+element.username+" user "+localStorage.getItem("currentUser")+" cancreate in "+this.state.canCreate)
+          }
+          // console.log("debate post1: " + element.postContent)
+          return <DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />
+        }
+      })
+      // console.log("JSX stuff "+typeof(JSXposts))
+      this.setState({JSXposts:JSXposts})
+
+
+         })
+       
+
+
+
+      
+
+  }
+
+  getQuestion() {
+    var url = "http://localhost:5000/api/debate/debateQuestionByTier/" + localStorage.getItem("currentUser");
     fetch(url, {
       method: 'get',
       headers: {
@@ -74,7 +114,7 @@ export default class Debate extends React.Component {
       .then(res => res.json())
       .then(res => {
         // console.log(res)
-        console.log(res.question)
+        // console.log(res.question)
         this.setState({ question: res.question })
       })
     // console.log("inside question ", this.state.question)
@@ -88,17 +128,9 @@ export default class Debate extends React.Component {
         <CssBaseline />
         <NavBar isLoggedIn={isLoggedIn} />
         <Header />
-        <DebatePost user={this.props.currentUser} post="null" prompt={this.state.question} />
+        <DebatePost user={localStorage.getItem("currentUser")} post="null" prompt={this.state.question} canCreate={this.state.canCreate} />
         {
-          this.state.posts.map(function (element, i) {
-            // console.log(element)
-            if (element !== null) {
-              return <DebatePost user={this.user} post={element} prompt={this.question} />
-            }
-            if(element.username === this.user){
-              this.setState({canCreate:false})
-            }
-          }, {user: this.props.currentUser, question:this.state.question})
+          this.state.JSXposts
         }
         {/* <createDebatePost /> */}
         {/* <DebatePost user={this.props.currentUser} poster="Mom" body={"Mom " + mockBody} prompt={this.state.question} />

@@ -149,23 +149,36 @@ router.get('/debateQuestionByTier/:username', async (req, res) => {
 });
 
 router.post('/createDebate', (req, res) => {
-    if ((typeof req.body.date) === 'undefined') {
-        return res.status(400).json({message: "date field is missing from json"})
-    }
-    const debate = new Debate({
-        fanalyst: [],
-        analyst: [],
-        proAnalyst: [],
-        expertAnalyst: [],
-        date: new Date(req.body.date)
-    })
-    debate.save()
-        .then(res.status(200).json(debate))
-        .catch(error => {
-            console.log(error)
-            res.status(500).json({
-                error: error
-            });
+    Debate.findOne().sort({ date: -1 }).limit(1)
+        .exec(function(error, debate) {
+            let today = new Date();
+            let lastDebate;
+            if (debate != null) {
+                lastDebate = debate.date
+                lastDebate.setDate(lastDebate.getDate() + 1);
+            }
+            if (debate === null || today > lastDebate) {
+                const debate = new Debate({
+                    fanalyst: [],
+                    analyst: [],
+                    proAnalyst: [],
+                    expertAnalyst: [],
+                    date: today
+                })
+                debate.save()
+                    .then(res.status(200).json(debate))
+                    .catch(error => {
+                        console.log(error)
+                        res.status(500).json({
+                            error: error
+                        });
+                    })
+            }
+            else {
+                res.status(200).json({
+                    message: "use old debate"
+                })
+            }
         })
 });
 
@@ -281,17 +294,18 @@ router.post('/updateAgreeOrDisagree/:username', (req, res) => {
         "score": 60
     }
     */
-
+    console.log("inside updateagreeordisagree")
     Profile.findOne({username: req.params.username})
         .exec(function(err, profile) {
             if(profile == null) {
                 return res.status(400).json({message:"This user does not exist"})
             } else {
-                DebatePost.findOne({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
+                DebatePost.findOne({_id: req.body.id})//({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
                     .exec(function(err, post) {
                         if(((typeof req.body.score) === 'undefined') || (req.body.score < 0)) {
                             return res.status(400).json({message:"Bad request, score not given or is a negative number"})
                         } else {
+                            console.log(post)
                             let alreadyAgreed = false;
                             let agreedIndex = -1;
                             post.agreeance.forEach(function (item, index) {
