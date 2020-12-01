@@ -20,11 +20,17 @@ export default class SearchCard extends React.Component{
     }
 
     render(){
+
+        const styles = {
+            score: {
+                color: '#FFE400',
+            }
+        }
         return (
             <React.Fragment>
                 <Card>
-                    <List >
-                        <ListItem style={{ justifyContent:'center','margin-top':'1rem' }} >
+                    <List>
+                        <ListItem style={{ justifyContent:'center'}} >
                             <Avatar alt={this.state.user.username} src={this.state.user.userIcon}/>
                             <ListItem>
                                 <strong>
@@ -35,7 +41,7 @@ export default class SearchCard extends React.Component{
                                 <p>{this.state.user.username}</p>
                             </ListItem>
                             <ListItem>
-                                <p>{this.state.user.ACSScore}</p>
+                                <p style={styles["score"]}>{this.state.user.ACSScore}</p>
                             </ListItem>
                             <ListItem>
                                 <p>{this.state.user.about}</p>

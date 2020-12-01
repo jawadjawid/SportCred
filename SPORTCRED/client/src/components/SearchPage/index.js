@@ -53,10 +53,13 @@ class PicksAndPredictions extends React.Component {
                     </Grid>
                     <Grid item xs={9} >
                         <React.Fragment >
+                            <br/><br/>
+
                             <Card>
                                 <List >
-                                    <ListItem style={{ justifyContent:'left','margin-top':'1rem' }} >
-                                        <h2>Search Results:</h2>
+
+                                    <ListItem style={{ justifyContent:'left'}}>
+                                        <h2 style={{ marginBottom:'0', marginTop: '0'}}>Search Results:</h2>
                                     </ListItem>
                                 </List>
                             </Card>
