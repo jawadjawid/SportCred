@@ -40,24 +40,23 @@ class PicksAndPredictions extends React.Component {
         const items = []
 
         for (const [index, value] of this.state.results.entries()) {
-            items.push(<SearchCard user={this.state.results[index]}/>)
-            items.push(<br/>)
+            if(this.state.results[index].username != localStorage.getItem("currentUser")){
+                items.push(<SearchCard user={this.state.results[index]}/>)
+                items.push(<br/>)
+            }
+
         }
 
         return (<div className={classes.Background}>
                 <NavBar username={this.props.currentUser}/>
                 <Grid container spacing={1} className={classes.GridContainer}>
-
-
                     <Grid item xs={1} >
                     </Grid>
                     <Grid item xs={9} >
                         <React.Fragment >
                             <br/><br/>
-
                             <Card>
                                 <List >
-
                                     <ListItem style={{ justifyContent:'left'}}>
                                         <h2 style={{ marginBottom:'0', marginTop: '0'}}>Search Results:</h2>
                                     </ListItem>

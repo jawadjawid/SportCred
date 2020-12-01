@@ -234,7 +234,7 @@ router.put('/addToRadarList/:username', (req, res) => {
                             {
                                 if(radarList[i].username === user2)
                                 {
-                                    return res.status(409).json({message: "User already present"});
+                                    return res.status(409).json({message: "You are already following this user"});
                                 }
                             }
                             radarList.push({"username": user2, "userIcon": userIcon});
@@ -242,7 +242,7 @@ router.put('/addToRadarList/:username', (req, res) => {
                             Profile.updateOne({username: user1}, {radarList: radarList})
                                 .then(() => {
                                     res.status(200).json({
-                                        message: user2 + " has been added to radar list of " + user1
+                                        message: user2 + " has been added to your radar list"
                                     });
                                 })
                                 .catch(() => {
