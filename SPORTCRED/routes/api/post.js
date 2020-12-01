@@ -107,16 +107,12 @@ router.get('/getFriendsPosts/:username', (req, res) => {
 });
 
 router.post('/addComment/:username', (req, res) => {
-
-    // Validations for other fields needed ?? 
-    // (postContent, poster, postDate)
-
     /* Request json format example, where username is specified in the request
+
+    http://localhost:3000/api/post/addComment/Jimmy
     {
-        "postContent": "post by user1",
-        "poster": "user1",
-        "postDate": "2020-11-01T05:36:36.743+00:00",
-        "commentContent": "comment by Jimmy"
+    "postId": "5fc09299c8e7df228c7da7dd",
+    "commentContent": "a comment on Jimmy2's post"
     } */
 
     // Check that commentContent is in the json 
@@ -136,7 +132,7 @@ router.post('/addComment/:username', (req, res) => {
                 return res.status(400).json({message:"Commenter does not exist"})
             }
             else {
-                Post.findOne({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
+                Post.findById({_id: req.body.postId})
                     .exec(function(err, post) {
                         if(post == null) {
                             return res.status(400).json({message:"This post does not exist"})
@@ -154,14 +150,14 @@ router.post('/addComment/:username', (req, res) => {
 
 router.post('/updateAgreeOrDisagree/:username', (req, res) => {
     /* Request json format example, username must be specified in request
+
+    http://localhost:3000/api/post/updateAgreeOrDisagree/Jimmy
     {
-        "postContent": "post by user1",
-        "poster": "user1",
-        "postDate": "2020-11-01T05:36:36.743+00:00",
-        "agree": true
+    "postId": "5fc09299c8e7df228c7da7dd",
+    "disagree": true
     } */
     
-    Post.findOne({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
+    Post.findById({_id: req.body.postId})
         .exec(function(err, post) {
             if(post == null) {
                 return res.status(400).json({message:"This post does not exist"})

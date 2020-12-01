@@ -123,17 +123,19 @@ export const getUserPassword = async (username, currPage) => {
     });
 }
 export const getDebateResult = async (username, setDebateResultChange,setDebateData) => {
-    // let ACSTier = '';
-    // await axios.put('http://localhost:5000/api/profile/getACSTier/' + username).then((res) => {
-    //     if(res.status === 200) {
-    //      ACSTier = res;
-    //     console.log(ACSTier)
-    //     }
-    // }).catch(error => {
-    //     alert('Something went wrong in getDebateResult.')
-    //     setDebateResultChange(false);
-    // });
-    await axios.get('http://localhost:5000/api/debate/getDebateScore' ).then((res) => {
+    let ACSTier = '';
+    await axios.get('http://localhost:5000/api/profile/getACSTier/' + username).then((res) => {
+        if(res.status === 200) {
+         ACSTier = res.data.ACSTier;
+        console.log(ACSTier)
+        }
+    }).catch(error => {
+        alert('Something went wrong in getDebateResult.')
+        setDebateResultChange(false);
+    });
+    console.log('inside getDebate')
+    console.log(ACSTier)
+    await axios.get('http://localhost:5000/api/debate/getDebateScore/' + ACSTier ).then((res) => {
         if(res.status === 200) {
             return res;
         }

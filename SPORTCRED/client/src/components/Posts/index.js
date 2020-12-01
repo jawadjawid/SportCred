@@ -1,13 +1,8 @@
 import React from 'react';
-import Header from './Header';
 import NavBar from '../NavBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withRouter } from 'react-router-dom';
 import PostsTable from './PostsTable';
-import CreatePost from './CreatePost';
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import UserPostsTable from "./UserPostsTable";
 
 
 class Post extends React.Component {
@@ -35,10 +30,8 @@ class Post extends React.Component {
       <div>
         <CssBaseline/>
         <NavBar isLoggedIn={isLoggedIn}/>
-        <Header {...this.props}/>
-          <Grid style = {{ marginLeft: "20%"}} item xs={7}>
-              <CreatePost />
-          </Grid>
+        {/* <Header {...this.props}/> */}
+        {/* <CreatePost username={this.state.currentUser}/> */}
         <PostsTable {...this.props} />
       </div>
     );

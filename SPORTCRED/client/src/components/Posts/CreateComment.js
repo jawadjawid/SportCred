@@ -6,46 +6,55 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 
 
-export default class CreatePost extends React.Component {
+export default class CreateComment extends React.Component {
     constructor(props) {
 
         super(props);
         this.state = {
-            username: localStorage.getItem("currentUser"),
+            username: this.props.username,
             postBody: "",
             snackbarmsg: "",
             snackbaropen: false,
             alertseverity: "success"
         }
         this.handleChange = this.handleChange.bind(this);
-        this.createPost = this.createPost.bind(this)
+        this.CreateComment = this.CreateComment.bind(this)
+    }
+
+    componentWillReceiveProps(nextProps) { // this is needed to update a state idk why 
+        if (nextProps.username !== this.state.username) {
+            this.setState({ username: nextProps.username });
+        }
     }
 
     handleChange(event) {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         this.setState({ postBody: event.target.value });
     }
 
-    createPost(){
+    CreateComment(){
         var postBody = {
             postContent: this.state.postBody
         }
         if (this.state.postBody === "" ){
             // alert('You cannot post with an empty body');
             this.setState({
-                snackbarmsg: "You cannot post with an empty body",
+                snackbarmsg: "Your comment can't be empty",
                 snackbaropen:true,
                 alertseverity: "info"})
             return 0;
         }
 
-        
-        console.log(JSON.stringify(postBody))
-        var url = "http://localhost:5000/api/post/createPost/" + localStorage.getItem("currentUser");
-
+        // console.log(this.props.post._id)
+        // console.log(JSON.stringify(postBody))
+        var url = "http://localhost:5000/api/post/addComment/" + localStorage.getItem("currentUser");
+        var commentData = {
+            "postId":this.props.post._id.toString(), "commentContent":postBody.postContent
+          }
+        //   console.log(JSON.stringify(commentData))
         fetch(url, {
             method: 'post',
-            body: JSON.stringify(postBody),
+            body: JSON.stringify(commentData),
             headers: {
                 Accept: 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
@@ -53,22 +62,22 @@ export default class CreatePost extends React.Component {
         })
         .then(res => {
             if (res.status == 200) {
-                // alert("your thing has been posted");
+                // alert("your thing has been commented");
                 this.setState({
                     postBody: "" , 
-                    snackbarmsg: "Successfully posted", 
+                    snackbarmsg: "Successfully made a comment", 
                     snackbaropen:true,
                     alertseverity: "success"})
-                
-                window.location.reload();
+                    
+                    window.location.reload();
             }
             else {
-                // alert("your thing failed to be posted");
+                // alert("your thing failed to be commented");
                 this.setState({
-                    snackbarmsg: "Failed to posted", 
+                    snackbarmsg: "Failed to make a comment", 
                     snackbaropen:true,
                     alertseverity: "error"})
-                console.log(res.json());
+                // console.log(res.json());
             }
                 
             // console.log(res.json());
@@ -96,18 +105,18 @@ export default class CreatePost extends React.Component {
                 <Card > 
                 <TextField
                     // //autoComplete="fname"
-                    style={{ width: '90%' }}
+                    style={{ width: '80%' }}
                     name="Post"
                     variant="filled"
                     multiline
                     id="postBody"
                     // // error={fullNameError}
-                    label="What's on your mind?"
+                    label="Your comment"
                     value={this.state.postBody}
                     onChange={this.handleChange}
                 />
-                <Button  style = {{ padding: "1rem", width: '10%'}} onClick={this.createPost}>
-                    Post
+                <Button  style = {{ padding: "1rem", width: '17%',marginLeft: '5px'}} onClick={this.CreateComment}>
+                    Comment
                 </Button>
                 </Card>
 

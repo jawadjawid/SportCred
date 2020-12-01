@@ -11,7 +11,7 @@ export default class CreatePost extends React.Component {
 
         super(props);
         this.state = {
-            username: localStorage.getItem("currentUser"),
+            username: this.props.username,
             postBody: "",
             snackbarmsg: "",
             snackbaropen: false,
@@ -19,6 +19,12 @@ export default class CreatePost extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.createPost = this.createPost.bind(this)
+    }
+
+    componentWillReceiveProps(nextProps) { // this is needed to update a state idk why 
+        if (nextProps.username !== this.state.username) {
+            this.setState({ username: nextProps.username });
+        }
     }
 
     handleChange(event) {
@@ -41,7 +47,7 @@ export default class CreatePost extends React.Component {
 
         
         console.log(JSON.stringify(postBody))
-        var url = "http://localhost:5000/api/post/createPost/" + localStorage.getItem("currentUser");
+        var url = "http://localhost:5000/api/post/createPost/" + this.state.username;
 
         fetch(url, {
             method: 'post',
@@ -60,7 +66,7 @@ export default class CreatePost extends React.Component {
                     snackbaropen:true,
                     alertseverity: "success"})
                 
-                window.location.reload();
+                 window.location.reload();
             }
             else {
                 // alert("your thing failed to be posted");

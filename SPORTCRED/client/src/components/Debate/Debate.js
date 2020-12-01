@@ -113,8 +113,9 @@ export default class Debate extends React.Component {
 
   }
 
-  getQuestion() {
+  getQuestion(){
     var url = "http://localhost:5000/api/debate/debateQuestionByTier/" + localStorage.getItem("currentUser");
+    // console.log("inside getPOsts")
     fetch(url, {
       method: 'get',
       headers: {
@@ -144,10 +145,10 @@ export default class Debate extends React.Component {
           this.state.JSXposts
         }
         {/* <createDebatePost /> */}
-        {/* <DebatePost user={this.props.currentUser} poster="Mom" body={"Mom " + mockBody} prompt={this.state.question} />
-        <DebatePost user={this.props.currentUser} poster="Joe" body={"Joe " + mockBody} prompt={this.state.question} />
-        <DebatePost user={this.props.currentUser} poster="Obama" body={"Obama " + mockBody} prompt={this.state.question} />
-        <DebatePost user={this.props.currentUser} poster="mani_d" body={"mani_d " + mockBody} prompt={this.state.question} /> */}
+        {/* <DebatePost user={localStorage.getItem("currentUser")} poster="Mom" body={"Mom " + mockBody} prompt={this.state.question} />
+        <DebatePost user={localStorage.getItem("currentUser")} poster="Joe" body={"Joe " + mockBody} prompt={this.state.question} />
+        <DebatePost user={localStorage.getItem("currentUser")} poster="Obama" body={"Obama " + mockBody} prompt={this.state.question} />
+        <DebatePost user={localStorage.getItem("currentUser")} poster="mani_d" body={"mani_d " + mockBody} prompt={this.state.question} /> */}
       </div>
     );
   }
@@ -156,6 +157,6 @@ export default class Debate extends React.Component {
 // function createDebatePost(){
 //   if(this.state.canCreate == true){
 //     // this.setState({canCreate: false})
-//     return <DebatePost user={this.props.currentUser} post={null} prompt={this.state.question} />
+//     return <DebatePost user={localStorage.getItem("currentUser")} post={null} prompt={this.state.question} />
 //   }
 // }

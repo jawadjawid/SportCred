@@ -5,7 +5,6 @@ export const style = theme => ({
         minHeight: '300px',
         minWidth: '800px',
         overflow: 'hidden',
-        marginBottom: '500px',
     },
     Video: {
         width: '100%',

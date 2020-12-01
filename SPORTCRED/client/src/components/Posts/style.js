@@ -15,6 +15,15 @@ export const styles = theme => ({
     marginTop: '30px',
     marginBottom: '20px',
   },
+  CommentList:{
+    borderRadius: '4px',
+      borderStyle: 'solid',
+      marginTop: '5px',
+      marginBottom: '8px',
+      marginLeft: '5px',
+      marginRight: '5px',
+      
+  },
   PostRow: {
     marginBottom: '5px',
     margin: theme.spacing(2),
@@ -24,11 +33,18 @@ export const styles = theme => ({
   },
   PostTitle:{
     fontSize: 25,
-    
+    marginLeft:'10px',
+    marginRight:'0px'
+  },
+  PosterNumber:{
+    color: '#ffffff',
+    fontSize: 17,
+    marginLeft:'10px',
+    marginRight:'0px'
   },
   Poster:{
     fontSize: 12,
-    color: '#00000',
+    color: '#ffffff',
     align:'center',
   },
   Postdata:{
@@ -38,7 +54,7 @@ export const styles = theme => ({
   Postdate:{
     display:'inline',
     fontSize: 12,
-    color: '#00000',
+    color: '#ffffff',
     float: 'right',
   },
   paper: {
