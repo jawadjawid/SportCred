@@ -76,19 +76,28 @@ class Profile extends React.Component {
         getUserProfile(localStorage.getItem("currentUser"),this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(prevProps);
+        console.log(prevState);
+    }
+
+    setProfileState = (info) => {
+        const copy = [...info['userBackground']];
+        this.setState({userBackground:copy}, () => {
+            console.log(info);
+            console.log(this.state);
+        });
+    }
+
     render() {
         const {classes} = this.props;
         const currentUser = localStorage.getItem("currentUser");
 
         const backUpBackground = JSON.parse(JSON.stringify(this.state.userBackground));
 
-        const setProfileState = (info) => {
-            const copy = [...info['userBackground']];
-            this.setState({userBackground:copy}, () => {
-                console.log(info);
-                console.log(this.state);
-                });
-        }
+
+        console.log("THESE ARE ACC FIRNDS");
+        console.log(this.state.friends);
 
         return (<div className={classes.Background}>
                     <NavBar username={currentUser}/>
@@ -96,9 +105,9 @@ class Profile extends React.Component {
                 <div>
                 <Grid container spacing={3} className={classes.GridContainer}>
                     <Grid item xs={3} className={classes.GridItemLeft}>
-                        <UserBasicInfo fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={setProfileState}/>
+                        <UserBasicInfo fullName={this.state.userBackground[2]["fullname"]} username={this.state.userBackground[0]["username"]} userIcon={this.state.userIcon} setProfileState={this.setProfileState}/>
                         <UserACSScore score={this.state.acsScore} tier={this.state.tier} report={this.state.acsHistoryReport}/>
-                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={setProfileState}/>
+                        <UserAboutInfo background={this.state.userBackground} backUp={backUpBackground} setProfileState={this.setProfileState}/>
                         <FriendLineUp friends={this.state.friends}/>
                     </Grid>
                     <Grid item xs={9} className={classes.GridItemRight}>

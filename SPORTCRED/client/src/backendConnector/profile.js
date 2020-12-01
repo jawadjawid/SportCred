@@ -26,17 +26,7 @@ export const getUserProfile = async (username, currPage,forgotPassword) => {
                 currPage.setState(
                     {
                         userIcon:data.userIcon,
-                        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
-                            {"fullName": "John Doe", "username": "hi142"},
-                            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
-                            {"fullName": "Albert Liu", "username": "alberto"},
-                            {"fullName": "Mohammad Sajjad", "username": "mohao"},
-                            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
-                            {"fullName": "John Doe", "username": "hi142"},
-                            {"fullName": "Pussy Cat", "username": "meow"},
-                            {"fullName": "Albert Liu", "username": "alberto"},
-                            {"fullName": "Mohammad Sajjad", "username": "mohao"}
-                        ],
+                        friends: data.radarList,
                         acsScore:data.ACSScore,
                         // acsHistoryReport:data.ACSHistoryReport,
                         acsHistoryReport:data.ACSHistoryReport,

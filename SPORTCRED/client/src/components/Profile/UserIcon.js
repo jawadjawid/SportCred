@@ -19,7 +19,7 @@ export default class UserIcon extends React.Component {
             }
         };
 
-            return (<Avatar style={sizes[this.props.size]} alt={this.props.fullName} src={this.props.imgSrc}/>);
+            return (<Avatar style={sizes[this.props.size]} src={this.props.imgSrc}/>);
     }
 
 

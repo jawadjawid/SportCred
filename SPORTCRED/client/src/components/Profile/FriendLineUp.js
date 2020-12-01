@@ -8,6 +8,9 @@ import { FixedSizeList } from 'react-window';
 import UserIcon from "./UserIcon";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import List from "@material-ui/core/List";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const theme = createMuiTheme({
     props: {
@@ -18,38 +21,41 @@ const theme = createMuiTheme({
     },
 });
 
+
 export default class FriendLineUp extends React.Component {
-
-    componentDidMount() {
-
+    radarList = {};
+    constructor(props) {
+        super(props);
+         this.state = {
+             friends: props.friends
+         }
     }
 
-    renderRow = (rowInfo) => {
-        const { friends } = this.props;
-        return (
-            <React.Fragment>
-                <ThemeProvider theme={theme}>
-                <ListItem button style={{height:"50px", width:'240px'}}>
-                    <ListItemIcon>
-                        <UserIcon size="small" fullName={friends[rowInfo.index]['fullName']} imgSrc={friends[rowInfo.index]['userIcon']}/>
-                    </ListItemIcon>
-                    <ListItemText disableTypography primary={friends[rowInfo.index]['username']}  />
-                </ListItem>
-                </ThemeProvider>
-            </React.Fragment>
-        );
+    componentWillReceiveProps(nextProps) {
+        this.state.friends = nextProps.friends;
     }
-
 
     render(){
-
         return (
             <React.Fragment>
                 <Card style={{padding: "1rem",margin:"1rem 0"}}>
                     <Typography variant="h1" component="h1"  color="secondary">Radar List</Typography>
-                    <FixedSizeList height={300} width={280} itemSize={30} itemCount={this.props.friends.length}>
-                        {this.renderRow}
-                    </FixedSizeList>
+                    <List style={{maxHeight:"300px",overflow: 'auto'}}>
+                        {(
+                            <li key={`section`} >
+                                <ul>
+                                    {Array.from(Array(this.state.friends.length).keys()).map((item) => (
+                                        <ListItem button style={{height:"50px", width:'240px'}}>
+                                            <ListItemIcon>
+                                                <UserIcon size="small" imgSrc={this.state.friends[item]['userIcon']}/>
+                                            </ListItemIcon>
+                                            <ListItemText disableTypography primary={this.state.friends[item]['username']}  />
+                                        </ListItem>
+                                    ))}
+                                </ul>
+                            </li>
+                        )}
+                    </List>
                 </Card>
             </React.Fragment>)
     }
