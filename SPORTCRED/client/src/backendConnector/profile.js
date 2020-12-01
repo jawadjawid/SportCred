@@ -26,36 +26,10 @@ export const getUserProfile = async (username, currPage,forgotPassword) => {
                 currPage.setState(
                     {
                         userIcon:data.userIcon,
-                        friends: [{"fullName": "Abraham Lincoln", "username": "hello123"},
-                            {"fullName": "John Doe", "username": "hi142"},
-                            {"fullName": "Pussy Cat", "username": "meow","userIcon":"https://material-ui.com/static/images/avatar/2.jpg"},
-                            {"fullName": "Albert Liu", "username": "alberto"},
-                            {"fullName": "Mohammad Sajjad", "username": "mohao"},
-                            {"fullName": "Abraham Lincoln", "username": "hello123","userIcon":"https://material-ui.com/static/images/avatar/3.jpg"},
-                            {"fullName": "John Doe", "username": "hi142"},
-                            {"fullName": "Pussy Cat", "username": "meow"},
-                            {"fullName": "Albert Liu", "username": "alberto"},
-                            {"fullName": "Mohammad Sajjad", "username": "mohao"}
-                        ],
-                        acsScore:"38",
+                        friends: data.radarList,
+                        acsScore:data.ACSScore,
                         // acsHistoryReport:data.ACSHistoryReport,
-                        acsHistoryReport:[{
-                            "ACSStart":"43",
-                            "ACSEnd":"38",
-                            "activity":"Incorrectly predicted winner ORL",
-                            "date":"Nov 5"
-                        },{
-                            "ACSStart":"38",
-                            "ACSEnd":"43",
-                            "activity":"Correctly predicted winner ORL",
-                            "date":"Nov 5"
-                        },{
-                            "ACSStart":"33",
-                            "ACSEnd":"38",
-                            "activity":"Trivia w user3252 with final score of 100:24",
-                            "date":"Oct 15"
-                        }],
-
+                        acsHistoryReport:data.ACSHistoryReport,
                         userBackground: createUserBackground(data)
                     });
             }
