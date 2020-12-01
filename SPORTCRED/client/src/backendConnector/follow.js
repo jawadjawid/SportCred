@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const follow = async (currPage, curruser) => {
-    axios.put('http://localhost:5000/api/profile/addToRadarList/'+ curruser, currPage.state).then((res) => {
+    axios.put('http://localhost:5000/api/profile/addToRadarList/'+ curruser, currPage.state.user).then((res) => {
+        console.log(currPage.state);
         return res.data;
     }).then(data => {
         currPage.setState({
