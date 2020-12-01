@@ -106,6 +106,7 @@ class Profile extends React.Component {
                         <React.Fragment >
                         
                             <Card raised>
+                                <br/>
                             <h2 className={classes.PostTitle}>Your Posts</h2>
                             <UserPostsTable {...this.props} />
                             </Card>
