@@ -13,6 +13,7 @@ import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import {getACSScoreChange,getDebateResult, updateACSScoreChange} from "../backendConnector/profile";
 import { JsonToTable } from "react-json-to-table";
+import Search from "./Search"
 
 const styles = (theme) => ({
         tab: {
@@ -26,7 +27,11 @@ const styles = (theme) => ({
         }
     });
 
+
+
 function NavBar(props) {
+    let search = "";
+    const [value, setValue] = React.useState(2);
     const [displayACSScoreChangeNotif,setDisplayACSScoreChangeNotif] = React.useState(false);
     const [displayDebateChangeNotif,setDisplayDebateResultNotif] = React.useState(false);
     const [DebateData,setDebateData] = React.useState('');
@@ -43,6 +48,15 @@ function NavBar(props) {
         }
         await updateACSScoreChange(CurrentUser);
         setDisplayACSScoreChangeNotif(false);
+    }
+
+    const  handleSearch = async () => {
+        console.log(search);
+    }
+
+    const  handleSearchChange = async (value) => {
+        console.log("asd");
+        search = value;
     }
 
     const  handleDebateResultClose = async (event, reason) => {
@@ -77,10 +91,12 @@ function NavBar(props) {
                      style={{'margin-bottom': '-4rem', 'margin-top': '-2.5rem'}}/>
                 <Tab label="Posts" component={Link} style={{'textDecoration': 'none'}} to="/posts"/>
                 <Tab label="Picks & Predictions" component={Link}  style={{'textDecoration': 'none'}}  to="/picks"/>
-                <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/profile"/>
+                <Tab label="Trivia" component={Link} style={{'textDecoration': 'none'}} to="/trivia"/>
                 <Tab label="Debate & Analysis" component={Link} style={{'textDecoration': 'none'}} to="/debate"/>
                 <div style={{flex:'1'}}>
                 </div>
+
+                <Search></Search>
                 <Tab icon={<EmojiEmotions/>} component={Link} to="/profile" style={{'textDecoration': 'none'}}/>
                 <Tab label="Logout" component={Link} style={{'textDecoration': 'none'}} to="/logout"/>
             </Tabs>

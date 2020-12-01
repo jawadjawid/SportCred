@@ -149,23 +149,36 @@ router.get('/debateQuestionByTier/:username', async (req, res) => {
 });
 
 router.post('/createDebate', (req, res) => {
-    if ((typeof req.body.date) === 'undefined') {
-        return res.status(400).json({message: "date field is missing from json"})
-    }
-    const debate = new Debate({
-        fanalyst: [],
-        analyst: [],
-        proAnalyst: [],
-        expertAnalyst: [],
-        date: new Date(req.body.date)
-    })
-    debate.save()
-        .then(res.status(200).json(debate))
-        .catch(error => {
-            console.log(error)
-            res.status(500).json({
-                error: error
-            });
+    Debate.findOne().sort({ date: -1 }).limit(1)
+        .exec(function(error, debate) {
+            let today = new Date();
+            let lastDebate;
+            if (debate != null) {
+                lastDebate = debate.date
+                lastDebate.setDate(lastDebate.getDate() + 1);
+            }
+            if (debate === null || today > lastDebate) {
+                const debate = new Debate({
+                    fanalyst: [],
+                    analyst: [],
+                    proAnalyst: [],
+                    expertAnalyst: [],
+                    date: today
+                })
+                debate.save()
+                    .then(res.status(200).json(debate))
+                    .catch(error => {
+                        console.log(error)
+                        res.status(500).json({
+                            error: error
+                        });
+                    })
+            }
+            else {
+                res.status(200).json({
+                    message: "use old debate"
+                })
+            }
         })
 });
 
@@ -281,17 +294,18 @@ router.post('/updateAgreeOrDisagree/:username', (req, res) => {
         "score": 60
     }
     */
-
+    console.log("inside updateagreeordisagree")
     Profile.findOne({username: req.params.username})
         .exec(function(err, profile) {
             if(profile == null) {
                 return res.status(400).json({message:"This user does not exist"})
             } else {
-                DebatePost.findOne({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
+                DebatePost.findOne({_id: req.body.id})//({poster: req.body.poster, postContent: req.body.postContent, postDate: req.body.postDate})
                     .exec(function(err, post) {
                         if(((typeof req.body.score) === 'undefined') || (req.body.score < 0)) {
                             return res.status(400).json({message:"Bad request, score not given or is a negative number"})
                         } else {
+                            console.log(post)
                             let alreadyAgreed = false;
                             let agreedIndex = -1;
                             post.agreeance.forEach(function (item, index) {
@@ -339,50 +353,67 @@ router.get('/getScoreFromPost', (req, res) => {
         });
 });
 
-router.get('/getDebateScore', async (req, res) => {
-    await DebatePost.find()
+router.get('/getDebateScore/:tier', async (req, res) => {
+    /**
+     * Tiers accepted fanalyst, analyst, proAnalyst and expertAnalyst
+     */
+    let userTier = req.params.tier; 
+    await Debate.find().sort({date: -1})
         .exec()
         .then(async (data) => {
+            console.log(data[0]);
             let user = "";
             let lastDebate = Date.now();
             let userScoreArray = [];
-            for(const item of data)
+            console.log(userTier in data[0]);
+            console.log(data[0][userTier].length);
+            if(userTier in data[0])
             {
-                let id = item.poster
-                await Profile.find({_id: id})
-                    .exec()
-                    .then(async (profileData) => {
-                        user = profileData[0].username;
-                        lastDebate = new Date(profileData[0].lastDebateCompleted);
-                    });
-                let currentDate = new Date();
-                let tomorrow = new Date(lastDebate);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                if(currentDate > tomorrow) 
+                for(let i = 0; i < data[0][userTier].length; i++)
                 {
-                    let scoreScale = item.agreeance;
-                    let totalAgreeDisagreeScore = 0;
-                    scoreScale.forEach((item1) => {
-                        totalAgreeDisagreeScore += item1.score;
-                    })
-                    userScoreArray.push({"username": user, "debateScore": totalAgreeDisagreeScore});  
+                    await DebatePost.find({_id: data[0][userTier][i]})
+                        .exec()
+                        .then(async (data) => {
+                            for(const item of data)
+                            {
+                                let id = item.poster
+                                await Profile.find({_id: id})
+                                        .exec()
+                                        .then(async (profileData) => {
+                                        user = profileData[0].username;
+                                        lastDebate = new Date(profileData[0].lastDebateCompleted);
+                                        });
+                                let currentDate = new Date();
+                                let tomorrow = new Date(lastDebate);
+                                tomorrow.setDate(tomorrow.getDate() + 1);
+                                if(currentDate > tomorrow) 
+                                {
+                                    let scoreScale = item.agreeance;
+                                    let totalAgreeDisagreeScore = 0;
+                                    scoreScale.forEach((item1) => {
+                                    totalAgreeDisagreeScore += item1.score;
+                                    })
+                                    userScoreArray.push({"username": item.username, "debateScore": totalAgreeDisagreeScore});  
+                                }
+                            }
+                        })
                 }
-            }
-            console.log(userScoreArray);
-            if(userScoreArray.length === 0)
-            {
-                return res.status(200).json(userScoreArray);
             }
             else
             {
-                return res.status(200).json(userScoreArray);
+                res.status(400).json({message: items + ' doesn\'t exist as tier'});
             }
-            
+            if(userScoreArray.length === 0)
+            {
+                res.status(200).json({
+                    userScoreArray: userScoreArray,
+                    message: "There are no posts for the previous day for " + userTier
+                });
+            }
+            res.status(200).json(userScoreArray);
         })
-        .catch((error) => {
-            return res.status(400).json({
-                error: error
-            });
+        .catch(async (err) => {
+            res.status(500).json(err);
         });
 });
 
