@@ -40,7 +40,7 @@ export default class FriendLineUp extends React.Component {
             <React.Fragment>
                 <Card style={{padding: "1rem",margin:"1rem 0"}}>
                     <Typography variant="h1" component="h1"  color="secondary">Radar List</Typography>
-                    <List style={{maxHeight:"300px",overflow: 'auto'}}>
+                    <List style={{maxHeight:"300px",overflow: 'auto',"margin-left":"-40px"}}>
                         {(
                             <li key={`section`} >
                                 <ul>
