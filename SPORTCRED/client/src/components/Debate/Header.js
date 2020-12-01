@@ -7,19 +7,30 @@ import './style.css'
 function Header() {
 
     return (
-        <div  className="header" >
-            <Card >
-                <List >
-                    <ListItem style={{ justifyContent: 'center'}} >
-                        {/* <h1> Debate and Analysis</h1> */}
-                        <Typography variant="h" component="h1" >Debate and Analysis</Typography>
-                    </ListItem>
-                    <ListItem style={{ justifyContent: 'center' }}>
-                        <Typography variant="h1" component="h1" >Tier based debate forum </Typography>
-                    </ListItem >
-                </List>
-            </Card>
-        </div>
+        // <div  className="header" >
+        //     <br/>
+        //     {/*<Card >*/}
+        //         <List >
+        //             <ListItem style={{ justifyContent: 'center'}} >
+        //                 {/* <h1> Debate and Analysis</h1> */}
+        //                 <Typography variant="h" component="h1" >Debate and Analysis</Typography>
+        //             </ListItem>
+        //             <ListItem style={{ justifyContent: 'center' }}>
+        //                 <Typography variant="h1" component="h1" >Tier based debate forum </Typography>
+        //             </ListItem >
+        //         </List>
+        //     {/*</Card>*/}
+        // </div>
+
+        <List >
+            <ListItem style={{ justifyContent: 'center'}} >
+                {/* <h1> Debate and Analysis</h1> */}
+                <Typography variant="h" component="h1" >Debate and Analysis</Typography>
+            </ListItem>
+            <ListItem style={{ justifyContent: 'center' }}>
+                <Typography variant="h1" component="h1" >Tier based debate forum </Typography>
+            </ListItem >
+        </List>
     );
 
 }
