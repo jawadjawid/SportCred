@@ -126,9 +126,6 @@ router.get('/:username', (req, res) => {
         });
 });
 
-
-
-
 router.get('/all', (req, res) => {
     Profile.find()
         .sort({ date: -1 })
@@ -196,6 +193,70 @@ router.get('/getUserProfile/:username', (req, res, next) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({ error: err });
+        });
+});
+
+router.put('/addToRadarList/:username', (req, res) => {
+    /**
+     * Send in the following request body
+     * url line -> /addToRadarList/Obama
+     * body -> 
+     * {
+     *      "username": "eden",
+     *      "userIcon": "url"
+     * }
+     * Obama will follow eden and add eden to radar list of Obama
+     */
+    let user1 = req.params.username;
+    let user2 = req.body.username;
+    let userIcon = req.body.userIcon;
+
+    Profile.find({username: user2})
+        .exec()
+        .then((data) => {
+            if(data.length === 0)
+            {
+                res.status(404).json({message: "The user in the body does not exist!"});
+            }
+            else 
+            {
+                Profile.find({username: user1})
+                    .exec()
+                    .then((userData) => {
+                        if(userData.length === 0)
+                        {
+                            res.status(404).json({message: "The user in url param does not exist!"});
+                        }
+                        else
+                        {
+                            let radarList = userData[0].radarList
+                            for(let i = 0; i < radarList.length; i++)
+                            {
+                                if(radarList[i].username === user2)
+                                {
+                                    return res.status(409).json({message: "User already present"});
+                                }
+                            }
+                            radarList.push({"username": user2, "userIcon": userIcon});
+                            console.log(radarList);
+                            Profile.updateOne({username: user1}, {radarList: radarList})
+                                .then(() => {
+                                    res.status(200).json({
+                                        message: user2 + " has been added to radar list of " + user1
+                                    });
+                                })
+                                .catch(() => {
+                                    res.status(400).json({message: "Could not add to radarList"});
+                                });
+                        }
+                    })
+                    .catch((err) => {
+                        res.status(500).json({error: err});
+                    });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({error:err});
         });
 });
 

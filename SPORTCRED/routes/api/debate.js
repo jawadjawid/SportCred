@@ -353,50 +353,67 @@ router.get('/getScoreFromPost', (req, res) => {
         });
 });
 
-router.get('/getDebateScore', async (req, res) => {
-    await DebatePost.find()
+router.get('/getDebateScore/:tier', async (req, res) => {
+    /**
+     * Tiers accepted fanalyst, analyst, proAnalyst and expertAnalyst
+     */
+    let userTier = req.params.tier; 
+    await Debate.find().sort({date: -1})
         .exec()
         .then(async (data) => {
+            console.log(data[0]);
             let user = "";
             let lastDebate = Date.now();
             let userScoreArray = [];
-            for(const item of data)
+            console.log(userTier in data[0]);
+            console.log(data[0][userTier].length);
+            if(userTier in data[0])
             {
-                let id = item.poster
-                await Profile.find({_id: id})
-                    .exec()
-                    .then(async (profileData) => {
-                        user = profileData[0].username;
-                        lastDebate = new Date(profileData[0].lastDebateCompleted);
-                    });
-                let currentDate = new Date();
-                let tomorrow = new Date(lastDebate);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                if(currentDate > tomorrow) 
+                for(let i = 0; i < data[0][userTier].length; i++)
                 {
-                    let scoreScale = item.agreeance;
-                    let totalAgreeDisagreeScore = 0;
-                    scoreScale.forEach((item1) => {
-                        totalAgreeDisagreeScore += item1.score;
-                    })
-                    userScoreArray.push({"username": user, "debateScore": totalAgreeDisagreeScore});  
+                    await DebatePost.find({_id: data[0][userTier][i]})
+                        .exec()
+                        .then(async (data) => {
+                            for(const item of data)
+                            {
+                                let id = item.poster
+                                await Profile.find({_id: id})
+                                        .exec()
+                                        .then(async (profileData) => {
+                                        user = profileData[0].username;
+                                        lastDebate = new Date(profileData[0].lastDebateCompleted);
+                                        });
+                                let currentDate = new Date();
+                                let tomorrow = new Date(lastDebate);
+                                tomorrow.setDate(tomorrow.getDate() + 1);
+                                if(currentDate > tomorrow) 
+                                {
+                                    let scoreScale = item.agreeance;
+                                    let totalAgreeDisagreeScore = 0;
+                                    scoreScale.forEach((item1) => {
+                                    totalAgreeDisagreeScore += item1.score;
+                                    })
+                                    userScoreArray.push({"username": item.username, "debateScore": totalAgreeDisagreeScore});  
+                                }
+                            }
+                        })
                 }
-            }
-            console.log(userScoreArray);
-            if(userScoreArray.length === 0)
-            {
-                return res.status(200).json(userScoreArray);
             }
             else
             {
-                return res.status(200).json(userScoreArray);
+                res.status(400).json({message: items + ' doesn\'t exist as tier'});
             }
-            
+            if(userScoreArray.length === 0)
+            {
+                res.status(200).json({
+                    userScoreArray: userScoreArray,
+                    message: "There are no posts for the previous day for " + userTier
+                });
+            }
+            res.status(200).json(userScoreArray);
         })
-        .catch((error) => {
-            return res.status(400).json({
-                error: error
-            });
+        .catch(async (err) => {
+            res.status(500).json(err);
         });
 });
 
