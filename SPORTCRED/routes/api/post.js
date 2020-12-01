@@ -26,6 +26,7 @@ router.post('/createPost/:username', (req, res) => {
             return res.status(400).json({message:"This user does not exist"})
         }
         const post = new Post({
+            username: req.params.username,
             postContent: req.body.postContent,
             poster: data._id
         })
@@ -70,6 +71,39 @@ router.get('/getPosts/:username', (req, res) => {
                 });
         }
     });
+});
+
+router.get('/getFriendsPosts/:username', (req, res) => {
+    Profile.findOne({username: req.params.username})
+        .exec(function(err, profile) {
+            if(profile == null) {
+                return res.status(400).json({message:"This user does not exist"})
+            }
+            else {
+                // Get all posts sorted by date descending
+                Post.find({})
+                    .sort({'postDate': 'desc'})
+                    .exec(function(err, post) {
+                        if(err) {
+                            return res.status(400).json({message:"Bad request"});
+                        }
+                        var i = 0;
+                        var radarList = profile.radarList;
+                        var friendsPost = [];
+                        while (i < post.length) {
+                            var j = 0;
+                            // For each post, check if the poster is in the given username's radar list
+                            while(j < radarList.length) {
+                                if(radarList[j].username === post[i].username)
+                                    friendsPost.push(post[i]) 
+                                j++;
+                            }
+                            i++;
+                        }
+                        res.status(200).json(friendsPost)
+                    });
+            }
+        });
 });
 
 router.post('/addComment/:username', (req, res) => {

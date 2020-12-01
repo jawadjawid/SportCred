@@ -18,8 +18,6 @@ router.get('/getUserProfileById/:id', (req, res, next) => {
             'questionnaire ACSScore ACSHistoryReport about posts')
         .exec()
         .then(userData => {
-            console.log(userData);
-
             if (userData) {
                 res.status(200).json(userData);
             } else {
@@ -182,7 +180,7 @@ router.get('/getUserProfile/:username', (req, res, next) => {
 
     Profile.find({ username: givenUser })
         .select('username fullName dateOfBirth email phone userIcon ' +
-            'questionnaire ACSScore ACSHistoryReport about posts')
+            'questionnaire ACSScore ACSHistoryReport about posts radarList')
         .exec()
         .then(userData => {
             console.log(userData);
@@ -544,7 +542,7 @@ router.get('/getLastDebatePrompt/:username', (req, res) => {
 router.put('/updateLastDebatePrompt/:username', (req, res, next) => {
     console.log("Hitting update lastDebatePrompt endpt with id " + req.params.username)
 
-    // If ACSScoreChange key is not in JSON body then return 400 status
+    // If lastDebatePrompt key is not in JSON body then return 400 status
     if ((typeof req.body.lastDebatePrompt) === 'undefined') {
         res.status(400).json({
             error: error
@@ -561,6 +559,84 @@ router.put('/updateLastDebatePrompt/:username', (req, res, next) => {
             res.status(400).json({
                 error: error
             });
+        });
+});
+
+router.put('/updateACSScoreDebate/:username', (req, res, next) => {
+    Profile.find({username: req.params.username })
+        .exec()
+        .then(async function(data) {
+            let ACSHistoryReport = data[0].ACSHistoryReport
+            let ACSScore = data[0].ACSScore
+            const finalDate = new Date();
+            let event;
+            event = {
+                    ACSStart: ACSScore,
+                    ACSEnd: ACSScore + 5,
+                    activity: "Gained " + 5 + " points by winning debate",
+                    date: finalDate
+            }
+            ACSScore = ACSScore + 5
+            ACSHistoryReport.unshift(event)
+            await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport, ACSScore: ACSScore})
+                .then(() => {
+                    res.status(200).json({
+                        message: "ACSScoreUpdated"
+                    })
+                })
+                .catch(error => {
+                    res.status(400).json({
+                        error: error
+                    });
+                });
+        });
+});
+
+router.put('/updateACSScoreTrivia/:username', (req, res, next) => {
+    //expected request body: {"change": -2} or {"change": 2}
+    // If change key is not in JSON body then return 400 status
+    if ((typeof req.body.change) === 'undefined') {
+        res.status(400).json({
+            error: "need score change amount"
+        })
+    }
+    Profile.find({username: req.params.username })
+        .exec()
+        .then(async function(data) {
+            let ACSHistoryReport = data[0].ACSHistoryReport
+            let ACSScore = data[0].ACSScore
+            const finalDate = new Date();
+            let event;
+            if (req.body.change > 0) {
+                event = {
+                    ACSStart: ACSScore,
+                    ACSEnd: ACSScore + req.body.change,
+                    activity: "Gained " + req.body.change + " points by playing trivia",
+                    date: finalDate
+                }
+                ACSScore = ACSScore + req.body.change
+            }
+            else {
+                event = {
+                    ACSStart: ACSScore,
+                    ACSEnd: ACSScore + req.body.change,
+                    activity: "Lost " + req.body.change*-1 + " points by playing trivia",
+                    date: finalDate
+                }
+                ACSScore = ACSScore + req.body.change
+            }
+            ACSHistoryReport.unshift(event)
+            await Profile.updateMany({username: req.params.username}, {ACSScoreChange: true, ACSHistoryReport: ACSHistoryReport, ACSScore: ACSScore})
+                .then(() => {
+                    res.status(200).json({
+                        message: "ACSScoreUpdated"
+                    })
+                })
+                .catch(error => {
+                    res.status(400).json({
+                        error: error
+                    });
+                });
         });
 });
 
@@ -602,48 +678,23 @@ router.put('/processPredictionResult/:username', async (req, res, next) => {
                 let ACSScore = data[0].ACSScore
                 const finalDate = new Date();
                 let event;
-                // if acshistoryreport is empty, then we need to initialize new values,
-                // else we can add to existing values
-                if (ACSHistoryReport[0] === undefined) {
-                    if (winner === predicted_winner) {
-                        event = {
-                            ACSStart: 0,
-                            ACSEnd: 5,
-                            activity: "Correctly predicted winner " + predicted_winner + "!",
-                            date: finalDate
-                        }
-                        ACSScore = ACSScore + 5
+                if (winner === predicted_winner) {
+                    event = {
+                        ACSStart: ACSScore,
+                        ACSEnd: ACSScore + 5,
+                        activity: "Correctly predicted winner " + predicted_winner + "!",
+                        date: finalDate
                     }
-                    else {
-                        event = {
-                            ACSStart: 0,
-                            ACSEnd: -5,
-                            activity: "Incorrectly predicted winner " + predicted_winner + "!",
-                            date: finalDate
-                        }
-                        ACSScore = ACSScore - 5
-                    }
-
+                    ACSScore = ACSScore + 5
                 }
                 else {
-                    if (winner === predicted_winner) {
-                        event = {
-                            ACSStart: ACSHistoryReport[0].ACSEnd,
-                            ACSEnd: ACSHistoryReport[0].ACSEnd + 5,
-                            activity: "Correctly predicted winner " + predicted_winner + "!",
-                            date: finalDate
-                        }
-                        ACSScore = ACSScore + 5
+                    event = {
+                        ACSStart: ACSScore,
+                        ACSEnd: ACSScore - 5,
+                        activity: "Incorrectly predicted winner " + predicted_winner + "!",
+                        date: finalDate
                     }
-                    else {
-                        event = {
-                            ACSStart: ACSHistoryReport[0].ACSEnd,
-                            ACSEnd: ACSHistoryReport[0].ACSEnd - 5,
-                            activity: "Incorrectly predicted winner " + predicted_winner + "!",
-                            date: finalDate
-                        }
-                        ACSScore = ACSScore - 5
-                    }
+                    ACSScore = ACSScore - 5
                 }
                 console.log("4. Inside updating")
                 ACSHistoryReport.unshift(event)

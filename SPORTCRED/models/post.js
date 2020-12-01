@@ -11,7 +11,8 @@ const PostSchema = new Schema({
         commenter: {type: String}
     }],
     agree: [ {type: String} ],
-    disagree: [ {type: String} ]
+    disagree: [ {type: String} ],
+    username: {type: String}
 });
 
 module.exports = Post = mongoose.model('posts', PostSchema);

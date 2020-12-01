@@ -63,3 +63,5 @@ IL-69: As George, I want to be able to follow other people and see them in my ra
   * Friends posts should show only posts of people in my radar list.
   * After I've searched for a user, I can hit follow to add them to my radar list
   * Call api to show only friends posts on friends posts page.
+  * My radar list should show on my profile
+  * API to get radar list for a user

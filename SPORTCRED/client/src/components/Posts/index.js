@@ -33,7 +33,7 @@ class Post extends React.Component {
         <CssBaseline/>
         <NavBar isLoggedIn={isLoggedIn}/>
         <Header {...this.props}/>
-        <CreatePost username={this.state.currentUser}/>
+        <CreatePost />
         <PostsTable {...this.props} />
       </div>
     );
