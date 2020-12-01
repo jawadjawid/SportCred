@@ -32,11 +32,13 @@ router.get('/getUserProfileById/:id', (req, res, next) => {
         });
 });
 
-router.get('/searchAndGetUserProfiles', (req, res, next) => {
+router.get('/searchAndGetUserProfiles/:username', (req, res, next) => {
     // expected body like so: {"username": "jimmy"}
 
     // If username is not in JSON body then return 400 status
-    if ((typeof req.body.username) === 'undefined') {
+    const userId = req.params.username;
+
+    if ((typeof userId) === 'undefined') {
         res.status(400).json({
             error: "username not provided"
         })
@@ -50,7 +52,7 @@ router.get('/searchAndGetUserProfiles', (req, res, next) => {
             let users = 0
             for (let i = 0; i < userData.length; i++) {
                 let str = userData[i].username
-                if (str.toLowerCase().includes(req.body.username.toLowerCase())) {
+                if (str.toLowerCase().includes(userId.toLowerCase())) {
                     result.push(userData[i])
                 }
                 if (users === userData.length - 1) {

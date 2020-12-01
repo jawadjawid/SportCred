@@ -136,8 +136,9 @@ export default class DebatePost extends React.Component {
         } else if (this.props.post === "null") {
             // this allow to make the first and only debatePost of the day
             return (
-                <div >
-                    <Grid container className="debatePost" style={{ padding: "3%", width: "720px", alignContent: 'center' }}>
+            <div >
+
+                <Grid container className="debatePost" style={{ padding: "3%", width: "720px", alignContent: 'center' }}>
                         {/* <Image/> */}
                         <Grid container style={{ padding: "1%" }}>
                             <Avatar

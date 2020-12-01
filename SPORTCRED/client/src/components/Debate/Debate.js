@@ -10,6 +10,7 @@ import Header from './Header';
 import DebatePost from './DebatePost'
 import './style.css'
 import { FilterNone } from '@material-ui/icons';
+import MatchCard from "../PicksAndPredictions/MatchCard";
 
 
 /*
@@ -76,22 +77,32 @@ export default class Debate extends React.Component {
            // console.log(posts)
            this.setState({ posts: posts })
 
-       // Makes JSX
-       var  JSXposts = posts.map((element, i) => {
-        // console.log(element)
-        if (element !== null) {
-          // console.log("post user: "+element.username +" user "+ this.user)
-          if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
-            this.setState({ canCreate: false });
-            // console.log("element user "+element.username+" user "+localStorage.getItem("currentUser")+" cancreate in "+this.state.canCreate)
-          }
-          // console.log("debate post1: " + element.postContent)
-          return <DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />
-        }
-      })
-      // console.log("JSX stuff "+typeof(JSXposts))
-      this.setState({JSXposts:JSXposts})
 
+             const items = []
+
+             for (const [index, element] of posts.entries()) {
+                 if (element !== null) {
+                     if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
+                         this.setState({ canCreate: false });
+                     }
+                     items.push(<br/>)
+                     items.push(<DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />)
+                 }
+             }
+
+       // Makes JSX
+      //  var  JSXposts = posts.map((element, i) => {
+      //   if (element !== null) {
+      //     if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
+      //       this.setState({ canCreate: false });
+      //     }
+      //     return (
+      //         <DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />
+      //     );
+      //   }
+      // })
+      // console.log("JSX stuff "+typeof(JSXposts))
+      this.setState({JSXposts:items})
 
          })
        
