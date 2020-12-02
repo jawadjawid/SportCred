@@ -53,6 +53,10 @@ export default class Trivia extends React.Component {
     this.setState(some)
   }
 
+  componentWillUnmount = () => {
+        window.onbeforeunload = undefined
+}
+
   render() {
     const { isLoggedIn } = this.props;
     return (

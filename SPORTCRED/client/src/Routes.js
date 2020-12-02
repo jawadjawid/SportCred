@@ -8,8 +8,8 @@ import PicksAndPredictions from './components/PicksAndPredictions/index'
 import { logout } from '../src/backendConnector/login';
 import Posts from './components/Posts'
 import Debate from './components/Debate/Debate'
-import SearchPage from './components/SearchPage'
 import Trivia from './components/Trivia/Trivia'
+import SearchPage from './components/SearchPage'
 
 export default props => {
 
