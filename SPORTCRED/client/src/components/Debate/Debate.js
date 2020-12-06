@@ -37,11 +37,11 @@ export default class Debate extends React.Component {
       posts: JSON.parse('[{}]'),//mockJSON
       question: "No question",
       canCreate: true,
-      JSXposts:Object
+      JSXposts: Object
     }
 
 
- 
+
     // console.log("inside constuctor")
     // console.log(this.state.posts)
   }
@@ -49,71 +49,65 @@ export default class Debate extends React.Component {
 
   componentWillMount() {
     this.getQuestion()
-       // create a new debate
-       var url = "http://localhost:5000/api/debate/createDebate/";
-       fetch(url, {
-         method: 'post',
-         headers: {
-           Accept: 'application/json, text/plain, */*',
-           'Content-Type': 'application/json'
-         }
-       }).then(res => res.json())
-         .then(res => {
-           // console.log(posts)
-           console.log(res.message)
-         })
-   
-   
-       var url = "http://localhost:5000/api/debate/getAllPostsByTier/" + localStorage.getItem("currentUser");
-       fetch(url, {
-         method: 'get',
-         headers: {
-           Accept: 'application/json, text/plain, */*',
-           'Content-Type': 'application/json'
-         }
-       })
-         .then(res => res.json())
-         .then(posts => {
-           // console.log(posts)
-           this.setState({ posts: posts })
+    // create a new debate
+    var url = "http://localhost:5000/api/debate/createDebate/";
+    fetch(url, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        // console.log(posts)
+        console.log(res.message)
+      })
 
 
-             const items = []
-
-             for (const [index, element] of posts.entries()) {
-                 if (element !== null) {
-                     if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
-                         this.setState({ canCreate: false });
-                     }
-                     items.push(<br/>)
-                     items.push(<DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />)
-                 }
-             }
-
-       // Makes JSX
-      //  var  JSXposts = posts.map((element, i) => {
-      //   if (element !== null) {
-      //     if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
-      //       this.setState({ canCreate: false });
-      //     }
-      //     return (
-      //         <DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />
-      //     );
-      //   }
-      // })
-      // console.log("JSX stuff "+typeof(JSXposts))
-      this.setState({JSXposts:items})
-
-         })
-       
+    var url = "http://localhost:5000/api/debate/getAllPostsByTier/" + localStorage.getItem("currentUser");
+    fetch(url, {
+      method: 'get',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(posts => {
+        // console.log(posts)
+        this.setState({ posts: posts })
 
 
+        const items = []
 
-      
+        for (const [index, element] of posts.entries()) {
+          if (element !== null) {
+            if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
+              this.setState({ canCreate: false });
+            }
+            items.push(<br />)
+            items.push(<DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />)
+          }
+        }
 
+        // Makes JSX
+        //  var  JSXposts = posts.map((element, i) => {
+        //   if (element !== null) {
+        //     if (element.username === localStorage.getItem("currentUser") && this.state.canCreate != false) {
+        //       this.setState({ canCreate: false });
+        //     }
+        //     return (
+        //         <DebatePost user={localStorage.getItem("currentUser")} post={element} prompt={this.state.question} canCreate={true} />
+        //     );
+        //   }
+        // })
+        // console.log("JSX stuff "+typeof(JSXposts))
+        this.setState({ JSXposts: items })
+
+      })
   }
 
-  getQuestion(){
+  getQuestion() {
     var url = "http://localhost:5000/api/debate/debateQuestionByTier/" + localStorage.getItem("currentUser");
     // console.log("inside getPOsts")
     fetch(url, {

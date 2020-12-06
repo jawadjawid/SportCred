@@ -38,7 +38,8 @@ const ProfileSchema = new Schema({
         required: true
     },
     userIcon: {
-        type: String
+        type: String,
+        default: ""
     },
     about: {
         type: String

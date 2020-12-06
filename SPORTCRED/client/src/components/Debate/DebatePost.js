@@ -16,6 +16,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 import Scale from './Scale'
+import NameTag from '../NameTag'
 
 /*
 img 
@@ -35,7 +36,9 @@ export default class DebatePost extends React.Component {
             snackbaropen: false,
             alertseverity: "success",
             button: false,
-            dialogBox: false
+            dialogBox: false,
+            disableScale:false,
+            blur:"blur(8px)"
         }
         this.handleChange = this.handleChange.bind(this);
         this.updatePost = this.updatePost.bind(this)
@@ -126,6 +129,11 @@ export default class DebatePost extends React.Component {
         this.setState({ dialogBox: false });
     }
 
+    changeState = (some) => {
+        // console.log("argument "+ JSON.stringify(some))
+        this.setState(some)
+      }
+
     render() {
         if (this.props.canCreate === false) {
             return (
@@ -141,11 +149,8 @@ export default class DebatePost extends React.Component {
                 <Grid container className="debatePost" style={{ padding: "3%", width: "720px", alignContent: 'center' }}>
                         {/* <Image/> */}
                         <Grid container style={{ padding: "1%" }}>
-                            <Avatar
-                                alt={this.props.user}
-                                src={AccountCircleIcon}
-                            />
-                            <Typography variant="h2" style={{ paddingTop: '1%', paddingLeft: '2%', fontSize: '120%' }}> {this.props.user}</Typography>
+                            <NameTag username={this.props.user} useAPI={true} />
+                        {/* <Typography variant="h2" > {this.props.user}  </Typography> */}
                         </Grid>
                         <Typography variant="h2" style={{ alignSelf: 'center', fontSize: '100%' }}> {this.props.prompt} </Typography>
                         <TextField
@@ -206,18 +211,23 @@ export default class DebatePost extends React.Component {
                 <div >
                     <Grid container direction="column" className="debatePost" style={{ padding: "3%", width: "720px" }}>
                         {/* <Image/> */}
-                        <Grid container style={{ padding: "1%" }}>
+                        <Grid container style={{ padding: "1%",filter: this.state.blur }}>
+                            <NameTag username={this.props.post.username}  useAPI={true} />
+                            {/* <div style={{display:"flex", justifyContent:"space-around"}}>
                             <Avatar
                                 alt={this.props.post.username}
                                 src={AccountCircleIcon}
                             />
-                            <Typography variant="h2" style={{ paddingTop: '1%', paddingLeft: '2%', fontSize: '120%' }}> {this.props.post.username}</Typography>
+                            <Typography variant="h2" style={{ paddingTop: '1%', paddingLeft: '2%', fontSize: '120%' }}> {this.props.post.username} </Typography>
+                            <Typography variant="h2" style={{ paddingTop: '1%', paddingLeft: '2%', fontSize: '90%', backgroundColor:"rgba(0, 0, 0, 0.80)", borderRadius:"10px" }}>100 </Typography>
+                            </div> */}
+
                         </Grid>
                         <Typography variant="h2" style={{ alignSelf: 'center', fontSize: '100%' }}> {this.props.prompt} </Typography>
                         <Typography className="content" variant="h2" style={{ paddingTop: '2%', fontSize: '80%' }}>
                             {this.props.post.postContent}
                         </Typography>
-                        <Scale ranker={this.props.user} post={this.props.post} />
+                        <Scale ranker={this.props.user} post={this.props.post} disabled={this.state.disableScale} setParentState={this.changeState}/>
                     </Grid>
 
                 </div>

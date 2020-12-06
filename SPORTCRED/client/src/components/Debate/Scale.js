@@ -19,10 +19,11 @@ export default class Scale extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleAgree = this.handleAgree.bind(this);
     }
 
     componentDidMount(){
+        // here i get the score from db
         if (this.props.post.agreeance !== undefined) {
             // console.log("the post " + JSON.stringify(this.props.post))
             // console.log("post by " + this.props.post.username + "score " + element.score)
@@ -34,20 +35,31 @@ export default class Scale extends React.Component {
                     this.setState({ score: element.score })
                     console.log("2post by " + this.props.post.username + "score " + element.score)
                     this.setState({score:element.score}) 
+                    this.props.setParentState({
+                        disableScale:true,
+                        blur:"blur(0px)"
+                    })
                 }
+            })
+        }
+
+        if(localStorage.getItem("currentUser") === this.props.post.username){
+            this.props.setParentState({
+                disableScale:true,
+                blur:"blur(0px)"
             })
         }
     }
     
 
     handleChange(event, data){
-        if(data != this.state.score){
+        if(data != this.state.score && !this.props.disabled){
             console.log("changing to "+data);
             this.setState({score:data})  
         }
     }
 
-    handleMouseUp(event, data){
+    handleAgree(event, data){
         
         // console.log(data);
         // console.log("the state.score is " + this.state.score)
@@ -60,7 +72,7 @@ export default class Scale extends React.Component {
             // "postContent": this.props.post.postContent,
             // "postDate": this.props.post.postDate,
             id: this.props.post._id,
-            "score": data
+            "score": this.state.score
         }
         // return 0;
         console.log("request to update " + JSON.stringify(postBody))
@@ -77,6 +89,11 @@ export default class Scale extends React.Component {
                 if (res.status == 200) {
                     // alert("your thing has been posted");
                     console.log("update agreeance")
+                    this.props.setParentState({
+                        disableScale:true,
+                        blur:"blur(0px)"
+                    })
+                    // window.location.reload(false);
                 }
                 else {
                     // alert("your thing failed to be posted");
@@ -93,22 +110,30 @@ export default class Scale extends React.Component {
     render() {
         if (this.props.ranker !== this.props.post.username) {
             return (
-                <div>
-                    <Typography id="discrete-slider-small-steps" color="secondary" style={{ paddingTop: "3%" }}>
+                <div style={{padding:"2%"}}>
+                    <Typography id="discrete-slider-small-steps" color="secondary"  style={{ paddingTop: "3%"}}>
                         AGREEANCE
                     </Typography>
+                    <div style={{display:"flex",justifyContent:"space-around",padding:"2px"}}>
                     <Slider
                         // defaultValue={this.state.score}
                         value={this.state.score}
                         color='secondary'
                         step={1}
-                        marks
+                        // disabled={this.props.disabled}
                         min={0}
-                        max={10}
+                        max={100}
                         valueLabelDisplay="auto"
-                        onChangeCommitted={this.handleMouseUp}
+                        // onChangeCommitted={this.handleAgree}
                         onChange={this.handleChange}
+                        style={{width:"80%"}}
+                        
                     />
+                    <Button variant="contained" color="secondary" disabled={this.props.disabled} onClick={this.handleAgree}>
+                        Agree
+                    </Button>
+                    </div>
+
                 </div>
             )
         } else {

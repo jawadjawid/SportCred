@@ -196,6 +196,22 @@ router.get('/getUserProfile/:username', (req, res, next) => {
         });
 });
 
+router.get('/getACSScoreAndIcon/:username', (req, res) => {
+    Profile.findOne({username: req.params.username})
+        .select('ACSScore userIcon')
+        .exec()
+        .then(profile => {
+            if(profile) {
+                res.status(200).json(profile);
+            } else {
+                res.status(400).json({message:'user not in database'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error: err});
+        });
+});
+
 router.put('/addToRadarList/:username', (req, res) => {
     /**
      * Send in the following request body
