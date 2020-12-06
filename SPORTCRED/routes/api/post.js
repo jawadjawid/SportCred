@@ -46,11 +46,7 @@ router.get('/getAllPosts', (req, res) => {
         .sort({'postDate': 'desc'})
         .exec()
         .then(async data => {
-            let copy = [...data];
-
-            for(let i = 0;i<data.length;i++){
-                copy[i] = {...data[i]};
-            }
+            let copy = JSON.parse(JSON.stringify(data))
 
             for(let i = 0; i < data.length;i++){
                 let post = data[i];
