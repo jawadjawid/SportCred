@@ -45,7 +45,21 @@ router.get('/getAllPosts', (req, res) => {
     Post.find({})
         .sort({'postDate': 'desc'})
         .exec()
-        .then(data => res.status(200).json(data))
+        .then(async data => {
+            let copy = [...data];
+
+            for(let i = 0;i<data.length;i++){
+                copy[i] = {...data[i]};
+            }
+
+            for(let i = 0; i < data.length;i++){
+                let post = data[i];
+                await Profile.findById({ _id: post.poster }).then(profile => {
+                    copy[i]["posterACSScore"] = profile.ACSScore;
+                })
+            }
+            //data[0].ACSScore = data[0].profile.ACSScore
+            res.status(200).json(copy)})
         .catch(error  => {
             console.log(error);
             res.status(500).json({error:error});
