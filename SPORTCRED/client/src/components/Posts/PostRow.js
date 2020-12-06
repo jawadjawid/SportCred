@@ -86,6 +86,7 @@ handleDisAgreeClick (event) {
 
         <TableRow className={classes.Postdata}>
           <TableCell className={classes.Poster} >Posted by {post.username} </TableCell>
+            <TableCell className={classes.ACSScore} >{post.posterACSScore} </TableCell>
           <TableCell className={classes.Postdate} >at {post.postDate}</TableCell>
           </TableRow>
 

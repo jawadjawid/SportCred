@@ -47,18 +47,21 @@ export const styles = theme => ({
     color: '#ffffff',
     align:'center',
   },
+  ACSScore:{
+      fontSize: 12,
+    color: '#ffffff',
+    align:'center',
+  },
   Postdata:{
     textAlign:'center',
   },
 
   Postdate:{
-    display:'inline',
     fontSize: 12,
     color: '#ffffff',
     float: 'right',
   },
   paper: {
-    display:'inline',
     // padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',

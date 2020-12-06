@@ -45,7 +45,17 @@ router.get('/getAllPosts', (req, res) => {
     Post.find({})
         .sort({'postDate': 'desc'})
         .exec()
-        .then(data => res.status(200).json(data))
+        .then(async data => {
+            let copy = JSON.parse(JSON.stringify(data));
+
+            for(let i = 0; i < data.length;i++){
+                let post = data[i];
+                await Profile.findById({ _id: post.poster }).then(profile => {
+                    copy[i]["posterACSScore"] = profile.ACSScore;
+                })
+            }
+            //data[0].ACSScore = data[0].profile.ACSScore
+            res.status(200).json(copy)})
         .catch(error  => {
             console.log(error);
             res.status(500).json({error:error});
@@ -83,7 +93,7 @@ router.get('/getFriendsPosts/:username', (req, res) => {
                 // Get all posts sorted by date descending
                 Post.find({})
                     .sort({'postDate': 'desc'})
-                    .exec(function(err, post) {
+                    .exec(async function(err, post) {
                         if(err) {
                             return res.status(400).json({message:"Bad request"});
                         }
@@ -100,8 +110,17 @@ router.get('/getFriendsPosts/:username', (req, res) => {
                             }
                             i++;
                         }
-                        res.status(200).json(friendsPost)
-                    });
+
+                        let copy = JSON.parse(JSON.stringify(friendsPost));
+
+                        for(let i = 0; i < friendsPost.length;i++){
+                            let post = friendsPost[i];
+                            await Profile.findById({ _id: post.poster }).then(profile => {
+                                copy[i]["posterACSScore"] = profile.ACSScore;
+                            })
+                        }
+                        //data[0].ACSScore = data[0].profile.ACSScore
+                        res.status(200).json(copy)})
             }
         });
 });

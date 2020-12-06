@@ -45,11 +45,17 @@ export default class FriendLineUp extends React.Component {
                             <li key={`section`} >
                                 <ul>
                                     {Array.from(Array(this.state.friends.length).keys()).map((item) => (
-                                        <ListItem button style={{height:"50px", width:'240px'}}>
+                                        <ListItem button style={{height:"50px", width:'100%'}}>
                                             <ListItemIcon>
                                                 <UserIcon size="small" imgSrc={this.state.friends[item]['userIcon']}/>
                                             </ListItemIcon>
                                             <ListItemText disableTypography primary={this.state.friends[item]['username']}  />
+                                            <div style={{ alignSelf: "center","margin-right":"40px" }}>
+                                                <Typography variant="h2"
+                                                            style={{ display: "flex", justifyContent: "space-around", fontSize: '90%', backgroundColor: "rgba(0, 0, 0, 0.80)", borderRadius: "10px", width: "200%" }}>
+                                                    {this.state.friends[item]['ACSScore']}
+                                                </Typography>
+                                            </div>
                                         </ListItem>
                                     ))}
                                 </ul>

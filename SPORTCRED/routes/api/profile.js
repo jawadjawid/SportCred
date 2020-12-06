@@ -179,10 +179,21 @@ router.get('/getUserProfile/:username', (req, res, next) => {
         .select('username fullName dateOfBirth email phone userIcon ' +
             'questionnaire ACSScore ACSHistoryReport about posts radarList')
         .exec()
-        .then(userData => {
+        .then(async userData => {
             console.log(userData);
 
             if (userData) {
+                if(userData[0].radarList !== undefined){
+                    let copyMain = [...userData];
+                    copyMain[0] = JSON.parse(JSON.stringify(userData[0]));
+                    for (let i = 0; i < userData[0].radarList.length; i++){
+                        await Profile.find({ "username": userData[0].radarList[i]["username"] }).then(profile => {
+                            copyMain[0].radarList[i].ACSScore = profile[0].ACSScore;
+                        })
+                    }
+                    res.status(200).json(copyMain);
+                    return;
+                }
                 res.status(200).json(userData);
             } else {
                 res.status(404).json({
